@@ -7,6 +7,7 @@ const lang = inject('lang')
 // เนื้อหาทั้งหมดแยกตามภาษา
 const content = {
   th: {
+    
     sectionTitle: 'Skills & Achievements',
     primaryStack: 'เทคโนโลยีหลักที่ใช้',
     fullstackCliDev: 'พัฒนาแบบไม่ใช้ GUI',
@@ -57,6 +58,11 @@ const content = {
   },
 
   en: {
+    Co: 'PNJ Tech',
+    lang: 'Switch To Thai',
+    main_head : 'TECHNICAL',
+    main_content: 'PORTFOLIO',
+    main_desc: 'Welcome to NPJ Tech — A clean portfolio built with Vue, Tailwind and real-world UX. No gimmicks.',
     sectionTitle: 'Skills & Achievements',
     primaryStack: 'Primary Stack',
     fullstackCliDev: 'Fullstack CLI Dev',

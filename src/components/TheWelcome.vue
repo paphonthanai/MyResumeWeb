@@ -1,3 +1,29 @@
+<script setup>
+
+import { ref, computed } from 'vue'
+import { inject, } from 'vue'
+// เลือกภาษา
+const lang = inject('lang')
+
+ const content = {
+  th: {
+    Co: 'พีเอ็นเจ เทคโนโลยี',
+    main_head: 'ด้านเทคนิค',
+    main_content: 'พอร์ตฟอลิโอ',
+    main_desc: 'ยินดีต้อนรับสู่ NPJ Tech — พอร์ตโฟลิโอที่สะอาดตา สร้างขึ้นด้วย Vue, Tailwind และ UX ที่ใช้งานจริง ไม่มีลูกเล่น',
+  },
+  en: {
+    Co: 'PNJ Tech',
+    lang: 'Switch To Thai',
+    main_head: 'TECHNICAL',
+    main_content: 'PORTFOLIO',
+    main_desc: 'Welcome to NPJ Tech — A clean portfolio built with Vue, Tailwind and real-world UX. No gimmicks.',
+  },
+}
+
+const t = computed(() => content[lang.value])
+
+</script>
 
 <template>
   <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 py-16 px-6 md:px-20 rounded-md shadow-md hover:shadow-sky-500/5">
@@ -5,13 +31,13 @@
       
       <!-- Text Zone -->
       <div class="w-full md:w-1/2 text-white space-y-6">
-        <h2 class="text-lg tracking-widest text-gray-400">TECHNICAL</h2>
+        <h2 class="text-lg tracking-widest text-gray-400">{{ t.main_head }}</h2>
         <h1 class="text-5xl md:text-6xl font-extrabold font-bowlby leading-tight">
-          PORTFOLIO
+          {{ t.main_content}}
         </h1>
         <div class="h-1 w-24 bg-gray-500 mt-2"></div>
         <p class="text-lg text-gray-300">
-          Welcome to NPJ Tech — A clean portfolio built with Vue, Tailwind and real-world UX. No gimmicks.
+          {{ t.main_desc }}
         </p>
       </div>
 
