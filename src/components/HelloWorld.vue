@@ -113,6 +113,21 @@ const content = {
   }
 };
 
+const techStack = [
+  { name: 'HTML', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+  { name: 'CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+  { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+  { name: 'PHP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg' },
+  { name: 'Flutter', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' },
+  { name: 'Dart', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg' },
+  { name: 'Firebase', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg' },
+  { name: 'Vue', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
+  { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+  { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
+  { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+  { name: 'Tailwind', icon: 'https://www.svgrepo.com/show/374118/tailwind.svg' },
+];
+
 // ดึงค่าตามภาษาปัจจุบัน
 const t = computed(() => content[lang.value])
 
@@ -139,12 +154,7 @@ p {
 </style>
 
 <template>
-  <section class="
-  bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 
-  text-white 
-  px-8 py-16 
-  shadow-md
-  hover:shadow-sky-500/5
+  <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 py-16 px-6 md:px-20 rounded-md shadow-md hover:shadow-sky-500/5
   ">
     <div class="
     max-w-7xl mx-auto grid 
@@ -154,7 +164,7 @@ p {
       <div class="
       shadow-[0_8px_20px_rgba(0,0,0,0.5)] 
       hover:shadow-red-500/10 px-8 
-      py-10 
+      py-10 rounded-md
       border border-white/10
       ">
         <h2 class="
@@ -280,19 +290,31 @@ p {
       <div class="grid gap-6 text-sm text-gray-200">
         <div
           class="
-          grid grid-cols-2 gap-6 
+          grid grid-rows gap-6 
           shadow-[0_8px_20px_rgba(0,0,0,0.5)] 
           hover:shadow-sky-500/10 
-          px-8 py-10 
-          border border-white/10">
+          px-8 py-10 rounded-md
+          border border-white/10"
+        >
           <div>
             <h4 class="font-bold text-red-500 text-lg">{{ t.primaryStack }}</h4>
-            <p class="text-gray-400">Vue.js, TailwindCSS, Firebase, CLI tools</p>
-          </div>
-
-          <div>
-            <h4 class="font-bold text-cyan-400 text-lg">{{ t.fullstackCliDev }}</h4>
-            <p class="text-gray-400">Terminal-based workflow, script-driven, no GUI reliance</p>
+            <br>
+            <div class="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-8 text-[12px] gap-8 text-center">
+              <div
+                v-for="tech in techStack"
+                :key="tech.name"
+                class="flex flex-col items-center justify-center group"
+              >
+                <img
+                  :src="tech.icon"
+                  :alt="tech.name"
+                  class="w-8 h-8 mb-3 transition-transform duration-300 group-hover:scale-110"
+                />
+                <span class="text-gray-300 text-md font-semibold group-hover:text-sky-300 transition-colors">
+                  {{ tech.name }}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -300,7 +322,7 @@ p {
           class="
           grid grid-cols-2 gap-6 
           shadow-[0_8px_20px_rgba(0,0,0,0.5)] 
-          px-8 py-10 
+          px-8 py-10 rounded-md
           border border-white/10 
           hover:shadow-sky-500/10">
           <div>
@@ -319,13 +341,79 @@ p {
           class="
           grid grid-cols-2 gap-6 
           shadow-[0_8px_20px_rgba(0,0,0,0.5)] 
-          px-8 py-10 
+          px-8 py-10 rounded-md
           border border-white/10 
           hover:shadow-sky-500/10">
           <div>
             <h4 class="font-bold text-red-500 text-lg"> {{ t.recognition }}</h4>
-            <p class="text-gray-400">CTF Top 5 (XOR, Java Reverse, Stego)</p>
-            <p class="text-gray-400">Red Team Lab hands-on (2024–2025)</p>
+            <p class="text-gray-400 text-md">
+              ->
+              <a 
+                href="https://www.borntodev.com/devlab/certificate" 
+                target="_blank" 
+                class="text-sky-300 hover:underline underline-offset-4 transition"
+              >
+                Certificate
+              </a>
+              in 
+              <a 
+                href="https://www.borntodev.com/devlab/profile/18960" 
+                target="_blank" 
+                class="text-sky-300 hover:underline underline-offset-4 transition"
+              >
+                DevLab
+              </a>
+              by
+              <a 
+                href="https://www.borntodev.com/" 
+                target="_blank" 
+                class="text-sky-300 hover:underline underline-offset-4 transition"
+              >
+                BornToDev
+              </a>
+            </p>
+
+            <!-- Cssbattle -->
+            <p class="text-gray-400 text-md">
+            ->
+              <a 
+                href="https://cssbattle.dev/player/baronquibe" 
+                target="_blank" 
+                class="text-sky-300 hover:underline underline-offset-4 transition"
+              >
+                Stats
+              </a>
+              in 
+              <a 
+                href="https://cssbattle.dev/" 
+                target="_blank" 
+                class="text-sky-300 hover:underline underline-offset-4 transition"
+              >
+                Cssbattle
+              </a>
+            </p>
+
+            <!-- Cssbattle -->
+            <p class="text-gray-400 text-md">
+            ->
+              <a 
+                href="https://drive.google.com/file/d/1uEVPXvL2djxsjJTTpgLq-QNLn_Mg7moN/view?usp=sharing" 
+                target="_blank" 
+                class="text-sky-300 hover:underline underline-offset-4 transition"
+              >
+                Certificate Cybersec
+              </a>
+              by
+              <a 
+                href="https://www.facebook.com/RPCACyberClub" 
+                target="_blank" 
+                class="text-sky-300 hover:underline underline-offset-4 transition"
+              >
+                RPCACyberClub
+              </a>
+              <img src="https://scontent.fkkc1-1.fna.fbcdn.net/v/t39.30808-6/305461311_498588532270737_1115774101095350383_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=HKyS5F5whnkQ7kNvwGVBfjl&_nc_oc=Adno3TDIa9F6GFIGiJL3IZ377cR_liOfWIFwzsA5WTUtVQiSTv6lUVg3GBbJbrlkXbM&_nc_zt=23&_nc_ht=scontent.fkkc1-1.fna&_nc_gid=wrKD6iTAGrqQ9u4okzojDA&oh=00_AfgI-0TioZ_VocsuT427xR-dbHhv3ndILNpiANYr17hRtg&oe=69138E1D" alt="">
+            </p>
+            
           </div>
 
           <div>
@@ -337,14 +425,16 @@ p {
                   <path stroke-linecap="round" stroke-linejoin="round"
                     d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
                 </svg>
-                <span>hello@npjtech.dev</span>
+                <span>Pj06052538@gmail.com</span>
               </div>
               <div class="flex items-center">
                 <svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
                   <path
                     d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.271c-.966 0-1.75-.787-1.75-1.75s.784-1.75 1.75-1.75 1.75.787 1.75 1.75-.784 1.75-1.75 1.75zm13.5 10.271h-3v-4.5c0-1.074-.021-2.458-1.5-2.458s-1.731 1.174-1.731 2.382v4.576h-3v-9h2.881v1.233h.042c.401-.761 1.379-1.561 2.839-1.561 3.033 0 3.591 1.996 3.591 4.59v4.738z" />
                 </svg>
-                <span>linkedin.com/in/npjtech</span>
+                <span>
+                  <a href="https://www.linkedin.com/in/%E0%B8%9B%E0%B8%9E%E0%B8%99%E0%B8%98%E0%B8%99%E0%B8%B1%E0%B8%A2-%E0%B9%83%E0%B8%88%E0%B8%A1%E0%B8%B2-aa57b2269/">linkedin.com/in/npjtech</a>
+                  </span>
               </div>
             </div>
           </div>
@@ -354,7 +444,7 @@ p {
           class="
           grid grid-cols-2 gap-6 
           shadow-[0_8px_20px_rgba(0,0,0,0.5)] 
-          px-8 py-10 
+          px-8 py-10 rounded-md
           border border-white/10 
           hover:shadow-sky-500/10">
           <div>
@@ -371,7 +461,7 @@ p {
           </div>
           <div>
             <p class="uppercase text-xs text-gray-500">GitHub</p>
-            <p class="text-blue-300">github.com/yourprofile</p>
+            <p class="text-blue-300"><a target="_blank" href="https://github.com/paphonthanai">github.com/paphonthanai</a></p>
           </div>
         </div>
 
