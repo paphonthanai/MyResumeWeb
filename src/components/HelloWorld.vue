@@ -7,7 +7,6 @@ const lang = inject('lang')
 // เนื้อหาทั้งหมดแยกตามภาษา
 const content = {
   th: {
-    
     sectionTitle: 'Skills & Achievements',
     primaryStack: 'เทคโนโลยีหลักที่ใช้',
     fullstackCliDev: 'พัฒนาแบบไม่ใช้ GUI',
@@ -113,20 +112,86 @@ const content = {
   }
 };
 
-const techStack = [
-  { name: 'HTML', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
-  { name: 'CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
-  { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-  { name: 'PHP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg' },
-  { name: 'Flutter', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' },
-  { name: 'Dart', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg' },
-  { name: 'Firebase', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg' },
-  { name: 'Vue', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
-  { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
-  { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
-  { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
-  { name: 'Tailwind', icon: 'https://www.svgrepo.com/show/374118/tailwind.svg' },
+const techCategories = [
+  {
+    name: 'Programming Languages',
+    items: [
+      { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+      { name: 'PHP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg' },
+      { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+      { name: 'Dart', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg' },
+      { name: 'C#', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg' },
+      { name: 'VB.NET', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg' },
+    ],
+  },
+  {
+    name: 'Frameworks & Libraries',
+    items: [
+      { name: 'Vue', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
+      { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+      { name: 'Flutter', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' },
+      { name: 'Express', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg' },
+      { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+      { name: 'Next.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
+      // { name: 'Laravel', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg' },
+    ],
+  },
+  {
+    name: 'UI & Frontend',
+    items: [
+      { name: 'HTML', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+      { name: 'CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+      { name: 'Tailwind', icon: 'https://www.svgrepo.com/show/374118/tailwind.svg' },
+      { name: 'daisyUI', icon: 'https://img.daisyui.com/images/daisyui/mark-rotating.svg' },
+      { name: 'Bootstrap', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg' },
+    ],
+  },
+  {
+    name: 'Backend & Database',
+    items: [
+      { name: 'Firebase', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg' },
+      { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
+      { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+      { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
+      
+    ],
+  },
+  {
+    name: 'Tools & IDE',
+    items: [
+      { name: 'VS Code', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg' },
+      { name: 'GitHub', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg' },
+      { name: 'Visual Basic', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg' },
+      { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+      { name: 'Figma', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg' },
+      { name: 'XAMPP', icon: 'https://www.apachefriends.org/images/xampp-logo-ac950edf.svg' },
+    ],
+  },
+  {
+    name: 'Design_Editing',
+    items: [
+      { name: 'PremierePro', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Adobe_Premiere_Pro_CC_icon.svg/768px-Adobe_Premiere_Pro_CC_icon.svg.png?20210729021549' },
+      // { name: 'After Effects', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg' },
+      { name: 'Photoshop', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/768px-Adobe_Photoshop_CC_icon.svg.png?20200616073617' },
+      { name: 'Illustrator', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Adobe_Illustrator_CC_icon.svg/768px-Adobe_Illustrator_CC_icon.svg.png?20251029195730' },
+      // { name: 'CapCut', icon: 'https://upload.wikimedia.org/wikipedia/commons/9/98/CapCut_Logo.svg' },
+      // { name: 'DaVinci Resolve', icon: 'https://upload.wikimedia.org/wikipedia/commons/5/5f/DaVinci_Resolve_17_logo.svg' },
+    ],
+  },
+  {
+  name: 'Security_CTF',
+  items: [
+    { name: 'BurpSuite', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/BurpSuite_Comunity_Edition.svg/825px-BurpSuite_Comunity_Edition.svg.png' },
+    // { name: 'Wireshark', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wireshark/wireshark-original.svg' },
+    { name: 'CyberChef', icon: 'https://cdn-1.webcatalog.io/catalog/cyberchef/cyberchef-icon-filled-256.webp?v=1714774077431' },
+    { name: 'Ghidra', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Ghidra_logo.svg/768px-Ghidra_logo.svg.png?20220727174502' },
+    { name: 'IDA', icon: 'https://static.wikitide.net/zenithwiki/0/0d/IDAIcon.png' },
+    { name: 'KaliLinux', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Kali-dragon-icon.svg/768px-Kali-dragon-icon.svg.png?20211125065834' },
+  ],
+  },
+
 ];
+
 
 // ดึงค่าตามภาษาปัจจุบัน
 const t = computed(() => content[lang.value])
@@ -299,22 +364,33 @@ p {
           <div>
             <h4 class="font-bold text-red-500 text-lg">{{ t.primaryStack }}</h4>
             <br>
-            <div class="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-8 text-[12px] gap-8 text-center">
+            <div v-for="(category, index) in techCategories" :key="index" class="mb-8">
+              <h3 class="text-sky-400 font-bold text-sm uppercase tracking-widest mb-4 border-b border-gray-700 pb-2">
+                {{ category.name }}
+              </h3>
+
               <div
-                v-for="tech in techStack"
-                :key="tech.name"
-                class="flex flex-col items-center justify-center group"
+                class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-8 text-[12px] gap-8 text-center"
               >
-                <img
-                  :src="tech.icon"
-                  :alt="tech.name"
-                  class="w-8 h-8 mb-3 transition-transform duration-300 group-hover:scale-110"
-                />
-                <span class="text-gray-300 text-md font-semibold group-hover:text-sky-300 transition-colors">
-                  {{ tech.name }}
-                </span>
+                <div
+                  v-for="tech in category.items"
+                  :key="tech.name"
+                  class="flex flex-col items-center justify-center group"
+                >
+                  <img
+                    :src="tech.icon"
+                    :alt="tech.name"
+                    class="w-8 h-8 mb-3 transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <span
+                    class="text-gray-300 text-md font-semibold group-hover:text-sky-300 transition-colors"
+                  >
+                    {{ tech.name }}
+                  </span>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
 
