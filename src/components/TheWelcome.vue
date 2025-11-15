@@ -8,16 +8,16 @@ const lang = inject('lang')
  const content = {
   th: {
     Co: 'พีเอ็นเจ เทคโนโลยี',
-    main_head: 'ด้านเทคนิค',
-    main_content: 'พอร์ตฟอลิโอ',
-    main_desc: 'ยินดีต้อนรับสู่ NPJ Tech — พอร์ตโฟลิโอที่สะอาดตา สร้างขึ้นด้วย Vue, Tailwind และ UX ที่ใช้งานจริง ไม่มีลูกเล่น',
+    main_head: 'พอร์ตโฟลิโอ ด้านเทคนิค',
+    main_content: 'พีเอ็นเจ เทคฯ',
+    main_desc: 'ยินดีต้อนรับสู่ PNJ Tech — เราพัฒนาระบบครบวงจรด้วยทีม Full-Stack ที่ดูแลตั้งแต่ต้นจนจบ มุ่งเน้นคุณภาพและความเสถียร เพื่อส่งมอบบริการแบบ One-Stop Service ที่ใช้งานได้จริงและต่อเนื่อง',
   },
   en: {
     Co: 'PNJ Tech',
     lang: 'Switch To Thai',
-    main_head: 'TECHNICAL',
-    main_content: 'PORTFOLIO',
-    main_desc: 'Welcome to NPJ Tech — A clean portfolio built with Vue, Tailwind and real-world UX. No gimmicks.',
+    main_head: 'PORTFOLIO TECHNICAL',
+    main_content: 'PNJ Tech',
+    main_desc: 'Welcome to PNJ Tech — We develop end-to-end systems with a full-stack team that handles every stage of the process. We focus on quality and stability to deliver a true, seamless one-stop service that works reliably.',
   },
 }
 
@@ -44,12 +44,12 @@ const t = computed(() => content[lang.value])
       <!-- Image Zone -->
       <div class="w-full md:w-1/2 group">
   <img
-    src="./image/Me_cartoon.png"
+    src="./image/NewLogo_4_2.png"
     alt="profile"
     class="w-[280px] md:w-[300px] object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.5)] mx-auto group-hover:hidden"
   />
   <img
-    src="./image/Me2.png" 
+    src="./image/NewLogo_4_2.png" 
     alt="profile-hover"
     class="w-[280px] md:w-[300px] object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.5)] mx-auto hidden group-hover:block"
   />

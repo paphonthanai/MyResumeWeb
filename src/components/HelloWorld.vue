@@ -25,41 +25,114 @@ const content = {
     github: 'GitHub',
     featuredProjects: 'โปรเจกต์เด่น',
     viewMore: 'ดูเพิ่มเติม',
+    status: 'สถานะ',
+    customer: 'ลูกค้า',
 
     // Skills (ซ้าย)
     flutter: 'พัฒนาแอพมือถือด้วย Flutter + Dart',
     flutterDesc1: 'แอพพลิเคชั่นองค์กร/หน่วยงาน, การกรอกฟอร์มแบบ เสต็ป, การเข้าใช้งานผ่าน OTP',
     flutterDesc2: '💡 MVP พร้อมใช้งานจริงในสหกรณ์และอนุมัติโดยกรรมการ',
+    flutterlink: 'https://bpp24-coop.com/',
+    flutter_status: 'กำลังอยู่ระหว่างการอนุมัติโดยกรรมการ ⏳',
+    flutter_customer: 'สหกรณ์ออมทรัพย์ตำรวจตระเวนชายแดนที่ 24',
 
     vue: 'สร้างระบบเว็บด้วย Vue.js + Firebase',
     vueDesc1: 'แดชบอร์ดหลายบทบาท กฎความปลอดภัยของ Firestore',
     vueDesc2: '💡 อัปเดตแบบเรียลไทม์ ตรรกะการอนุญาตระดับบอร์ด',
+    vuelink: 'https://www.firsttelecom.co.th/',
+    vue_status: 'เสร็จสมบูรณ์ ✅',
+    vue_customer: 'บริษัท เฟิร์สท เทเลคอม ซีสเต็ม จำกัด',
 
     python: 'บอทและสคริปต์ Python',
-    pythonDesc1: 'การสร้างชุด PDF, การตรวจสอบตรรกะ, การชดเชย Cheat Engine',
-    pythonDesc2: '💡 ใช้ในการ reverse-engineering โปรแกรมในเครื่อง',
+    pythonDesc1: 'การสร้างชุด LLM เพื่อตรวจสอบตรรกะและวิเคราะห์ค่าฝุ่น',
+    pythonDesc2: '💡 ใช้ในการคำนวณทำนายค่าฝุ่นด้วยโมเดล Random Forest และอื่นๆ',
+    pythonlink: '#',
+    python_status: 'เสร็จสมบูรณ์ ✅',
+    python_customer: 'นักศึกษาปริญญาโท ใช้ประกอบรายงานวิทยานิพนธ์',
 
-    php: 'แก้ระบบฟอร์มด้วย PHP + SMTP',
+    php: 'แก้ไขเว็บไซต์ด้วย PHP + FTP SMTP',
     phpDesc1: 'PHPMailer, Hostneverdie SMTP Debug',
-    phpDesc2: '💡 ส่งอีเมลจริงได้ พร้อม Debug HELO และ ErrorInfo',
+    phpDesc2: '💡 อัพเดทข่าวสาร ข้อมูลบนเว็บไซต์',
+    phplink1: 'https://www.kyoei-thai.co.th/th/index.php',
+    php_status: 'เสร็จสมบูรณ์ ✅',
+    php_customer: 'บริษัท เคียวเออิ (ประเทศไทย) จำกัด',
+
 
     html: 'สร้าง UI ด้วย HTML / CSS / JavaScript',
-    htmlDesc1: 'หน้า Landing page, แบบฟอร์มการตรวจสอบ, องค์ประกอบ UI',
-    htmlDesc2: '💡 ใช้งานร่วมกับ Tailwind หรือ CSS native layout',
+    htmlDesc1: 'หน้า Landing page, สร้าง - แก้ไของค์ประกอบ UI',
+    htmlDesc2: '💡 ใช้งานได้ทั้งแบบ CLI(VsCOde) และ UI(wix.com)',
+    htmllink1: 'http://164.115.20.79/bpp.go.th/bpp24/',
+    htmllink2: 'https://ttta-tapioca.org/',
+    html_status: 'เสร็จสมบูรณ์ ✅',
+    html_customer1: 'กองกำกับการตำรวจตระเวนชายแดนที่ 24',
+    html_customer2: 'สมาคมการค้ามันสำปะหลังไทย',
+
 
     vb: 'แก้โปรแกรมเก่า VB และ Reverse Engineering',
     vbDesc1: 'Mods ซอฟต์แวร์รุ่นเก่า การแก้ไขพฤติกรรมไบนารี',
     vbDesc2: '💡 ใช้ในงานออฟไลน์และสัญญาจ้างส่วนตัว',
+    vblink: 'https://www.facebook.com/kbpseafood/',
+    vb_status: 'ยกเลิกสัญญา (ค้างชำระ)❌',
+    vb_customer: 'KBP Seafood ',
+
+
+    backendAPI: 'พัฒนา API และระบบ Backend',
+    backendAPIDesc1: 'ออกแบบและพัฒนาระบบ API เชื่อมต่อธนาคาร เพื่อค้นหาสินเชื่อ',
+    backendAPIDesc2: '💡 ปรับปรุงประสิทธิภาพและเสริมความปลอดภัยสำหรับระบบเชื่อมต่อขนาดใหญ่',
+    backendAPIlink: 'http://www.homedd.co.th/',
+    backendAPI_status: 'เสร็จสมบูรณ์ ✅',
+    backendAPI_customer: 'บริษัท โฮม ดี ดี จำกัด',
+
+    devOps: 'DevOps และ CI/CD',
+    devOpsDesc1: 'ตั้งค่าและดูแลกระบวนการ CI/CD เพื่อให้การ deploy รวดเร็วและไม่มีสะดุด',
+    devOpsDesc2: '💡 ลดเวลาการส่งมอบงานและเพิ่มความน่าเชื่อถือของระบบ',
+    devOpslink1: 'https://www.firsttelecom.co.th/',
+    devOpslink2: '#',
+    devOps_status: 'เสร็จสมบูรณ์ ✅',
+    devOps_customer1: 'บริษัท เฟิร์สท เทเลคอม ซีสเต็ม จำกัด',
+    devOps_customer2: 'PNJ Tech (Ltd. soon)',
+
+    security: 'Security & Data Protection',
+    securityDesc1: 'วิเคราะห์ช่องโหว่ระบบและออกแบบมาตรการรักษาความปลอดภัยข้อมูล',
+    securityDesc2: '💡 ปกป้องข้อมูลสำคัญขององค์กรและลูกค้า',
+    securitylink1: 'https://www.firsttelecom.co.th/',
+    securitylink2: 'https://hodaka.co.th/contact.php',
+    securitylink3: 'https://www.kyoei-thai.co.th/th/index.php',
+    security_status: 'เสร็จสมบูรณ์ ✅',
+    security_customer1: 'บริษัท เฟิร์สท เทเลคอม ซีสเต็ม จำกัด',
+    security_customer2: 'บริษัท โฮดากะ อีเอส (ประเทศไทย) จำกัด',
+    security_customer3: 'บริษัท เคียวเออิ (ประเทศไทย) จำกัด',
+
+    consulting: 'Consulting & Technical Training',
+    consultingDesc1: 'ให้คำปรึกษาเชิงเทคนิคและจัดอบรมทีมงานภายใน',
+    consultingDesc2: '💡 ยกระดับทักษะและประสิทธิภาพของทีมงาน',
+    consultinglink1: 'https://www.firsttelecom.co.th/',
+    consultinglink2: 'https://www.kyoei-thai.co.th/th/index.php',
+    consultinglink3: 'http://www.homedd.co.th/',
+    consulting_status: 'เสร็จสมบูรณ์ ✅',
+    consulting_customer1: 'บริษัท เฟิร์สท เทเลคอม ซีสเต็ม จำกัด',
+    consulting_customer2: 'บริษัท เคียวเออิ (ประเทศไทย) จำกัด',
+    consulting_customer3: 'บริษัท โฮม ดี ดี จำกัด',
 
     systemThinking: 'อธิบายงานเทคนิคให้เข้าใจง่าย',
-    systemDesc1: 'สรุปข้อมูลลูกค้า → แผนผังงาน → ข้อมูลจำเพาะส่วนประกอบ → แผนการพัฒนา',
+    systemDesc1: 'วางแผนผังงาน → ข้อมูลจำเพาะส่วนประกอบ → แผนการพัฒนา → สรุปข้อมูลลูกค้า',
     systemDesc2: '💡 แปลงานเทคนิคให้บอร์ดบริหารเข้าใจและอนุมัติได้',
+    systemThinkinglink1: 'https://www.firsttelecom.co.th/',
+    systemThinkinglink2: 'https://www.kyoei-thai.co.th/th/index.php',
+    systemThinkinglink3: 'http://www.homedd.co.th/',
+    systemThinkinglink4: '#',
+    systemThinking_status1: 'เสร็จสมบูรณ์ ✅',
+    systemThinking_status2: 'กำลังอยู่ระหว่างการอนุมัติ ⏳',
+    systemThinking_customer1: 'บริษัท เฟิร์สท เทเลคอม ซีสเต็ม จำกัด',
+    systemThinking_customer2: 'บริษัท เคียวเออิ (ประเทศไทย) จำกัด',
+    systemThinking_customer3: 'บริษัท โฮม ดี ดี จำกัด',
+    systemThinking_customer4: 'Your Company Here  ⏳',
   },
 
   en: {
     Co: 'PNJ Tech',
     lang: 'Switch To Thai',
-    main_head : 'TECHNICAL',
+    main_head: 'TECHNICAL',
     main_content: 'PORTFOLIO',
     main_desc: 'Welcome to NPJ Tech — A clean portfolio built with Vue, Tailwind and real-world UX. No gimmicks.',
     sectionTitle: 'Skills & Achievements',
@@ -68,7 +141,7 @@ const content = {
     experience: 'Experience',
     experlemceDetail: '5+ Years Freelance — delivered real-world co-op finance apps',
     provenUxImpact: 'Proven UX Impact',
-    provenDetail1: 'Approval time reduced from days ➔ minutes ',
+    provenDetail1: 'Approval time reduced from days ➔ minutes',
     provenDetail2: 'Adopted by ฿99M/year cooperative (800+ users)',
     recognition: 'Recognition',
     contact: 'Contact',
@@ -80,35 +153,105 @@ const content = {
     github: 'GitHub',
     featuredProjects: 'Featured Projects',
     viewMore: 'View More',
+    status: 'Status',
+    customer: 'Customer',
 
     // Skills (left block)
     flutter: 'Mobile App Development with Flutter + Dart',
-    flutterDesc1: 'Application for organizations/agencies, step-by-step form filling, OTP access',
-    flutterDesc2: '💡 MVP is in the cooperative and has been approved by the board.',
+    flutterDesc1: 'Applications for organizations/agencies, step-by-step form filling, OTP access',
+    flutterDesc2: '💡 MVP ready and approved by cooperative board',
+    flutterlink: 'https://bpp24-coop.com/',
+    flutter_status: 'Pending board approval ⏳',
+    flutter_customer: 'Border Patrol Police Savings Cooperative 24',
 
-    vue: 'Web Systems via Vue.js + Firebase',
-    vueDesc1: 'Multi-role dashboard, Firestore security rules',
-    vueDesc2: '💡 Real-time updates, Board-level permission logic',
+    vue: 'Web Systems with Vue.js + Firebase',
+    vueDesc1: 'Multi-role dashboards, Firestore security rules',
+    vueDesc2: '💡 Real-time updates with board-level permission logic',
+    vuelink: 'https://www.firsttelecom.co.th/',
+    vue_status: 'Completed ✅',
+    vue_customer: 'First Telecom System Co., Ltd.',
 
-    python: 'Python Bots and Automation',
-    pythonDesc1: 'PDF batch gen, logic validation, Cheat Engine offset',
-    pythonDesc2: '💡 Used to reverse-engineer programs on the machine.',
+    python: 'Python Bots & Scripts',
+    pythonDesc1: 'Developed LLM suites for logic validation and air quality analysis',
+    pythonDesc2: '💡 Used Random Forest models and others for pollution prediction',
+    pythonlink: '#',
+    python_status: 'Completed ✅',
+    python_customer: 'Master’s student for thesis research',
 
-    php: 'Form Fix with PHP + SMTP',
+    php: 'Website Fix with PHP + FTP SMTP',
     phpDesc1: 'PHPMailer, Hostneverdie SMTP Debug',
-    phpDesc2: '💡 Real mail with Debug HELO and ErrorInfo',
+    phpDesc2: '💡 Updating news and website data',
+    phplink1: 'https://www.kyoei-thai.co.th/th/index.php',
+    php_status: 'Completed ✅',
+    php_customer: 'Kyoei (Thailand) Co., Ltd.',
 
     html: 'UI Layout with HTML / CSS / JavaScript',
-    htmlDesc1: 'Landing page, validation form, UI flow',
-    htmlDesc2: '💡 Works with Tailwind or CSS native layout',
+    htmlDesc1: 'Landing pages, UI element creation and fixes',
+    htmlDesc2: '💡 Works with CLI (VSCode) and UI tools (wix.com)',
+    htmllink1: 'http://164.115.20.79/bpp.go.th/bpp24/',
+    htmllink2: 'https://ttta-tapioca.org/',
+    html_status: 'Completed ✅',
+    html_customer1: 'Border Patrol Police Region 24',
+    html_customer2: 'Thai Tapioca Trade Association',
 
     vb: 'Legacy VB & Reverse Engineering',
-    vbDesc1: 'Legacy software mods, debugging binary behaviors',
-    vbDesc2: '💡 Use in offline work and personal contracts',
+    vbDesc1: 'Legacy software mods, binary behavior debugging',
+    vbDesc2: '💡 Used in offline work and private contracts',
+    vblink: 'https://www.facebook.com/kbpseafood/',
+    vb_status: 'Contract cancelled (Outstanding payment) ❌',
+    vb_customer: 'KBP Seafood',
+
+    backendAPI: 'API & Backend Development',
+    backendAPIDesc1: 'Designed and developed robust API systems connecting banks for loan searches',
+    backendAPIDesc2: '💡 Improved efficiency and security for large-scale system integrations',
+    backendAPIlink: 'http://www.homedd.co.th/',
+    backendAPI_status: 'Completed ✅',
+    backendAPI_customer: 'Home DD Co., Ltd.',
+
+    devOps: 'DevOps & CI/CD',
+    devOpsDesc1: 'Configured and maintained CI/CD pipelines for smooth, fast deployments',
+    devOpsDesc2: '💡 Reduced delivery time and increased system reliability',
+    devOpslink1: 'https://www.firsttelecom.co.th/',
+    devOpslink2: '#',
+    devOps_status: 'Completed ✅',
+    devOps_customer1: 'First Telecom System Co., Ltd.',
+    devOps_customer2: 'PNJ Tech (Ltd. soon)',
+
+    security: 'Security & Data Protection',
+    securityDesc1: 'Analyzed system vulnerabilities and designed security measures',
+    securityDesc2: '💡 Protected critical data for organizations and clients',
+    securitylink1: 'https://www.firsttelecom.co.th/',
+    securitylink2: 'https://hodaka.co.th/contact.php',
+    securitylink3: 'https://www.kyoei-thai.co.th/th/index.php',
+    security_status: 'Completed ✅',
+    security_customer1: 'First Telecom System Co., Ltd.',
+    security_customer2: 'Hodaka ES (Thailand) Co., Ltd.',
+    security_customer3: 'Kyoei (Thailand) Co., Ltd.',
+
+    consulting: 'Consulting & Technical Training',
+    consultingDesc1: 'Provided technical consulting and internal team training',
+    consultingDesc2: '💡 Elevated team skills and efficiency',
+    consultinglink1: 'https://www.firsttelecom.co.th/',
+    consultinglink2: 'https://www.kyoei-thai.co.th/th/index.php',
+    consultinglink3: 'http://www.homedd.co.th/',
+    consulting_status: 'Completed ✅',
+    consulting_customer1: 'First Telecom System Co., Ltd.',
+    consulting_customer2: 'Kyoei (Thailand) Co., Ltd.',
+    consulting_customer3: 'Home DD Co., Ltd.',
 
     systemThinking: 'Translating Complex Logic to Business Language',
     systemDesc1: 'Client brief → Flowchart → Component spec → Dev plan',
-    systemDesc2: '💡 Translate technical work for the board to understand and approve.',
+    systemDesc2: '💡 Translate technical work for the board to understand and approve',
+    systemThinkinglink1: 'https://www.firsttelecom.co.th/',
+    systemThinkinglink2: 'https://www.kyoei-thai.co.th/th/index.php',
+    systemThinkinglink3: 'http://www.homedd.co.th/',
+    systemThinkinglink4: '#',
+    systemThinking_status1: 'Completed ✅',
+    systemThinking_status2: 'Pending approval ⏳',
+    systemThinking_customer1: 'First Telecom System Co., Ltd.',
+    systemThinking_customer2: 'Kyoei (Thailand) Co., Ltd.',
+    systemThinking_customer3: 'Home DD Co., Ltd.',
+    systemThinking_customer4: 'Your Company Here  ⏳',
   }
 };
 
@@ -257,6 +400,28 @@ p {
           <p class="
           text-sm text-gray-400
           ">{{ t.flutterDesc2 }}</p>
+          <p>
+            <strong>{{ t.status }} : </strong>
+            <strong>
+              <span class="badge badge-warning">{{ t.flutter_status }}</span>
+            </strong>
+
+            <strong>
+
+            </strong>
+            
+          </p>
+          <p>
+            <strong>{{ t.customer }} : </strong>
+             <strong>
+              <a :href="t.flutterlink" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-yellow-500 text-black hover:bg-yellow-500 hover:text-yellow-100"
+              >
+                {{ t.flutter_customer}}
+              </a>
+            </strong>
+          </p>
         </div>
 
         <div class="mb-6">
@@ -272,6 +437,29 @@ p {
           </div>
           <p class="text-sm text-orange-400">{{ t.vueDesc1 }}</p>
           <p class="text-sm text-gray-400">{{ t.vueDesc2 }}</p>
+          <p>
+            <strong>{{ t.status }} : </strong>
+            <strong>
+              <span class="badge badge-success text-white">{{ t.vue_status }}</span>
+            </strong>
+
+            <strong>
+
+            </strong>
+            
+          </p>
+          <p>
+            <strong>{{ t.customer }} : </strong>
+             <strong>
+              <a :href="t.vuelink" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-green-100 hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.vue_customer}}
+              </a>
+            </strong>
+            
+          </p>
         </div>
 
         <div class="mb-6">
@@ -286,6 +474,29 @@ p {
           </div>
           <p class="text-sm text-orange-400">{{ t.pythonDesc1 }}</p>
           <p class="text-sm text-gray-400">{{ t.pythonDesc2 }}</p>
+          <p>
+            <strong>{{ t.status }} : </strong>
+            <strong>
+              <span class="badge badge-success text-white">{{ t.python_status }}</span>
+            </strong>
+
+            <strong>
+
+            </strong>
+            
+          </p>
+          <p>
+            <strong>{{ t.customer }} : </strong>
+             <strong>
+              <a :href="t.pythonlink" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-blue-500 text-white hover:bg-blue-500 hover:text-blue-100"
+              >
+                {{ t.python_customer}}
+              </a>
+            </strong>
+            
+          </p>
         </div>
 
         <div class="mb-6">
@@ -301,6 +512,29 @@ p {
           </div>
           <p class="text-sm text-orange-400">{{ t.phpDesc1 }}</p>
           <p class="text-sm text-gray-400">{{ t.phpDesc2 }}</p>
+          <p>
+            <strong>{{ t.status }} : </strong>
+            <strong>
+              <span class="badge badge-success text-white">{{ t.php_status }}</span>
+            </strong>
+
+            <strong>
+
+            </strong>
+            
+          </p>
+          <p>
+            <strong>{{ t.customer }} : </strong>
+             <strong>
+              <a :href="t.phplink" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.php_customer}}
+              </a>
+            </strong>
+            
+          </p>
         </div>
 
         <div class="mb-6">
@@ -316,6 +550,40 @@ p {
           </div>
           <p class="text-sm text-orange-400">{{ t.htmlDesc1 }}</p>
           <p class="text-sm text-gray-400">{{ t.htmlDesc2 }}</p>
+          <p>
+            <strong>{{ t.status }} : </strong>
+            <strong>
+              <span class="badge badge-success text-white">{{ t.html_status }}</span>
+            </strong>
+
+            <strong>
+
+            </strong>
+            
+          </p>
+          <p>
+            <strong>{{ t.customer }} : </strong>
+             <strong>
+              <a :href="t.htmllink1" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.html_customer1}}
+              </a>
+            </strong>
+            
+          </p>
+          <p>
+             <strong>
+              <a :href="t.htmllink2" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.html_customer2}}
+              </a>
+            </strong>
+            
+          </p>
         </div>
 
         <div class="mb-6">
@@ -331,6 +599,220 @@ p {
           </div>
           <p class="text-sm text-orange-400">{{ t.vbDesc1 }}</p>
           <p class="text-sm text-gray-400">{{ t.vbDesc2 }}</p>
+          <p>
+            <strong>{{ t.status }} : </strong>
+            <strong>
+              <span class="badge badge-error text-white">{{ t.vb_status }}</span>
+            </strong>
+
+            <strong>
+
+            </strong>
+            
+          </p>
+          <p>
+            <strong>{{ t.customer }} : </strong>
+             <strong>
+              <a :href="t.vblink" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-red-500 text-red-100 hover:bg-red-300 hover:text-red-800"
+              >
+                {{ t.vb_customer}}
+              </a>
+            </strong>
+            
+          </p>
+        </div>
+
+        <div class="mb-6">
+          <div class="flex items-start space-x-2">
+            <svg class="w-6 h-6 text-sky-400 mt-[2px]" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+            </svg>
+            <div class="text-white">
+              <h3 class="text-lg font-semibold text-blue-400">{{ t.backendAPI }}</h3>
+            </div>
+          </div>
+          <p class="text-sm text-orange-400">{{ t.backendAPIDesc1 }}</p>
+          <p class="text-sm text-gray-400">{{ t.backendAPIDesc2 }}</p>
+          <p>
+            <strong>{{ t.status }} : </strong>
+            <strong>
+              <span class="badge badge-success text-white">{{ t.backendAPI_status }}</span>
+            </strong>
+
+            <strong>
+
+            </strong>
+            
+          </p>
+          <p>
+            <strong>{{ t.customer }} : </strong>
+             <strong>
+              <a :href="t.backendAPIlink" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.backendAPI_customer}}
+              </a>
+            </strong>
+            
+          </p>
+        </div>
+
+        <div class="mb-6">
+          <div class="flex items-start space-x-2">
+            <svg class="w-6 h-6 text-sky-400 mt-[2px]" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+            </svg>
+            <div class="text-white">
+              <h3 class="text-lg font-semibold text-blue-400">{{ t.devOps }}</h3>
+            </div>
+          </div>
+          <p class="text-sm text-orange-400">{{ t.devOpsDesc1 }}</p>
+          <p class="text-sm text-gray-400">{{ t.devOpsDesc2 }}</p>
+          <p>
+            <strong>{{ t.status }} : </strong>
+            <strong>
+              <span class="badge badge-success text-white">{{ t.devOps_status }}</span>
+            </strong>
+
+            <strong>
+
+            </strong>
+            
+          </p>
+          <p>
+            <strong>{{ t.customer }} : </strong>
+             <strong>
+              <a :href="t.devOpslink1" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.devOps_customer1}}
+              </a>
+            </strong>
+            <strong>
+              <a :href="t.devOpslink2" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.devOps_customer2}}
+              </a>
+            </strong>
+            
+          </p>
+        </div>
+
+        <div class="mb-6">
+          <div class="flex items-start space-x-2">
+            <svg class="w-6 h-6 text-sky-400 mt-[2px]" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+            </svg>
+            <div class="text-white">
+              <h3 class="text-lg font-semibold text-blue-400">{{ t.security }}</h3>
+            </div>
+          </div>
+          <p class="text-sm text-orange-400">{{ t.securityDesc1 }}</p>
+          <p class="text-sm text-gray-400">{{ t.securityDesc2 }}</p>
+          <p>
+            <strong>{{ t.status }} : </strong>
+            <strong>
+              <span class="badge badge-success text-white">{{ t.security_status }}</span>
+            </strong>
+
+            <strong>
+
+            </strong>
+            
+          </p>
+          <p>
+            <strong>{{ t.customer }} : </strong>
+             <strong>
+              <a :href="t.securitylink1" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.security_customer1}}
+              </a>
+            </strong>
+            <strong>
+              <a :href="t.securitylink2" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.security_customer2}}
+              </a>
+            </strong>
+            <strong>
+              <a :href="t.securitylink3" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.security_customer3}}
+              </a>
+            </strong>
+        
+          </p>
+        </div>
+
+        <div class="mb-6">
+          <div class="flex items-start space-x-2">
+            <svg class="w-6 h-6 text-sky-400 mt-[2px]" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+            </svg>
+            <div class="text-white">
+              <h3 class="text-lg font-semibold text-blue-400">{{ t.consulting }}</h3>
+            </div>
+          </div>
+          <p class="text-sm text-orange-400">{{ t.consultingDesc1 }}</p>
+          <p class="text-sm text-gray-400">{{ t.consultingDesc2 }}</p>
+          <p>
+            <strong>{{ t.status }} : </strong>
+            <strong>
+              <span class="badge badge-success text-white">{{ t.consulting_status }}</span>
+            </strong>
+
+            <strong>
+
+            </strong>
+            
+          </p>
+          <p>
+            <strong>{{ t.customer }} : </strong>
+             <strong>
+              <a :href="t.consultinglink1" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.consulting_customer1}}
+              </a>
+            </strong>
+            <strong>
+              <a :href="t.consultinglink2" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.consulting_customer2}}
+              </a>
+            </strong>
+            <strong>
+              <a :href="t.consultinglink3" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.consulting_customer3}}
+              </a>
+            </strong>
+          </p>
         </div>
 
         <div class="mb-6">
@@ -346,6 +828,57 @@ p {
           </div>
           <p class="text-sm text-orange-400">{{ t.systemDesc1 }}</p>
           <p class="text-sm text-gray-400">{{ t.systemDesc2 }}</p>
+          <p>
+            <strong>{{ t.status }} : </strong>
+            <strong>
+              <span class="badge badge-success text-white">{{ t.systemThinking_status1 }}</span>
+              <span class="badge badge-warning text-back">{{ t.systemThinking_status2 }}</span>
+            </strong>
+
+            <strong>
+
+            </strong>
+            
+          </p>
+          <p>
+            <strong>{{ t.customer }} : </strong>
+             <strong>
+              <a :href="t.systemThinkinglink1" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.systemThinking_customer1}}
+              </a>
+            </strong>
+
+            <strong>
+              <a :href="t.systemThinkinglink2" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.systemThinking_customer2}}
+              </a>
+            </strong>
+
+            <strong>
+              <a :href="t.systemThinkinglink3" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-success text-white hover:bg-green-500 hover:text-green-100"
+              >
+                {{ t.systemThinking_customer3}}
+              </a>
+            </strong>
+
+            <strong>
+              <a :href="t.systemThinkinglink4" target="_blank" 
+              rel="noopener noreferrer" 
+              class="badge bg-yellow-500 text-black hover:bg-yellow-500 hover:text-yellow-100"
+              >
+                {{ t.systemThinking_customer4}}
+              </a>
+            </strong>
+            
+          </p>
         </div>
       </div>
 
@@ -364,13 +897,13 @@ p {
           <div>
             <h4 class="font-bold text-red-500 text-lg">{{ t.primaryStack }}</h4>
             <br>
-            <div v-for="(category, index) in techCategories" :key="index" class="mb-8">
+            <div v-for="(category, index) in techCategories" :key="index" class="mb-2 ">
               <h3 class="text-sky-400 font-bold text-sm uppercase tracking-widest mb-4 border-b border-gray-700 pb-2">
                 {{ category.name }}
               </h3>
 
               <div
-                class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-8 text-[12px] gap-8 text-center"
+                class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 text-[12px] gap-8 text-center"
               >
                 <div
                   v-for="tech in category.items"
