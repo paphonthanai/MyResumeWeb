@@ -32,7 +32,7 @@ const t = computed(() => content[lang.value])
       <!-- Text Zone -->
       <div class="w-full md:w-1/2 text-white space-y-6">
         <h2 class="text-lg tracking-widest text-gray-400">{{ t.main_head }}</h2>
-        <h1 class="text-5xl md:text-6xl font-extrabold font-bowlby leading-tight">
+        <h1 class="text-5xl md:text-6xl font-extrabold leading-tight">
           {{ t.main_content}}
         </h1>
         <div class="h-1 w-24 bg-gray-500 mt-2"></div>
@@ -62,6 +62,17 @@ const t = computed(() => content[lang.value])
 
 <style scoped>
 h1 {
-  font-family: 'Bowlby One SC', cursive;
+  font-family: 'Athiti', sans-serif;
+  font-size: 50px;
+}
+h2{
+  font-family: 'Athiti', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+}
+p {
+  font-family: 'Athiti', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
 }
 </style>

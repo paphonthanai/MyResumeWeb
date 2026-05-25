@@ -10,7 +10,10 @@ module.exports = {
     extend: {
       fontFamily: {
         bowlby: ['"Bowlby One SC"', 'cursive'],
+        googlecode: ['"Google Sans Code"', 'monospace'],
+        Athiti: ["Athiti", 'sans-serif']
       },
+      
     },
   },
   plugins: [require("daisyui")],

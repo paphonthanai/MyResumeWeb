@@ -11,10 +11,13 @@ const content = {
     primaryStack: 'เทคโนโลยีหลักที่ใช้',
     fullstackCliDev: 'พัฒนาแบบไม่ใช้ GUI',
     experience: 'ประสบการณ์',
-    experlemceDetail: 'ประสบการณ์ทำงานอิสระมากกว่า 5 ปี — ส่งมอบแอปทางการเงินในโลกแห่งความเป็นจริง',
+    experlemceDetail1: '-> ประสบการณ์ทำงานอิสระ 5 ปี',
+    experlemceDetail2: '-> ประสบการณ์ทำงานในองค์กร 10 ปี',
+    experlemceDetail3: '-> คลุกคลีและศึกษาเทคโนโลยีคอมพิวเตอร์กว่า 20 ปี',
     provenUxImpact: 'ผลลัพธ์การใช้งานจริง',
-    provenDetail1: 'ลดระยะเวลาอนุมัติจากวันเป็นนาที',
-    provenDetail2: 'ใช้งานโดยสหกรณ์ 99 ล้านบาท/ปี (ผู้ใช้มากกว่า 800 ราย)',
+    provenDetail1: '— ส่งมอบผลงานที่ใช้งานได้จริง !!',
+    provenDetail2: '— เข้าใจระบบและกระบวนการทำงานขององค์กรอย่างลึกซึ้ง',
+    provenDetail3: '— พัฒนาระบบที่มีประสิทธิภาพและตอบโจทย์ผู้ใช้งาน',
     recognition: 'รางวัลและผลงานแข่งขัน',
     contact: 'ติดต่อ',
     email: 'อีเมล',
@@ -139,10 +142,13 @@ const content = {
     primaryStack: 'Primary Stack',
     fullstackCliDev: 'Fullstack CLI Dev',
     experience: 'Experience',
-    experlemceDetail: '5+ Years Freelance — delivered real-world co-op finance apps',
-    provenUxImpact: 'Proven UX Impact',
-    provenDetail1: 'Approval time reduced from days ➔ minutes',
-    provenDetail2: 'Adopted by ฿99M/year cooperative (800+ users)',
+    experlemceDetail1: '-> Over 5 years of freelance work experience',
+    experlemceDetail2: '-> 10 years of experience working within organizations',
+    experlemceDetail3: '-> More than 20 years immersed in computer technology',
+    provenUxImpact: 'Proven Results',
+    provenDetail1: '— Delivered practical and effective solutions',
+    provenDetail2: '— Deep understanding of organizational systems and workflows',
+    provenDetail3: '— Developed efficient systems tailored to user needs',
     recognition: 'Recognition',
     contact: 'Contact',
     email: 'Email',
@@ -354,6 +360,11 @@ h4 {
 
 p {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem;
+}
+span {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1em;
 }
 
 .text-shadow-lg {
@@ -366,7 +377,7 @@ p {
   ">
     <div class="
     max-w-7xl mx-auto grid 
-    md:grid-cols-2 gap-10
+    lg:grid-cols-2 gap-10
     ">
       <!-- Left Column -->
       <div class="
@@ -936,13 +947,16 @@ p {
           hover:shadow-sky-500/10">
           <div>
             <h4 class="font-bold text-red-500 text-lg">{{ t.experience }}</h4>
-            <p class="text-gray-400">{{ t.experlemceDetail }}</p>
+            <p class="text-gray-400">{{ t.experlemceDetail1 }}</p>
+            <p class="text-gray-400">{{ t.experlemceDetail2 }}</p>
+            <p class="text-gray-400">{{ t.experlemceDetail3 }}</p>
           </div>
 
           <div>
             <h4 class="font-bold text-cyan-400 text-lg">{{ t.provenUxImpact }}</h4>
             <p class="text-gray-400">{{ t.provenDetail1 }}</p>
             <p class="text-gray-400">{{ t.provenDetail2 }}</p>
+            <p class="text-gray-400">{{ t.provenDetail3 }}</p>
           </div>
         </div>
 
@@ -1089,7 +1103,7 @@ p {
         p-4 rounded-md shadow-md 
         transform transition-transform duration-300 
         hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-sky-500/10">
-          <img src="./image/Code.png" class="w-full rounded-md mb-3" />
+          <img src="./image/Project/AppsLone/01.png" class="w-full rounded-md mb-3" />
           <p class="text-lg font-semibold">Loan App System</p>
           <p class="text-sm text-gray-400">Flutter + Firebase for Co-op Lending</p>
           <button
@@ -1102,9 +1116,9 @@ p {
         border border-white/10 
         p-4 rounded-md shadow-md
         transform transition-transform duration-300 hover:scale-105 hover:shadow-sky-500/10">
-          <img src="./image/Code.png" class="w-full rounded-md mb-3" />
-          <p class="text-lg font-semibold">CyberSec Dashboard</p>
-          <p class="text-sm text-gray-400">Node.js + Realtime Log Monitor</p>
+          <img src="./image/Project/web-vue/01.png" class="w-full rounded-md mb-3" />
+          <p class="text-lg font-semibold">Website 2.0</p>
+          <p class="text-sm text-gray-400">Vue.js + back-end dashboards</p>
           <button
             class="
             border border-white 
@@ -1115,7 +1129,7 @@ p {
             View More
           </button>
         </div>
-        <div class="
+        <!-- <div class="
         backdrop-blur-md bg-gradient-to-r from-slate-900/5 via-slate-800 to-slate-900/5 
         border border-white/10 
         p-4 rounded-md shadow-md
@@ -1131,7 +1145,7 @@ p {
             hover:text-slate-900 transition-all duration-200">
             View More
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
