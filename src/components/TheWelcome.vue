@@ -7,17 +7,18 @@ const lang = inject('lang')
 
  const content = {
   th: {
-    Co: 'พีเอ็นเจ เทคโนโลยี',
-    main_head: 'พอร์ตโฟลิโอ ด้านเทคนิค',
-    main_content: 'พีเอ็นเจ เทคฯ',
-    main_desc: 'ยินดีต้อนรับสู่ PNJ Tech — เราพัฒนาระบบครบวงจรด้วยทีม Full-Stack ที่ดูแลตั้งแต่ต้นจนจบ มุ่งเน้นคุณภาพและความเสถียร เพื่อส่งมอบบริการแบบ One-Stop Service ที่ใช้งานได้จริงและต่อเนื่อง',
+    tagline: 'คุณมีระบบที่คนใช้จริง หรือแค่เว็บที่ดูดี',
+    heroTitleLine1: 'เว็บสวยไม่พอ',
+    heroTitleLine2: 'ถ้าระบบไม่ตอบโจทย์ธุรกิจ',
+    heroDesc: 'ผมออกแบบเว็บและระบบจากปัญหาการใช้งานจริง เพื่อให้สามารถดูแลต่อ ขยายได้ และเติบโตไปพร้อมธุรกิจ',
+    ctaButton: 'ปรึกษาโปรเจกต์',
   },
   en: {
-    Co: 'PNJ Tech',
-    lang: 'Switch To Thai',
-    main_head: 'PORTFOLIO TECHNICAL',
-    main_content: 'PNJ Tech',
-    main_desc: 'Welcome to PNJ Tech — We develop end-to-end systems with a full-stack team that handles every stage of the process. We focus on quality and stability to deliver a true, seamless one-stop service that works reliably.',
+    tagline: 'Do you have a system people actually use, or just a nice-looking website?',
+    heroTitleLine1: "A pretty website isn't enough",
+    heroTitleLine2: "if it doesn't solve your business problem",
+    heroDesc: 'I design websites and systems around real usage problems, so they stay maintainable, scale, and grow together with your business.',
+    ctaButton: 'Discuss your project',
   },
 }
 
@@ -31,14 +32,23 @@ const t = computed(() => content[lang.value])
       
       <!-- Text Zone -->
       <div class="w-full md:w-1/2 text-white space-y-6">
-        <h2 class="text-lg tracking-widest text-gray-400">{{ t.main_head }}</h2>
-        <h1 class="text-5xl md:text-6xl font-extrabold font-bowlby leading-tight">
-          {{ t.main_content}}
-        </h1>
-        <div class="h-1 w-24 bg-gray-500 mt-2"></div>
-        <p class="text-lg text-gray-300">
-          {{ t.main_desc }}
+        <!-- Tagline, not a heading — the page's h1 is below -->
+        <p class="text-lg tracking-widest text-gray-400">
+          {{ t.tagline }}
         </p>
+
+        <h1 class="text-5xl md:text-6xl font-extrabold font-bowlby leading-tight">
+          {{ t.heroTitleLine1 }} <br>
+          {{ t.heroTitleLine2 }}
+        </h1>
+
+        <div class="h-1 w-24 bg-gray-500 mt-2"></div>
+        <p class="text-lg text-gray-300 max-w-xl">
+          {{ t.heroDesc }}
+        </p>
+        <button class="mt-6 px-6 py-3 bg-sky-600 hover:bg-sky-500 text-white font-semibold rounded-md">
+          {{ t.ctaButton }}
+        </button>
       </div>
 
       <!-- Image Zone -->
@@ -62,6 +72,6 @@ const t = computed(() => content[lang.value])
 
 <style scoped>
 h1 {
-  font-family: 'Bowlby One SC', cursive;
+  font-family: 'varela round', sans-serif;
 }
 </style>

@@ -1,7 +1,6 @@
 <script setup>
 import UserLayout from '../layout/UserLayout.vue'
 import IconActivity from '@/components/icons/iconActivity.vue'
-import IconPersernal from '@/components/icons/iconPersernal.vue'
 
 const EducationEn = [
   {
@@ -34,7 +33,7 @@ const EducationEn = [
         <div class="divider"></div>
         <div>
           <!-- #หัวข้อมหาวิทยาลัย# -->
-          <h1 class="name text-2xl font-black">Education</h1>
+          <h2 class="name text-2xl font-black">Education</h2>
           <br/>
           <div class="flex flex-1 justify-between mr-4 name font-bold">
             <p>{{ EducationEn[0].major }}</p>
@@ -75,7 +74,7 @@ const EducationEn = [
         </div>
         <div class="divider"></div>
         <!-- #หัวข้อ การทำงาน# -->
-        <h1 class="name text-2xl font-bold">Employment</h1>
+        <h2 class="name text-2xl font-bold">Employment</h2>
           <div class="flex flex-1 justify-between mr-4 name font-bold">
             <p>
               <a href="http://www.bpp.go.th/" 
@@ -145,21 +144,11 @@ const EducationEn = [
       </div>
         
       <div >
-        <div class="flex flex-1 justify-start ">
-          <h1 class="text-md md:text-2xl font-bold sm:min-sm:text-lg">
-            Persernal details
-          </h1>
-          <IconPersernal class="w-10 ml-2 hidden xl:block "/>
-        </div>
-        <br />
-        <p class="text-sm mb-2">Date of birth</p>
-        <p class="text-sm">May 6, 1995</p>
-        <div class="divider"></div>
         <div>
           <div class="flex flex-1">
-            <h1 class="text-md md:text-2xl font-bold sm:min-sm:text-lg">
+            <h2 class="text-md md:text-2xl font-bold sm:min-sm:text-lg">
               Activity
-            </h1>
+            </h2>
             <IconActivity class="w-10 ml-2 hidden lg:block"></IconActivity>
           </div>
           <p class="text-sm my-2 overflow-x-auto">
@@ -204,9 +193,9 @@ const EducationEn = [
           </ul>
           <div class="divider"></div>
           <div class="flex flex-1 flex-col">
-            <h1 class="text-md md:text-2xl font-bold sm:min-sm:text-lg">
+            <h2 class="text-md md:text-2xl font-bold sm:min-sm:text-lg">
               Language
-            </h1>
+            </h2>
             <div class="collapse bg-base-200 mt-2">
               <input type="checkbox" /> 
                 <div class="collapse-title text-md font-bold">

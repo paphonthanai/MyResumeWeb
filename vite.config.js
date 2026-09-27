@@ -12,5 +12,10 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  ssgOptions: {
+    // Emit /about/index.html (not /about.html) so Firebase Hosting's
+    // default static serving resolves "/about" without extra config.
+    dirStyle: 'nested'
   }
 })

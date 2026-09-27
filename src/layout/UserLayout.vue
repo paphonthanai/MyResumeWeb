@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRoute } from 'vue-router'
 import image from '@/components/image/image.vue'
 import iconEmail from '../components/icons/iconEmail.vue'
 import iconTelephone from '../components/icons/iconTelephone.vue'
@@ -7,7 +7,10 @@ import Documentation from '../components/icons/IconDocumentation.vue'
 import IconHome from '../components/icons/iconHome.vue'
 import { ref, provide } from 'vue'
 
-const lang = ref('th')
+const route = useRoute()
+// Initial language follows the route (e.g. "/en" prerenders in English for
+// crawlers); the toggle button below still flips it client-side after that.
+const lang = ref(route.meta.lang === 'en' ? 'en' : 'th')
 provide('lang', lang)
 
 
@@ -21,18 +24,18 @@ provide('lang', lang)
             <div class="navbar-start lg:justify-center">
                 <div class="dropdown">
                 <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-                    <img src="../components/image/NewLogo_4.png" alt="" width="60" 
+                    <img src="../components/image/NewLogo_4.png" alt="PNJ Tech" width="60"
                     style="position: relative;
                     top: -0px;"/>
                 </div>
                 <ul
                     tabindex="0"
                     class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow z-[10]">
-                    <li><a>Home</a></li>
-                    <li><a>Portfolio</a></li>
-                    <li><a>Project</a></li>
-                    <li><a>About</a></li>
-                    <li><a>Contact</a></li>
+                    <li><RouterLink to="/">Home</RouterLink></li>
+                    <li><RouterLink to="/#portfolio">Portfolio</RouterLink></li>
+                    <li><RouterLink to="/#project">Project</RouterLink></li>
+                    <li><RouterLink to="/about">About</RouterLink></li>
+                    <li><RouterLink to="/#contact">Contact</RouterLink></li>
                 </ul>
                 </div>
                 <a class="btn btn-ghost text-white logo-text hidden lg:block">
@@ -48,11 +51,11 @@ provide('lang', lang)
             </div>
             <div class="navbar-center hidden lg:flex tracking-wide space-x-6">
                 <ul class="menu menu-horizontal px-1">
-                    <li><a>Home</a></li>
-                    <li><a>Portfolio</a></li>
-                    <li><a>Project</a></li>
-                    <li><a>About</a></li>
-                    <li><a>Contact</a></li>
+                    <li><RouterLink to="/">Home</RouterLink></li>
+                    <li><RouterLink to="/#portfolio">Portfolio</RouterLink></li>
+                    <li><RouterLink to="/#project">Project</RouterLink></li>
+                    <li><RouterLink to="/about">About</RouterLink></li>
+                    <li><RouterLink to="/#contact">Contact</RouterLink></li>
                 </ul>
             </div>
             <div class="navbar-end lg:justify-center">
@@ -68,22 +71,22 @@ provide('lang', lang)
         <div class="container w-full">
             <footer class="footer sm:footer-horizontal bg-base-100 text-neutral-content p-10">
             <aside>
-                <img src="../components/image/NewLogo_4.png" alt="" width="100" 
+                <img src="../components/image/NewLogo_4.png" alt="PNJ Tech" width="100"
                 style="position: relative;
                 left: -0px;
                 top: -10px;
                 " />
                 <p style="position: relative;
                 top: -0px;">
-                PNJ Tech Ltd.
+                PNJ Tech
                 <br />
-                Providing reliable tech since 2000
+                Freelance software development
                 </p>
             </aside>
             <nav>
                 <h6 class="footer-title">Social</h6>
                 <div class="grid grid-flow-col gap-4">
-                <a>
+                <a href="https://github.com/paphonthanai" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -91,10 +94,10 @@ provide('lang', lang)
                     viewBox="0 0 24 24"
                     class="fill-current">
                     <path
-                        d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
+                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
                     </svg>
                 </a>
-                <a>
+                <a href="https://www.linkedin.com/in/%E0%B8%9B%E0%B8%9E%E0%B8%99%E0%B8%98%E0%B8%99%E0%B8%B1%E0%B8%A2-%E0%B9%83%E0%B8%88%E0%B8%A1%E0%B8%B2-aa57b2269/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -102,18 +105,7 @@ provide('lang', lang)
                     viewBox="0 0 24 24"
                     class="fill-current">
                     <path
-                        d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-                    </svg>
-                </a>
-                <a>
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    class="fill-current">
-                    <path
-                        d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
+                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.271c-.966 0-1.75-.787-1.75-1.75s.784-1.75 1.75-1.75 1.75.787 1.75 1.75-.784 1.75-1.75 1.75zm13.5 10.271h-3v-4.5c0-1.074-.021-2.458-1.5-2.458s-1.731 1.174-1.731 2.382v4.576h-3v-9h2.881v1.233h.042c.401-.761 1.379-1.561 2.839-1.561 3.033 0 3.591 1.996 3.591 4.59v4.738z"></path>
                     </svg>
                 </a>
                 </div>
