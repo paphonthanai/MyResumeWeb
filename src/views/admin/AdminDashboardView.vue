@@ -8,6 +8,7 @@ import { auth, db } from '../../firebase'
 const router = useRouter()
 const posts = ref([])
 const loading = ref(true)
+const confirmingDeleteId = ref(null)
 
 function formatDate(value) {
   if (!value) return '—'
@@ -23,9 +24,9 @@ async function loadPosts() {
   loading.value = false
 }
 
-async function handleDelete(id, title) {
-  if (!window.confirm(`ลบบทความ "${title}" ใช่หรือไม่? การลบนี้กู้คืนไม่ได้`)) return
+async function handleDelete(id) {
   await deleteDoc(doc(db, 'posts', id))
+  confirmingDeleteId.value = null
   await loadPosts()
 }
 
@@ -86,27 +87,44 @@ onMounted(loadPosts)
             <p class="mt-1 truncate font-display text-lg font-semibold text-base-content">{{ post.title }}</p>
             <p class="truncate text-xs text-base-content/40">/blog/{{ post.slug || post.id }}</p>
           </div>
-          <div class="flex shrink-0 gap-2">
-            <RouterLink
-              v-if="post.published"
-              :to="`/blog/${post.slug || post.id}`"
-              target="_blank"
-              class="btn btn-xs rounded-full border-base-300 bg-transparent text-base-content/70 hover:border-primary hover:text-primary"
-            >
-              ดู
-            </RouterLink>
-            <RouterLink
-              :to="{ name: 'admin-post-edit', params: { id: post.id } }"
-              class="btn btn-xs rounded-full border-primary/70 bg-transparent text-primary hover:bg-primary hover:text-primary-content"
-            >
-              แก้ไข
-            </RouterLink>
-            <button
-              @click="handleDelete(post.id, post.title)"
-              class="btn btn-xs rounded-full border-error/70 bg-transparent text-error hover:bg-error hover:text-white"
-            >
-              ลบ
-            </button>
+          <div class="flex shrink-0 items-center gap-2">
+            <template v-if="confirmingDeleteId === post.id">
+              <span class="text-xs text-error">ลบแน่นอนไหม?</span>
+              <button
+                @click="handleDelete(post.id)"
+                class="btn btn-xs rounded-full border-error bg-error text-white"
+              >
+                ยืนยัน
+              </button>
+              <button
+                @click="confirmingDeleteId = null"
+                class="btn btn-xs rounded-full border-base-300 bg-transparent text-base-content/60"
+              >
+                ยกเลิก
+              </button>
+            </template>
+            <template v-else>
+              <RouterLink
+                v-if="post.published"
+                :to="`/blog/${post.slug || post.id}`"
+                target="_blank"
+                class="btn btn-xs rounded-full border-base-300 bg-transparent text-base-content/70 hover:border-primary hover:text-primary"
+              >
+                ดู
+              </RouterLink>
+              <RouterLink
+                :to="{ name: 'admin-post-edit', params: { id: post.id } }"
+                class="btn btn-xs rounded-full border-primary/70 bg-transparent text-primary hover:bg-primary hover:text-primary-content"
+              >
+                แก้ไข
+              </RouterLink>
+              <button
+                @click="confirmingDeleteId = post.id"
+                class="btn btn-xs rounded-full border-error/70 bg-transparent text-error hover:bg-error hover:text-white"
+              >
+                ลบ
+              </button>
+            </template>
           </div>
         </div>
       </div>

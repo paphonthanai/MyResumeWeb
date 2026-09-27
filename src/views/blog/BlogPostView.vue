@@ -73,7 +73,7 @@ useHead({
           class="mt-8 w-full rounded-lg border border-base-300"
         />
         <div
-          class="prose prose-invert prose-headings:font-display prose-a:text-primary mt-8 max-w-none"
+          class="prose prose-invert prose-headings:font-display prose-a:text-primary prose-img:rounded-lg prose-img:border prose-img:border-base-300 mt-8 max-w-none"
           v-html="contentHtml"
         ></div>
       </article>
