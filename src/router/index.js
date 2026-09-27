@@ -1,5 +1,12 @@
 import HomeView from '../views/HomeView.vue'
 
+async function requireAdmin() {
+  const { getCurrentUser } = await import('../composables/useAuth')
+  const user = await getCurrentUser()
+  if (!user) return { name: 'admin-login' }
+  return true
+}
+
 export const routes = [
   {
     path: '/',
@@ -43,5 +50,52 @@ export const routes = [
       // Thai/English toggle), so the page's real language is "en".
       lang: 'en'
     }
+  },
+  {
+    path: '/blog',
+    name: 'blog',
+    component: () => import('../views/blog/BlogListView.vue'),
+    meta: {
+      title: 'Blog | ปพนธนัย ใจมา (PNJ Tech)',
+      description: 'บทความและบันทึกเทคนิคจากปพนธนัย ใจมา (PNJ Tech) นักพัฒนาซอฟต์แวร์ฟรีแลนซ์',
+      lang: 'th'
+    }
+  },
+  {
+    path: '/blog/:slug',
+    name: 'blog-post',
+    component: () => import('../views/blog/BlogPostView.vue'),
+    meta: {
+      // No static title/description — BlogPostView sets these itself via
+      // useHead once the post has loaded, since they depend on the post.
+      lang: 'th'
+    }
+  },
+  {
+    path: '/admin/login',
+    name: 'admin-login',
+    component: () => import('../views/admin/AdminLoginView.vue'),
+    meta: { title: 'Admin login | PNJ Tech', noindex: true, lang: 'en' }
+  },
+  {
+    path: '/admin',
+    name: 'admin-dashboard',
+    component: () => import('../views/admin/AdminDashboardView.vue'),
+    meta: { title: 'Admin | PNJ Tech', noindex: true, lang: 'en' },
+    beforeEnter: requireAdmin
+  },
+  {
+    path: '/admin/posts/new',
+    name: 'admin-post-new',
+    component: () => import('../views/admin/AdminPostEditorView.vue'),
+    meta: { title: 'New post | PNJ Tech', noindex: true, lang: 'en' },
+    beforeEnter: requireAdmin
+  },
+  {
+    path: '/admin/posts/:id/edit',
+    name: 'admin-post-edit',
+    component: () => import('../views/admin/AdminPostEditorView.vue'),
+    meta: { title: 'Edit post | PNJ Tech', noindex: true, lang: 'en' },
+    beforeEnter: requireAdmin
   }
 ]

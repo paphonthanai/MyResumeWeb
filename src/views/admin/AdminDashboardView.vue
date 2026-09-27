@@ -1,0 +1,115 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
+import { signOut } from 'firebase/auth'
+import { collection, query, orderBy, getDocs, deleteDoc, doc } from 'firebase/firestore'
+import { auth, db } from '../../firebase'
+
+const router = useRouter()
+const posts = ref([])
+const loading = ref(true)
+
+function formatDate(value) {
+  if (!value) return '—'
+  const date = value.toDate ? value.toDate() : new Date(value)
+  return date.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' })
+}
+
+async function loadPosts() {
+  loading.value = true
+  const q = query(collection(db, 'posts'), orderBy('updatedAt', 'desc'))
+  const snapshot = await getDocs(q)
+  posts.value = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }))
+  loading.value = false
+}
+
+async function handleDelete(id, title) {
+  if (!window.confirm(`ลบบทความ "${title}" ใช่หรือไม่? การลบนี้กู้คืนไม่ได้`)) return
+  await deleteDoc(doc(db, 'posts', id))
+  await loadPosts()
+}
+
+async function handleSignOut() {
+  await signOut(auth)
+  router.push({ name: 'admin-login' })
+}
+
+onMounted(loadPosts)
+</script>
+
+<template>
+  <div class="min-h-screen bg-base-100 px-6 py-10 md:px-12">
+    <div class="mx-auto max-w-4xl">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 class="font-display text-2xl font-semibold text-base-content">Blog Admin</h1>
+          <p class="text-sm text-base-content/50">จัดการบทความทั้งหมด</p>
+        </div>
+        <div class="flex gap-3">
+          <RouterLink
+            :to="{ name: 'admin-post-new' }"
+            class="btn btn-sm rounded-full border-primary bg-primary text-primary-content hover:bg-transparent hover:text-primary"
+          >
+            + บทความใหม่
+          </RouterLink>
+          <button
+            @click="handleSignOut"
+            class="btn btn-sm rounded-full border-base-300 bg-transparent text-base-content/70 hover:border-primary hover:text-primary"
+          >
+            ออกจากระบบ
+          </button>
+        </div>
+      </div>
+
+      <div v-if="loading" class="mt-10 text-sm text-base-content/50">กำลังโหลด...</div>
+
+      <div v-else-if="posts.length === 0" class="mt-10 text-sm text-base-content/50">
+        ยังไม่มีบทความ — กด "+ บทความใหม่" เพื่อเริ่มเขียน
+      </div>
+
+      <div v-else class="mt-8 divide-y divide-base-300 rounded-lg border border-base-300 bg-base-200/40">
+        <div
+          v-for="post in posts"
+          :key="post.id"
+          class="flex flex-wrap items-center justify-between gap-3 p-5"
+        >
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <span
+                class="rounded-full px-2 py-0.5 text-[11px] uppercase tracking-widest"
+                :class="post.published ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning'"
+              >
+                {{ post.published ? 'Published' : 'Draft' }}
+              </span>
+              <span class="text-xs text-base-content/40">{{ formatDate(post.updatedAt) }}</span>
+            </div>
+            <p class="mt-1 truncate font-display text-lg font-semibold text-base-content">{{ post.title }}</p>
+            <p class="truncate text-xs text-base-content/40">/blog/{{ post.slug || post.id }}</p>
+          </div>
+          <div class="flex shrink-0 gap-2">
+            <RouterLink
+              v-if="post.published"
+              :to="`/blog/${post.slug || post.id}`"
+              target="_blank"
+              class="btn btn-xs rounded-full border-base-300 bg-transparent text-base-content/70 hover:border-primary hover:text-primary"
+            >
+              ดู
+            </RouterLink>
+            <RouterLink
+              :to="{ name: 'admin-post-edit', params: { id: post.id } }"
+              class="btn btn-xs rounded-full border-primary/70 bg-transparent text-primary hover:bg-primary hover:text-primary-content"
+            >
+              แก้ไข
+            </RouterLink>
+            <button
+              @click="handleDelete(post.id, post.title)"
+              class="btn btn-xs rounded-full border-error/70 bg-transparent text-error hover:bg-error hover:text-white"
+            >
+              ลบ
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

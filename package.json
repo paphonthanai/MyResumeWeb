@@ -11,13 +11,16 @@
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
     "@unhead/vue": "^2.1.17",
+    "dompurify": "^3.4.16",
     "firebase": "^10.8.0",
+    "marked": "^18.0.14",
     "pinia": "^2.1.7",
     "vite-ssg": "^28.3.0",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
     "@vitejs/plugin-vue": "^4.5.2",
     "autoprefixer": "^10.4.17",
     "daisyui": "^4.6.0",

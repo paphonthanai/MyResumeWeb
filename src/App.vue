@@ -51,12 +51,15 @@ const linkTags = computed(() => {
   return links
 })
 
+const robotsContent = computed(() => (route.meta.noindex ? 'noindex, nofollow' : 'index, follow'))
+
 useHead({
   htmlAttrs: {
     lang: htmlLang,
   },
   title,
   meta: [
+    { name: 'robots', content: robotsContent },
     { name: 'description', content: description },
     { property: 'og:type', content: 'profile' },
     { property: 'og:site_name', content: 'PNJ Tech' },

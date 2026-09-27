@@ -17,7 +17,17 @@
           }
         ]
       }
+    ],
+    "rewrites": [
+      { "source": "/blog", "destination": "/index.html" },
+      { "source": "/blog/**", "destination": "/index.html" },
+      { "source": "/admin", "destination": "/index.html" },
+      { "source": "/admin/**", "destination": "/index.html" }
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
   },
   "functions": [
     {

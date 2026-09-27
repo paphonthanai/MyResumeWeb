@@ -25,6 +25,7 @@ provide('lang', lang)
             <li><RouterLink to="/#portfolio" class="brand-nav-link">Portfolio</RouterLink></li>
             <li><RouterLink to="/#project" class="brand-nav-link">Project</RouterLink></li>
             <li><RouterLink to="/about" class="brand-nav-link">About</RouterLink></li>
+            <li><RouterLink to="/blog" class="brand-nav-link">Blog</RouterLink></li>
             <li><RouterLink to="/#contact" class="brand-nav-link">Contact</RouterLink></li>
           </ul>
         </div>
@@ -42,6 +43,7 @@ provide('lang', lang)
           <li><RouterLink to="/#portfolio" class="brand-nav-link">Portfolio</RouterLink></li>
           <li><RouterLink to="/#project" class="brand-nav-link">Project</RouterLink></li>
           <li><RouterLink to="/about" class="brand-nav-link">About</RouterLink></li>
+          <li><RouterLink to="/blog" class="brand-nav-link">Blog</RouterLink></li>
           <li><RouterLink to="/#contact" class="brand-nav-link">Contact</RouterLink></li>
         </ul>
       </div>
