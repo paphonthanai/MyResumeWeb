@@ -388,6 +388,12 @@ const skills = computed(() => {
   const v = t.value
   return [
     {
+      icon: 'truck',
+      title: v.grabTruck, desc1: v.grabTruckDesc1, desc2: v.grabTruckDesc2,
+      statuses: [{ label: v.grabTruck_status, variant: 'success' }],
+      customers: [{ name: v.grabTruck_customer, link: 'https://www.facebook.com/Mittrakarn/' }],
+    },
+    {
       icon: 'form',
       title: v.flutter, desc1: v.flutterDesc1, desc2: v.flutterDesc2,
       statuses: [{ label: v.flutter_status, variant: 'warning' }],
@@ -398,13 +404,6 @@ const skills = computed(() => {
       title: v.vue, desc1: v.vueDesc1, desc2: v.vueDesc2,
       statuses: [{ label: v.vue_status, variant: 'success' }],
       customers: [{ name: v.vue_customer, link: v.vuelink }],
-    },
-    {
-      icon: 'truck',
-      title: v.grabTruck, desc1: v.grabTruckDesc1, desc2: v.grabTruckDesc2,
-      statuses: [{ label: v.grabTruck_status, variant: 'success' }],
-      // No public link for this internal company system — shown as plain text, not a fabricated href.
-      customers: [{ name: v.grabTruck_customer, link: null }],
     },
     {
       icon: 'gear',
