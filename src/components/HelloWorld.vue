@@ -31,6 +31,12 @@ const content = {
     viewMore: 'ดูเพิ่มเติม',
     status: 'สถานะ',
     customer: 'ลูกค้า',
+    fastworkTitle: 'รีวิวจาก FastWork',
+    fastworkOrders: 'ออเดอร์',
+    fastworkClients: 'ลูกค้า',
+    fastworkRepeat: 'จ้างซ้ำ',
+    fastworkViewProfile: 'ดูโปรไฟล์',
+    fastworkAnonymousName: '***** (บัญชีไม่ระบุชื่อ)',
 
     // Skills (ซ้าย)
     flutter: 'พัฒนาแอพมือถือด้วย Flutter + Dart',
@@ -46,6 +52,12 @@ const content = {
     vuelink: 'https://www.firsttelecom.co.th/',
     vue_status: 'เสร็จสมบูรณ์ ✅',
     vue_customer: 'บริษัท เฟิร์สท เทเลคอม ซีสเต็ม จำกัด',
+
+    grabTruck: 'ระบบบริหารจัดการงานขนส่งและบริหารภายในองค์กรผ่านแพลตฟอร์มและมือถือ (Grab-Truck)',
+    grabTruckDesc1: 'ระบบเว็บแพลตฟอร์มและแอปมือถือสำหรับบริหารจัดการงานขนส่งและกระบวนการทำงานภายในองค์กร',
+    grabTruckDesc2: '💡 ใช้งานจริงในองค์กรของลูกค้า',
+    grabTruck_status: 'ใช้งานจริง ✅',
+    grabTruck_customer: 'บริษัทมิตรกาญ',
 
     python: 'บอทและสคริปต์ Python',
     pythonDesc1: 'การสร้างชุด LLM เพื่อตรวจสอบตรรกะและวิเคราะห์ค่าฝุ่น',
@@ -154,6 +166,12 @@ const content = {
     viewMore: 'View More',
     status: 'Status',
     customer: 'Customer',
+    fastworkTitle: 'Reviews from FastWork',
+    fastworkOrders: 'Orders',
+    fastworkClients: 'Clients',
+    fastworkRepeat: 'Repeat hires',
+    fastworkViewProfile: 'View Profile',
+    fastworkAnonymousName: '***** (anonymous account)',
 
     // Skills (left block)
     flutter: 'Mobile App Development with Flutter + Dart',
@@ -169,6 +187,12 @@ const content = {
     vuelink: 'https://www.firsttelecom.co.th/',
     vue_status: 'Completed ✅',
     vue_customer: 'First Telecom System Co., Ltd.',
+
+    grabTruck: 'Transport & Internal Operations Management System via Web and Mobile (Grab-Truck)',
+    grabTruckDesc1: 'A web platform and mobile app for managing transport operations and internal workflows',
+    grabTruckDesc2: '💡 Actively used in production at the client organization',
+    grabTruck_status: 'In active use ✅',
+    grabTruck_customer: 'Mitkarn',
 
     python: 'Python Bots & Scripts',
     pythonDesc1: 'Developed LLM suites for logic validation and air quality analysis',
@@ -334,6 +358,11 @@ const ICONS = {
     stroke: true,
     d: 'M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3',
   },
+  truck: {
+    viewBox: '0 0 24 24',
+    stroke: true,
+    d: 'M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v11.177m0-11.177L12.164 4.44a2.056 2.056 0 0 0-1.582-.859H5.25A2.25 2.25 0 0 0 3 5.83v8.42m10.5-7.677H12a2.25 2.25 0 0 0-2.25 2.25v8.427',
+  },
   refresh: {
     viewBox: '0 0 24 24',
     d: 'M21.721 12.752a9.711 9.711 0 0 0-.945-5.003 12.754 12.754 0 0 1-4.339 2.708 18.991 18.991 0 0 1-.214 4.772 17.165 17.165 0 0 0 5.498-2.477ZM14.634 15.55a17.324 17.324 0 0 0 .332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 0 0 .332 4.647 17.385 17.385 0 0 0 5.268 0ZM9.772 17.119a18.963 18.963 0 0 0 4.456 0A17.182 17.182 0 0 1 12 21.724a17.18 17.18 0 0 1-2.228-4.605ZM7.777 15.23a18.87 18.87 0 0 1-.214-4.774 12.753 12.753 0 0 1-4.34-2.708 9.711 9.711 0 0 0-.944 5.004 17.165 17.165 0 0 0 5.498 2.477ZM21.356 14.752a9.765 9.765 0 0 1-7.478 6.817 18.64 18.64 0 0 0 1.988-4.718 18.627 18.627 0 0 0 5.49-2.098ZM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 0 0 1.988 4.718 9.765 9.765 0 0 1-7.478-6.816ZM13.878 2.43a9.755 9.755 0 0 1 6.116 3.986 11.267 11.267 0 0 1-3.746 2.504 18.63 18.63 0 0 0-2.37-6.49ZM12 2.276a17.152 17.152 0 0 1 2.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0 1 12 2.276ZM10.122 2.43a18.629 18.629 0 0 0-2.37 6.49 11.266 11.266 0 0 1-3.746-2.504 9.754 9.754 0 0 1 6.116-3.985Z',
@@ -369,6 +398,13 @@ const skills = computed(() => {
       title: v.vue, desc1: v.vueDesc1, desc2: v.vueDesc2,
       statuses: [{ label: v.vue_status, variant: 'success' }],
       customers: [{ name: v.vue_customer, link: v.vuelink }],
+    },
+    {
+      icon: 'truck',
+      title: v.grabTruck, desc1: v.grabTruckDesc1, desc2: v.grabTruckDesc2,
+      statuses: [{ label: v.grabTruck_status, variant: 'success' }],
+      // No public link for this internal company system — shown as plain text, not a fabricated href.
+      customers: [{ name: v.grabTruck_customer, link: null }],
     },
     {
       icon: 'gear',
@@ -464,6 +500,20 @@ const featuredProjects = [
   { title: 'Loan App System', desc: 'Flutter + Firebase for Co-op Lending', image: loanAppImage },
   { title: 'Website 2.0', desc: 'Vue.js + back-end dashboards', image: websiteImage },
 ]
+
+// ข้อมูลจริงจากโปรไฟล์ FastWork (ไม่แปลข้อความรีวิวจริงของลูกค้าข้ามภาษา
+// เพื่อคงคำพูดต้นฉบับไว้ตามที่ลูกค้าเขียนจริง)
+const fastwork = {
+  profileUrl: 'https://fastwork.co/user/0xname?source=web_marketplace_profile-menu_profile',
+  rating: 4.8,
+  orders: 5,
+  clients: 3,
+  repeatHires: 0,
+  reviews: [
+    { name: 'wlvczpgx', date: '25/01/2026', rating: 5.0, text: '', anonymous: false },
+    { name: '', date: '18/12/2025', rating: 4.8, text: 'ทำงานรวดเร็วมาก เข้าใจในเนื้องานดีมากครับ แนะนำน้องคนนี้เลยย', anonymous: true },
+  ],
+}
 </script>
 
 <template>
@@ -522,16 +572,23 @@ const featuredProjects = [
                 </div>
 
                 <div class="mt-3 flex flex-wrap gap-2">
-                  <a
-                    v-for="(c, ci) in skill.customers"
-                    :key="ci"
-                    :href="c.link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="rounded-full border border-base-300 px-3 py-1 text-xs text-base-content/60 transition hover:border-primary/60 hover:text-primary"
-                  >
-                    {{ c.name }}
-                  </a>
+                  <template v-for="(c, ci) in skill.customers" :key="ci">
+                    <a
+                      v-if="c.link"
+                      :href="c.link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="rounded-full border border-base-300 px-3 py-1 text-xs text-base-content/60 transition hover:border-primary/60 hover:text-primary"
+                    >
+                      {{ c.name }}
+                    </a>
+                    <span
+                      v-else
+                      class="rounded-full border border-base-300 px-3 py-1 text-xs text-base-content/60"
+                    >
+                      {{ c.name }}
+                    </span>
+                  </template>
                 </div>
               </div>
             </div>
@@ -622,7 +679,61 @@ const featuredProjects = [
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-6 rounded-lg border border-base-300 bg-base-200/40 p-7 sm:grid-cols-4">
+        <div class="rounded-lg border border-base-300 bg-base-200/40 p-7">
+          <div class="flex items-center justify-between">
+            <h4 class="font-display text-base font-semibold text-primary">{{ t.fastworkTitle }}</h4>
+            <span class="inline-flex items-center gap-1 text-sm text-base-content/70">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 text-primary">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
+              </svg>
+              {{ fastwork.rating.toFixed(1) }}
+            </span>
+          </div>
+
+          <div class="mt-4 grid grid-cols-3 gap-3 text-center">
+            <div>
+              <p class="font-display text-lg font-semibold text-base-content">{{ fastwork.orders }}</p>
+              <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.fastworkOrders }}</p>
+            </div>
+            <div>
+              <p class="font-display text-lg font-semibold text-base-content">{{ fastwork.clients }}</p>
+              <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.fastworkClients }}</p>
+            </div>
+            <div>
+              <p class="font-display text-lg font-semibold text-base-content">{{ fastwork.repeatHires }}</p>
+              <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.fastworkRepeat }}</p>
+            </div>
+          </div>
+
+          <a
+            :href="fastwork.profileUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-sm mt-5 w-full rounded-full border-primary/70 bg-transparent text-xs uppercase tracking-widest text-primary transition hover:bg-primary hover:text-primary-content"
+          >
+            {{ t.fastworkViewProfile }}
+          </a>
+
+          <ul class="mt-5 space-y-4 border-t border-base-300 pt-4">
+            <li v-for="(review, ri) in fastwork.reviews" :key="ri">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-base-content/80">
+                  {{ review.anonymous ? t.fastworkAnonymousName : review.name }}
+                </span>
+                <span class="inline-flex items-center gap-1 text-xs text-base-content/60">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5 text-primary">
+                    <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
+                  </svg>
+                  {{ review.rating.toFixed(1) }}
+                </span>
+              </div>
+              <p class="text-[11px] text-base-content/40">{{ review.date }}</p>
+              <p v-if="review.text" class="mt-1 text-sm text-base-content/70">{{ review.text }}</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6 rounded-lg border border-base-300 bg-base-200/40 p-7">
           <div>
             <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.projectStatus }}</p>
             <p class="mt-1 font-display text-lg font-semibold text-primary">In Progress</p>
