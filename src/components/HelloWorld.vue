@@ -1,5 +1,7 @@
 <script setup>
 import { computed, inject } from 'vue'
+import loanAppImage from './image/Project/AppsLone/01.png'
+import websiteImage from './image/Project/web-vue/01.png'
 // เลือกภาษา
 const lang = inject('lang')
 
@@ -10,10 +12,13 @@ const content = {
     primaryStack: 'เทคโนโลยีหลักที่ใช้',
     fullstackCliDev: 'พัฒนาแบบไม่ใช้ GUI',
     experience: 'ประสบการณ์',
-    experlemceDetail: 'ประสบการณ์ทำงานอิสระมากกว่า 5 ปี — ส่งมอบแอปทางการเงินในโลกแห่งความเป็นจริง',
+    experlemceDetail1: '-> ประสบการณ์ทำงานอิสระ 5 ปี',
+    experlemceDetail2: '-> ประสบการณ์ทำงานในองค์กร 10 ปี',
+    experlemceDetail3: '-> คลุกคลีและศึกษาเทคโนโลยีคอมพิวเตอร์กว่า 20 ปี',
     provenUxImpact: 'ผลลัพธ์การใช้งานจริง',
-    provenDetail1: 'ลดระยะเวลาอนุมัติจากวันเป็นนาที',
-    provenDetail2: 'ใช้งานโดยสหกรณ์ 99 ล้านบาท/ปี (ผู้ใช้มากกว่า 800 ราย)',
+    provenDetail1: '— ส่งมอบผลงานที่ใช้งานได้จริง !!',
+    provenDetail2: '— เข้าใจระบบและกระบวนการทำงานขององค์กรอย่างลึกซึ้ง',
+    provenDetail3: '— พัฒนาระบบที่มีประสิทธิภาพและตอบโจทย์ผู้ใช้งาน',
     recognition: 'รางวัลและผลงานแข่งขัน',
     contact: 'ติดต่อ',
     email: 'อีเมล',
@@ -130,10 +135,13 @@ const content = {
     primaryStack: 'Primary Stack',
     fullstackCliDev: 'Fullstack CLI Dev',
     experience: 'Experience',
-    experlemceDetail: '5+ Years Freelance — delivered real-world co-op finance apps',
-    provenUxImpact: 'Proven UX Impact',
-    provenDetail1: 'Approval time reduced from days ➔ minutes',
-    provenDetail2: 'Adopted by ฿99M/year cooperative (800+ users)',
+    experlemceDetail1: '-> Over 5 years of freelance work experience',
+    experlemceDetail2: '-> 10 years of experience working within organizations',
+    experlemceDetail3: '-> More than 20 years immersed in computer technology',
+    provenUxImpact: 'Proven Results',
+    provenDetail1: '— Delivered practical and effective solutions',
+    provenDetail2: '— Deep understanding of organizational systems and workflows',
+    provenDetail3: '— Developed efficient systems tailored to user needs',
     recognition: 'Recognition',
     contact: 'Contact',
     email: 'Email',
@@ -453,9 +461,8 @@ const statusTextClass = {
 }
 
 const featuredProjects = [
-  { title: 'Loan App System', desc: 'Flutter + Firebase for Co-op Lending' },
-  { title: 'CyberSec Dashboard', desc: 'Node.js + Realtime Log Monitor' },
-  { title: 'RE Toolkit CLI', desc: 'Reverse Binary / Stego Tools' },
+  { title: 'Loan App System', desc: 'Flutter + Firebase for Co-op Lending', image: loanAppImage },
+  { title: 'Website 2.0', desc: 'Vue.js + back-end dashboards', image: websiteImage },
 ]
 </script>
 
@@ -560,12 +567,15 @@ const featuredProjects = [
         <div class="grid grid-cols-2 gap-6 rounded-lg border border-base-300 bg-base-200/40 p-7">
           <div>
             <h4 class="font-display text-base font-semibold text-primary">{{ t.experience }}</h4>
-            <p class="mt-2 text-sm text-base-content/70">{{ t.experlemceDetail }}</p>
+            <p class="mt-2 text-sm text-base-content/70">{{ t.experlemceDetail1 }}</p>
+            <p class="mt-1 text-sm text-base-content/70">{{ t.experlemceDetail2 }}</p>
+            <p class="mt-1 text-sm text-base-content/70">{{ t.experlemceDetail3 }}</p>
           </div>
           <div>
             <h4 class="font-display text-base font-semibold text-primary">{{ t.provenUxImpact }}</h4>
             <p class="mt-2 text-sm text-base-content/70">{{ t.provenDetail1 }}</p>
             <p class="mt-1 text-sm text-base-content/70">{{ t.provenDetail2 }}</p>
+            <p class="mt-1 text-sm text-base-content/70">{{ t.provenDetail3 }}</p>
           </div>
         </div>
 
@@ -639,7 +649,7 @@ const featuredProjects = [
       <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.featuredProjects }}</h2>
       <div class="mt-3 h-px w-16 bg-primary/60"></div>
 
-      <div class="mt-10 grid gap-8 md:grid-cols-3">
+      <div class="mt-10 grid gap-8 md:grid-cols-2">
         <div
           v-for="(project, i) in featuredProjects"
           :key="i"
@@ -647,7 +657,7 @@ const featuredProjects = [
         >
           <div class="overflow-hidden">
             <img
-              src="./image/Code.png"
+              :src="project.image"
               :alt="`${project.title} project screenshot`"
               width="400" height="212" loading="lazy"
               class="w-full transition duration-500 group-hover:scale-105"

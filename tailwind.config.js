@@ -14,6 +14,7 @@ module.exports = {
         sans: ['"Outfit"', 'sans-serif'],
         thai: ['"Noto Sans Thai"', 'sans-serif'],
       },
+      
     },
   },
   plugins: [require("daisyui")],
