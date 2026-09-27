@@ -2,3 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0906;
+  color: #eee7d6;
+  font-family: 'Outfit', 'Noto Sans Thai', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', 'Noto Serif Thai', serif;
+  letter-spacing: 0.01em;
+}
+
+::selection {
+  background-color: #d4af37;
+  color: #0a0906;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0906;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3a3527;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+/* A restrained gold hairline, used instead of daisyUI's default divider color */
+.divider::before,
+.divider::after {
+  background-color: #2a2620;
+}
