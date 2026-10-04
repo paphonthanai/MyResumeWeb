@@ -39,6 +39,35 @@ h1, h2, h3, h4, h5, h6 {
   background: #d4af37;
 }
 
+/* Scroll reveal (see utils/reveal.js) */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-init.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Gold shimmer sweep for primary CTAs */
+@keyframes gold-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.btn-shimmer {
+  background-image: linear-gradient(110deg, #d4af37 35%, #f3dd8a 50%, #d4af37 65%);
+  background-size: 200% 100%;
+}
+.btn-shimmer:hover {
+  animation: gold-shimmer 1.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn-shimmer:hover { animation: none; }
+}
+
 /* A restrained gold hairline, used instead of daisyUI's default divider color */
 .divider::before,
 .divider::after {

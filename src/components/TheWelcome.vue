@@ -56,7 +56,7 @@ const t = computed(() => content[lang.value])
         </p>
 
         <a
-          href="#contact"
+          href="#inquiry"
           class="btn rounded-full border-primary bg-primary px-8 text-primary-content transition hover:bg-transparent hover:text-primary"
         >
           {{ t.ctaButton }}

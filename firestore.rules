@@ -15,6 +15,28 @@ service cloud.firestore {
                     && request.auth.token.email.lower() == "pj06052538@gmail.com";
     }
 
+    // Project inquiries from the public contact form: anyone may create one
+    // (with strict shape/size limits to blunt spam), but only the admin can
+    // read, change or delete them.
+    match /inquiries/{inquiryId} {
+      allow create: if request.resource.data.keys().hasOnly(
+                         ['name', 'contact', 'package', 'message', 'lang', 'createdAt'])
+                    && request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.name.size() <= 100
+                    && request.resource.data.contact is string
+                    && request.resource.data.contact.size() > 0
+                    && request.resource.data.contact.size() <= 150
+                    && request.resource.data.message is string
+                    && request.resource.data.message.size() > 0
+                    && request.resource.data.message.size() <= 2000
+                    && request.resource.data.package in ['', 'starter', 'pro', 'enterprise']
+                    && request.resource.data.lang in ['th', 'en']
+                    && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if request.auth != null
+                    && request.auth.token.email.lower() == "pj06052538@gmail.com";
+    }
+
     // Everything else is closed by default.
     match /{document=**} {
       allow read, write: if false;

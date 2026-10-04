@@ -9,6 +9,7 @@ const router = useRouter()
 const posts = ref([])
 const loading = ref(true)
 const confirmingDeleteId = ref(null)
+const inquiries = ref([])
 
 function formatDate(value) {
   if (!value) return '—'
@@ -35,7 +36,21 @@ async function handleSignOut() {
   router.push({ name: 'admin-login' })
 }
 
-onMounted(loadPosts)
+async function loadInquiries() {
+  const q = query(collection(db, 'inquiries'), orderBy('createdAt', 'desc'))
+  const snapshot = await getDocs(q)
+  inquiries.value = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }))
+}
+
+async function removeInquiry(id) {
+  await deleteDoc(doc(db, 'inquiries', id))
+  await loadInquiries()
+}
+
+onMounted(() => {
+  loadPosts()
+  loadInquiries().catch((e) => console.error('Failed to load inquiries', e))
+})
 </script>
 
 <template>
@@ -125,6 +140,24 @@ onMounted(loadPosts)
                 ลบ
               </button>
             </template>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14">
+        <h2 class="font-display text-xl font-semibold text-base-content">ข้อความจากฟอร์มติดต่อ</h2>
+        <p class="text-sm text-base-content/50">{{ inquiries.length }} รายการ</p>
+        <div v-if="inquiries.length === 0" class="mt-4 text-sm text-base-content/50">ยังไม่มีข้อความ</div>
+        <div v-else class="mt-4 divide-y divide-base-300 rounded-lg border border-base-300 bg-base-200/40">
+          <div v-for="item in inquiries" :key="item.id" class="p-5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <p class="font-display text-lg font-semibold text-base-content">{{ item.name }}</p>
+              <span class="text-xs text-base-content/40">{{ formatDate(item.createdAt) }}</span>
+            </div>
+            <p class="mt-1 text-sm text-primary">{{ item.contact }}</p>
+            <p v-if="item.package" class="mt-1 text-xs uppercase tracking-widest text-base-content/50">แพ็กเกจ: {{ item.package }}</p>
+            <p class="mt-2 whitespace-pre-line text-sm text-base-content/70">{{ item.message }}</p>
+            <button @click="removeInquiry(item.id)" class="btn btn-xs mt-3 rounded-full border-error/70 bg-transparent text-error hover:bg-error hover:text-white">ลบ</button>
           </div>
         </div>
       </div>
