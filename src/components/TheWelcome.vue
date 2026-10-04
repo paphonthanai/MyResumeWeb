@@ -91,7 +91,7 @@ const chips = [
       </div>
 
       <!-- Visual zone: logo core, counter-rotating orbits, floating chips -->
-      <div class="hero-visual relative mx-auto aspect-square w-full max-w-[22rem] md:max-w-[26rem]" aria-hidden="true">
+      <div class="hero-visual relative mx-auto aspect-square w-full max-w-[22rem] md:max-w-[26rem]">
         <div class="hero-pulse absolute inset-[22%] rounded-full bg-primary/20 blur-2xl"></div>
 
         <div class="hero-ring hero-ring-a absolute inset-[6%] rounded-full border border-dashed border-primary/40">
@@ -156,7 +156,19 @@ const chips = [
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-9px); }
 }
-.hero-chip { animation: hero-float 6s ease-in-out infinite; }
+.hero-chip {
+  animation: hero-float 6s ease-in-out infinite;
+  cursor: default;
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.25s, scale 0.25s;
+}
+/* `scale` is independent of the float animation's `transform`, so they don't fight */
+.hero-chip:hover {
+  scale: 1.18;
+  background-color: #d4af37;
+  border-color: #d4af37;
+  color: #0a0906;
+  box-shadow: 0 0 18px 2px rgba(212, 175, 55, 0.55);
+}
 .hero-logo { animation: hero-float 7s ease-in-out infinite; }
 
 @keyframes hero-pulse {
