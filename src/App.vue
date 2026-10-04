@@ -27,6 +27,7 @@ const personSchema = {
   description: defaultDescription,
   sameAs: [
     'https://github.com/paphonthanai',
+    'https://www.facebook.com/Paphonthanai.name',
     'https://www.linkedin.com/in/%E0%B8%9B%E0%B8%9E%E0%B8%99%E0%B8%98%E0%B8%99%E0%B8%B1%E0%B8%A2-%E0%B9%83%E0%B8%88%E0%B8%A1%E0%B8%B2-aa57b2269/',
     'https://codepen.io/BaRon-Qube',
     'https://cssbattle.dev/player/lwWE4eMhEfcH9iY0J5mcVAJo6y63',

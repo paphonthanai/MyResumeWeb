@@ -21,6 +21,7 @@ const content = {
     provenDetail3: '— พัฒนาระบบที่มีประสิทธิภาพและตอบโจทย์ผู้ใช้งาน',
     recognition: 'รางวัลและผลงานแข่งขัน',
     contact: 'ติดต่อ',
+    messengerLabel: 'Messenger — ติดต่อสอบถาม / ปรึกษาโปรเจกต์',
     email: 'อีเมล',
     linkedin: 'ลิงก์อิน',
     projectStatus: 'สถานะโปรเจกต์',
@@ -156,6 +157,7 @@ const content = {
     provenDetail3: '— Developed efficient systems tailored to user needs',
     recognition: 'Recognition',
     contact: 'Contact',
+    messengerLabel: 'Messenger — questions / project consultation',
     email: 'Email',
     linkedin: 'LinkedIn',
     projectStatus: 'Project Status',
@@ -673,6 +675,18 @@ const fastwork = {
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.271c-.966 0-1.75-.787-1.75-1.75s.784-1.75 1.75-1.75 1.75.787 1.75 1.75-.784 1.75-1.75 1.75zm13.5 10.271h-3v-4.5c0-1.074-.021-2.458-1.5-2.458s-1.731 1.174-1.731 2.382v4.576h-3v-9h2.881v1.233h.042c.401-.761 1.379-1.561 2.839-1.561 3.033 0 3.591 1.996 3.591 4.59v4.738z" />
                 </svg>
                 <a href="https://www.linkedin.com/in/%E0%B8%9B%E0%B8%9E%E0%B8%99%E0%B8%98%E0%B8%99%E0%B8%B1%E0%B8%A2-%E0%B9%83%E0%B8%88%E0%B8%A1%E0%B8%B2-aa57b2269/" target="_blank" rel="noopener noreferrer" class="hover:text-primary">linkedin.com/in/npjtech</a>
+              </div>
+              <div class="flex items-center gap-2 text-base-content/70">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 text-primary/70" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                </svg>
+                <a href="https://www.facebook.com/Paphonthanai.name" target="_blank" rel="noopener noreferrer" class="hover:text-primary">Facebook — Paphonthanai.name</a>
+              </div>
+              <div class="flex items-start gap-2 text-base-content/70">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mt-0.5 h-5 w-5 shrink-0 text-primary/70" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
+                </svg>
+                <a href="https://m.me/Paphonthanai.name" target="_blank" rel="noopener noreferrer" class="hover:text-primary">{{ t.messengerLabel }}</a>
               </div>
             </div>
           </div>
