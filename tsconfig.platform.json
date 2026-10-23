@@ -1,0 +1,18 @@
+{
+  // ตรวจ type อย่างเดียว — รันไฟล์ .ts ด้วย Node โดยตรง (type stripping) ไม่มีขั้น build
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "allowJs": true,
+    "checkJs": false,
+    "skipLibCheck": true,
+    "types": ["node"]
+  },
+  "include": ["packages/*/src", "packages/*/test", "tools/*/src", "tools/*/test"]
+}

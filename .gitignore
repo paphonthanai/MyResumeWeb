@@ -28,3 +28,6 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# ผลลัพธ์ของ npm run import:ff
+tools/import-ff/out/

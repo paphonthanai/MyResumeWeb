@@ -21,6 +21,6 @@ export default defineConfig({
     // Firestore and can be added at any time without a rebuild, and admin
     // pages need a live auth check — both are client-rendered instead
     // (see firebase.json's /blog and /admin rewrites to index.html).
-    includedRoutes: () => ['/', '/en', '/about'],
+    includedRoutes: () => ['/', '/en', '/about', '/website-builder', '/en/website-builder'],
   }
 })

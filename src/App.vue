@@ -37,16 +37,17 @@ const personSchema = {
 
 const htmlLang = computed(() => route.meta.lang || 'th')
 
-// "/" (th) and "/en" belong to the same hreflang group — tell crawlers
-// they're language alternates of one page. AboutView has no group, so it
-// gets no hreflang links (there's only one language for that page).
+// Pages with a Thai and an English URL (e.g. "/" and "/en") list both in
+// meta.alternates — tell crawlers they're language alternates of one page.
+// AboutView has none, so it gets no hreflang links (only one language).
 const linkTags = computed(() => {
   const links = [{ rel: 'canonical', href: canonicalUrl.value }]
-  if (route.meta.hreflangGroup === 'home') {
+  const alt = route.meta.alternates
+  if (alt) {
     links.push(
-      { rel: 'alternate', hreflang: 'th', href: `${siteUrl}/` },
-      { rel: 'alternate', hreflang: 'en', href: `${siteUrl}/en` },
-      { rel: 'alternate', hreflang: 'x-default', href: `${siteUrl}/` },
+      { rel: 'alternate', hreflang: 'th', href: siteUrl + alt.th },
+      { rel: 'alternate', hreflang: 'en', href: siteUrl + alt.en },
+      { rel: 'alternate', hreflang: 'x-default', href: siteUrl + alt.th },
     )
   }
   return links

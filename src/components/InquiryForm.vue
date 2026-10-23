@@ -5,6 +5,14 @@ import { selectedPackage } from '../utils/inquiryState'
 
 const lang = inject('lang')
 
+// Other pages (e.g. the Website Builder sales page) reuse this form with
+// their own heading and package list: { th: {...}, en: {...} }.
+// Package ids must be allowed by firestore.rules (inquiries.package).
+const props = defineProps({
+  heading: { type: Object, default: null },
+  packages: { type: Object, default: null },
+})
+
 const content = {
   th: {
     kicker: 'Contact',
@@ -43,7 +51,11 @@ const content = {
     okBody: 'Thank you — I will get back to you as soon as possible.',
   },
 }
-const t = computed(() => content[lang.value])
+const t = computed(() => ({
+  ...content[lang.value],
+  ...(props.heading?.[lang.value] || {}),
+  pkgs: props.packages?.[lang.value] || content[lang.value].pkgs,
+}))
 
 const name = ref('')
 const contact = ref('')

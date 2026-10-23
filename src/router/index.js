@@ -18,7 +18,7 @@ export const routes = [
       lang: 'th',
       // Marks this and '/en' as language alternates of the same page,
       // so App.vue can emit hreflang links between them.
-      hreflangGroup: 'home'
+      alternates: { th: '/', en: '/en' }
     }
   },
   {
@@ -33,7 +33,29 @@ export const routes = [
       title: 'Paphonthanai Jaima (PNJ Tech) | Fullstack Developer Portfolio',
       description: 'Portfolio and resume of Paphonthanai Jaima (PNJ Tech), a freelance software developer with 5+ years of experience building web and mobile apps with Vue.js, Flutter, Firebase and PHP. Includes real projects and Security/CTF skills.',
       lang: 'en',
-      hreflangGroup: 'home'
+      alternates: { th: '/', en: '/en' }
+    }
+  },
+  {
+    path: '/website-builder',
+    name: 'website-builder',
+    component: () => import('../views/WebsiteBuilderView.vue'),
+    meta: {
+      title: 'PNJ Tech Website Builder | สร้างเว็บไซต์บริษัทสองภาษา แก้เองได้',
+      description: 'แพลตฟอร์มสร้างเว็บไซต์บริษัทไทย-อังกฤษ โหลดเร็ว SEO ครบทุกหน้า ฟอร์มขอใบเสนอราคาส่งถึงทีมขาย เปิดรับลูกค้ากลุ่มแรก ลูกค้ารายแรกคือ Fire First Safety & Truck',
+      lang: 'th',
+      alternates: { th: '/website-builder', en: '/en/website-builder' }
+    }
+  },
+  {
+    path: '/en/website-builder',
+    name: 'website-builder-en',
+    component: () => import('../views/WebsiteBuilderView.vue'),
+    meta: {
+      title: 'PNJ Tech Website Builder | Bilingual company websites your team can edit',
+      description: 'A website builder for Thai companies: Thai and English pages, fast loading, full SEO on every page, and quote requests delivered to your sales team. Now onboarding early customers, starting with Fire First Safety & Truck.',
+      lang: 'en',
+      alternates: { th: '/website-builder', en: '/en/website-builder' }
     }
   },
   {
