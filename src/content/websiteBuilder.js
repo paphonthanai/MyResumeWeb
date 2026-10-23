@@ -5,6 +5,9 @@
 // site, and the self-serve editor opens to customers one by one — the copy
 // says so rather than promising a finished product. Plan ids must match
 // firestore.rules (inquiries.package).
+//
+// Plan items are either a string or { t, soon: true } for a feature that is
+// on the roadmap but not available yet — the card shows a "soon" badge.
 
 export const FIRE_FIRST_URL = 'https://firefirstsafetyandtruck.com'
 
@@ -53,14 +56,36 @@ export const content = {
     pricingKicker: 'Pricing',
     pricingTitle: 'แพ็กเกจ',
     pricingIntro: 'ราคาเปิดตัวสำหรับลูกค้ากลุ่มแรก ต่อเว็บไซต์ต่อเดือน',
+    freeNote: 'ไม่ต้องใช้บัตรเครดิต',
     perMonth: '/ เดือน',
     choose: 'เลือกแพ็กเกจนี้',
     popular: 'แนะนำ',
+    soon: 'เร็ว ๆ นี้',
     plans: [
-      { id: 'site-free', name: 'Free', price: '0', items: ['ที่อยู่เว็บ .web.app', '5 หน้า ภาษาเดียว', 'ป้าย Made with PNJ Tech'] },
-      { id: 'site-starter', name: 'Starter', price: '390', items: ['ใช้โดเมนของคุณ', '15 หน้า ไทย-อังกฤษ', 'ฟอร์มขอใบเสนอราคา + แจ้งเตือน', 'ไม่มีป้าย'] },
-      { id: 'site-business', name: 'Business', price: '990', featured: true, items: ['ไม่จำกัดจำนวนหน้า', 'รายการสินค้า ผลงาน และคำถามที่พบบ่อย', 'ผู้ช่วย AI แปลภาษาและเขียน SEO', 'ผู้ใช้ 5 คน'] },
-      { id: 'site-agency', name: 'Agency', price: '2,490', items: ['ดูแลได้ 10 เว็บไซต์', 'บทบาทผู้ใช้และการอนุมัติก่อนเผยแพร่', 'ใช้แบรนด์ของคุณในหน้าจัดการ'] },
+      {
+        id: 'site-free', name: 'Free', tagline: 'ทดลองใช้', price: '0',
+        items: ['ที่อยู่เว็บ .web.app', 'โฮสติ้งบน Google Cloud', 'แก้เนื้อหาทีละส่วน ไม่ต้องเขียนโค้ด', '5 หน้า ภาษาเดียว', 'ป้าย Made with PNJ Tech',
+          { t: 'จัดหน้าแบบลากและวาง', soon: true }, { t: 'แม่แบบหลายแบบให้เลือก', soon: true }],
+      },
+      {
+        id: 'site-light', name: 'Light', tagline: 'เริ่มต้นออนไลน์', price: '390',
+        items: ['ใช้โดเมนของคุณเอง', 'พื้นที่เก็บไฟล์ 2 GB', '15 หน้า ไทย-อังกฤษ', 'ฟอร์มขอใบเสนอราคา + แจ้งเตือน', 'ผู้ร่วมแก้ไข 2 คน', 'ไม่มีป้าย'],
+      },
+      {
+        id: 'site-core', name: 'Core', tagline: 'ดึงดูดลูกค้า', price: '690',
+        items: ['ทุกอย่างใน Light', 'พื้นที่เก็บไฟล์ 20 GB', 'ไม่จำกัดจำนวนหน้า', 'รายการสินค้า ผลงาน และคำถามที่พบบ่อย', 'ผู้ร่วมแก้ไข 5 คน',
+          { t: 'เครื่องมือการตลาดพื้นฐาน', soon: true }, { t: 'รับชำระเงินออนไลน์', soon: true }],
+      },
+      {
+        id: 'site-business', name: 'Business', tagline: 'ขยายแบรนด์', price: '990', featured: true,
+        items: ['ทุกอย่างใน Core', 'พื้นที่เก็บไฟล์ 50 GB', 'ผู้ร่วมแก้ไข 10 คน',
+          { t: 'ผู้ช่วย AI แปลภาษาและเขียน SEO', soon: true }, { t: 'ร้านค้าออนไลน์พื้นฐาน', soon: true }, { t: 'ระบบนัดหมายและจองบริการ', soon: true }],
+      },
+      {
+        id: 'site-elite', name: 'Business Elite', tagline: 'ขยายธุรกิจ', price: '2,990',
+        items: ['ทุกอย่างใน Business', 'พื้นที่เก็บไฟล์ 200 GB', 'ผู้ร่วมแก้ไข 100 คน',
+          { t: 'ดูแลหลายเว็บไซต์ในบัญชีเดียว', soon: true }, { t: 'ร้านค้าออนไลน์ขั้นสูง', soon: true }, { t: 'เครื่องมือการตลาดขั้นสูง', soon: true }, { t: 'API สำหรับนักพัฒนา', soon: true }],
+      },
     ],
     setupTitle: 'บริการจัดทำเว็บให้',
     setupDesc: 'ทีม PNJ Tech ทำเว็บให้ครบเหมือนที่ทำให้ Fire First แล้วส่งมอบให้ทีมคุณดูแลต่อ',
@@ -82,7 +107,7 @@ export const content = {
       intro: 'บอกชื่อบริษัท เว็บไซต์เดิม (ถ้ามี) และสิ่งที่ต้องการ เราจะติดต่อกลับเพื่อเริ่มทำเว็บไซต์ของคุณ',
       message: 'บริษัทและสิ่งที่ต้องการ',
     },
-    formPackages: { 'site-free': 'Free', 'site-starter': 'Starter', 'site-business': 'Business', 'site-agency': 'Agency', 'site-setup': 'บริการจัดทำเว็บให้' },
+    formPackages: { 'site-free': 'Free', 'site-light': 'Light', 'site-core': 'Core', 'site-business': 'Business', 'site-elite': 'Business Elite', 'site-setup': 'บริการจัดทำเว็บให้' },
   },
   en: {
     kicker: 'PNJ Tech Website Builder',
@@ -128,14 +153,36 @@ export const content = {
     pricingKicker: 'Pricing',
     pricingTitle: 'Plans',
     pricingIntro: 'Launch pricing for early customers, per website per month.',
+    freeNote: 'No credit card required',
     perMonth: '/ month',
     choose: 'Choose this plan',
     popular: 'Recommended',
+    soon: 'Soon',
     plans: [
-      { id: 'site-free', name: 'Free', price: '0', items: ['.web.app address', '5 pages, one language', 'Made with PNJ Tech badge'] },
-      { id: 'site-starter', name: 'Starter', price: '390', items: ['Your own domain', '15 pages in Thai and English', 'Quote form with notifications', 'No badge'] },
-      { id: 'site-business', name: 'Business', price: '990', featured: true, items: ['Unlimited pages', 'Product, project and FAQ lists', 'AI help with translation and SEO', '5 users'] },
-      { id: 'site-agency', name: 'Agency', price: '2,490', items: ['Manage up to 10 websites', 'User roles and approval before publishing', 'Your brand in the editor'] },
+      {
+        id: 'site-free', name: 'Free', tagline: 'Try it out', price: '0',
+        items: ['.web.app address', 'Hosting on Google Cloud', 'Edit section by section, no code', '5 pages, one language', 'Made with PNJ Tech badge',
+          { t: 'Drag-and-drop page layout', soon: true }, { t: 'A choice of templates', soon: true }],
+      },
+      {
+        id: 'site-light', name: 'Light', tagline: 'Get online', price: '390',
+        items: ['Your own domain', '2 GB file storage', '15 pages in Thai and English', 'Quote form with notifications', '2 collaborators', 'No badge'],
+      },
+      {
+        id: 'site-core', name: 'Core', tagline: 'Attract customers', price: '690',
+        items: ['Everything in Light', '20 GB file storage', 'Unlimited pages', 'Product, project and FAQ lists', '5 collaborators',
+          { t: 'Basic marketing tools', soon: true }, { t: 'Online payments', soon: true }],
+      },
+      {
+        id: 'site-business', name: 'Business', tagline: 'Grow your brand', price: '990', featured: true,
+        items: ['Everything in Core', '50 GB file storage', '10 collaborators',
+          { t: 'AI help with translation and SEO', soon: true }, { t: 'Basic online store', soon: true }, { t: 'Bookings and appointments', soon: true }],
+      },
+      {
+        id: 'site-elite', name: 'Business Elite', tagline: 'Scale your business', price: '2,990',
+        items: ['Everything in Business', '200 GB file storage', '100 collaborators',
+          { t: 'Several websites in one account', soon: true }, { t: 'Advanced online store', soon: true }, { t: 'Advanced marketing tools', soon: true }, { t: 'Developer API', soon: true }],
+      },
     ],
     setupTitle: 'Done-for-you setup',
     setupDesc: 'The PNJ Tech team builds the whole site, as we did for Fire First, then hands it over to your team.',
@@ -157,6 +204,6 @@ export const content = {
       intro: 'Tell us your company name, your current website (if any) and what you need. We will get back to you to start your site.',
       message: 'Your company and what you need',
     },
-    formPackages: { 'site-free': 'Free', 'site-starter': 'Starter', 'site-business': 'Business', 'site-agency': 'Agency', 'site-setup': 'Done-for-you setup' },
+    formPackages: { 'site-free': 'Free', 'site-light': 'Light', 'site-core': 'Core', 'site-business': 'Business', 'site-elite': 'Business Elite', 'site-setup': 'Done-for-you setup' },
   },
 }

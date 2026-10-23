@@ -32,7 +32,7 @@ service cloud.firestore {
                     && request.resource.data.message.size() <= 2000
                     && request.resource.data.package in ['', 'starter', 'pro', 'enterprise',
                          // Website Builder plans (src/views/WebsiteBuilderView.vue)
-                         'site-free', 'site-starter', 'site-business', 'site-agency', 'site-setup']
+                         'site-free', 'site-light', 'site-core', 'site-business', 'site-elite', 'site-setup']
                     && request.resource.data.lang in ['th', 'en']
                     && request.resource.data.createdAt == request.time;
       allow read, update, delete: if request.auth != null

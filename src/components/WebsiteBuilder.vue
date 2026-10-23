@@ -171,7 +171,7 @@ function choose(id) {
         <div class="mt-3 h-px w-16 bg-primary/60"></div>
         <p class="mt-5 max-w-2xl text-base-content/60">{{ t.pricingIntro }}</p>
       </div>
-      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <article
           v-for="(p, i) in t.plans"
           :key="p.id"
@@ -181,16 +181,21 @@ function choose(id) {
         >
           <span v-if="p.featured" class="absolute -top-3 left-6 rounded-full bg-primary px-3 py-0.5 text-[11px] font-semibold uppercase tracking-widest text-primary-content">{{ t.popular }}</span>
           <h3 class="font-display text-xl font-semibold text-base-content">{{ p.name }}</h3>
-          <p class="mt-3 flex items-baseline gap-1">
+          <p class="mt-1 text-xs uppercase tracking-widest text-base-content/45">{{ p.tagline }}</p>
+          <p class="mt-4 flex items-baseline gap-1">
             <span class="font-display text-4xl font-semibold text-primary" style="font-variant-numeric: tabular-nums">฿{{ p.price }}</span>
             <span class="text-sm text-base-content/50">{{ t.perMonth }}</span>
           </p>
+          <p v-if="p.price === '0'" class="mt-1 text-xs text-success">{{ t.freeNote }}</p>
           <ul class="mt-6 flex-1 space-y-3 text-sm text-base-content/75">
-            <li v-for="item in p.items" :key="item" class="flex gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true">
+            <li v-for="item in p.items" :key="item.t || item" class="flex gap-2" :class="{ 'text-base-content/45': item.soon }">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="mt-0.5 h-4 w-4 shrink-0" :class="item.soon ? 'text-base-content/30' : 'text-primary'" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
               </svg>
-              {{ item }}
+              <span>
+                {{ item.t || item }}
+                <span v-if="item.soon" class="ml-1 whitespace-nowrap rounded-full border border-base-content/20 px-1.5 py-px text-[10px] text-base-content/55">{{ t.soon }}</span>
+              </span>
             </li>
           </ul>
           <a
