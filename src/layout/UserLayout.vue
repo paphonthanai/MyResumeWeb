@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, useRoute } from 'vue-router'
-import { ref, provide } from 'vue'
+import { ref, provide, computed } from 'vue'
 import logoGold from '@/components/image/NewLogo_Gold.png'
 
 const route = useRoute()
@@ -8,6 +8,9 @@ const route = useRoute()
 // crawlers); the toggle button below still flips it client-side after that.
 const lang = ref(route.meta.lang === 'en' ? 'en' : 'th')
 provide('lang', lang)
+
+// The Website Builder page has its own Thai and English URLs.
+const builderPath = computed(() => (lang.value === 'en' ? '/en/website-builder' : '/website-builder'))
 </script>
 
 <template>
@@ -24,6 +27,7 @@ provide('lang', lang)
             <li><RouterLink to="/" class="brand-nav-link">Home</RouterLink></li>
             <li><RouterLink to="/#portfolio" class="brand-nav-link">Portfolio</RouterLink></li>
             <li><RouterLink to="/#project" class="brand-nav-link">Project</RouterLink></li>
+            <li><RouterLink :to="builderPath" class="brand-nav-link">Website Builder</RouterLink></li>
             <li><RouterLink to="/about" class="brand-nav-link">About</RouterLink></li>
             <li><RouterLink to="/blog" class="brand-nav-link">Blog</RouterLink></li>
             <li><RouterLink to="/#contact" class="brand-nav-link">Contact</RouterLink></li>
@@ -42,6 +46,7 @@ provide('lang', lang)
           <li><RouterLink to="/" class="brand-nav-link">Home</RouterLink></li>
           <li><RouterLink to="/#portfolio" class="brand-nav-link">Portfolio</RouterLink></li>
           <li><RouterLink to="/#project" class="brand-nav-link">Project</RouterLink></li>
+          <li><RouterLink :to="builderPath" class="brand-nav-link">Website Builder</RouterLink></li>
           <li><RouterLink to="/about" class="brand-nav-link">About</RouterLink></li>
           <li><RouterLink to="/blog" class="brand-nav-link">Blog</RouterLink></li>
           <li><RouterLink to="/#contact" class="brand-nav-link">Contact</RouterLink></li>
