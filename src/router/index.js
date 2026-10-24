@@ -162,7 +162,13 @@ export const routes = [
     beforeEnter: appGuard('requireBuilder')
   },
   comingSoon('/app/pages', 'pages'),
-  comingSoon('/app/collections', 'collections'),
+  {
+    path: '/app/collections',
+    name: 'app-collections',
+    component: () => import('../app/views/CollectionsView.vue'),
+    meta: { ...appMeta, title: 'ผลงาน (Collection) | PNJ Created Website' },
+    beforeEnter: appGuard('requireBuilder')
+  },
   comingSoon('/app/media', 'media'),
   comingSoon('/app/seo', 'seo'),
   comingSoon('/app/leads', 'leads'),

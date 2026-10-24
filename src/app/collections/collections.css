@@ -1,0 +1,117 @@
+/* Collections screen (design: Collections.dc.html). Uses the builder tokens
+   from theme.js, so it follows light/dark like the rest of /app. */
+
+.sk-pill-bad { background: var(--sk-bad-soft); color: var(--sk-bad); }
+.sk-col { display: flex; flex-direction: column; gap: 14px; }
+.sk-col-banner { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 16px; background: var(--sk-accent-soft); border-color: transparent; }
+.sk-col-banner-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.sk-col-check-head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-align: left; }
+.sk-col-check-head:disabled { cursor: default; }
+.sk-col-issues { list-style: none; margin: 0; padding: 4px 16px 14px; display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow: auto; border-top: 1px solid var(--sk-line); }
+.sk-col-issues li { padding-top: 6px; font-size: 13px; overflow-wrap: anywhere; }
+
+.sk-col-grid { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 20px; align-items: start; }
+.sk-col-list { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.sk-col-tabs { display: flex; gap: 4px; padding: 3px; border-radius: 9px; background: var(--sk-surface); border: 1px solid var(--sk-line); overflow-x: auto; scrollbar-width: thin; }
+.sk-col-tab { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 7px; border: 0; background: transparent; color: var(--sk-text); font: 400 14px Anuphan, sans-serif; cursor: pointer; white-space: nowrap; }
+.sk-col-tab .sk-num { font-size: 12px; opacity: .7; }
+.sk-col-tab:hover { background: var(--sk-sunk); }
+.sk-col-tab.on { background: var(--sk-accent-soft); color: var(--sk-accent-ink); font-weight: 600; }
+.sk-col-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sk-bad); }
+.sk-col-tools { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.sk-col-search { display: flex; gap: 8px; margin-left: auto; }
+.sk-col-search .sk-input { width: 200px; }
+
+.sk-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.sk-chip { padding: 6px 12px; border-radius: 7px; border: 1px solid var(--sk-line2); background: transparent; color: var(--sk-text); font: 400 13px Anuphan, sans-serif; cursor: pointer; }
+.sk-chip .sk-num { font-size: 12px; opacity: .7; }
+.sk-chip:hover { background: var(--sk-sunk); }
+.sk-chip.is-on { border-color: var(--sk-accent); background: var(--sk-accent-soft); color: var(--sk-accent-ink); }
+.sk-chip.is-bad { border-color: var(--sk-bad); background: var(--sk-bad-soft); color: var(--sk-bad); cursor: default; }
+
+.sk-col-table { overflow: hidden; }
+.sk-col-head, .sk-col-row { display: grid; grid-template-columns: minmax(0, 1fr) 140px 52px 84px; gap: 14px; align-items: center; padding: 10px 16px; }
+.sk-col-table.no-cat .sk-col-head, .sk-col-table.no-cat .sk-col-row { grid-template-columns: minmax(0, 1fr) 52px 84px; }
+.sk-col-head { font-size: 12px; color: var(--sk-muted); background: var(--sk-sunk); border-bottom: 1px solid var(--sk-line); }
+.sk-col-row { border-bottom: 1px solid var(--sk-line); }
+.sk-col-row:last-child { border-bottom: 0; }
+.sk-col-row.is-sel { background: var(--sk-accent-soft); }
+.sk-col-pick { display: flex; align-items: center; gap: 14px; min-width: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.sk-col-thumb { width: 72px; height: 50px; flex: none; border-radius: 5px; overflow: hidden; background: repeating-linear-gradient(135deg, rgba(128, 128, 128, .14) 0 2px, transparent 2px 10px), var(--sk-sunk); border: 1px solid var(--sk-line); }
+.sk-col-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sk-col-title { min-width: 0; display: flex; flex-direction: column; }
+.sk-col-title b { font-size: 14px; font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
+.sk-col-title small { font-size: 12px; color: var(--sk-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sk-col-cat > span { display: inline-block; font-size: 12px; padding: 3px 9px; border-radius: 5px; background: var(--sk-sunk); border: 1px solid var(--sk-line); }
+.sk-col-move { display: flex; gap: 4px; justify-content: flex-end; }
+.sk-col-move .sk-btn { width: 32px; padding: 0; }
+
+.sk-switch { width: 34px; height: 20px; flex: none; border-radius: 10px; border: 0; padding: 0; position: relative; cursor: pointer; background: var(--sk-line2); transition: background .15s; }
+.sk-switch > span { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: left .15s; }
+.sk-switch.on { background: var(--sk-accent); }
+.sk-switch.on > span { left: 16px; }
+.sk-switch.lg { width: 40px; height: 24px; border-radius: 12px; }
+.sk-switch.lg > span { top: 3px; left: 3px; width: 18px; height: 18px; }
+.sk-switch.lg.on > span { left: 19px; }
+
+.sk-col-edit { display: flex; flex-direction: column; position: sticky; top: 76px; max-height: calc(100vh - 92px); }
+.sk-col-edit-head { padding: 14px 18px; border-bottom: 1px solid var(--sk-line); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.sk-col-edit-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 16px; overflow: auto; min-height: 0; }
+.sk-col-edit-foot { padding: 12px 18px; border-top: 1px solid var(--sk-line); display: flex; gap: 8px; flex-wrap: wrap; }
+.sk-col-pub { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 12px; border-top: 1px solid var(--sk-line); }
+
+.sk-form { display: flex; flex-direction: column; gap: 16px; }
+.sk-form-field { display: flex; flex-direction: column; gap: 6px; }
+.sk-form-label { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 13px; font-weight: 500; }
+.sk-req { color: var(--sk-bad); }
+.sk-form .sk-input { height: 38px; font-size: 14px; }
+.sk-form textarea.sk-input { height: auto; min-height: 60px; }
+.sk-form .sk-input[aria-invalid="true"] { border-color: var(--sk-bad); }
+.sk-field-error { margin: 0; font-size: 12px; color: var(--sk-bad); }
+.sk-loc { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+.sk-loc-row { display: flex; flex-direction: column; gap: 3px; }
+.sk-loc-tag { font-size: 11px; color: var(--sk-muted); }
+.sk-list-row { display: flex; gap: 8px; align-items: flex-start; padding: 8px; border: 1px solid var(--sk-line); border-radius: 8px; background: var(--sk-sunk); }
+.sk-list-n { width: 20px; padding-top: 22px; text-align: center; font-size: 12px; color: var(--sk-muted); flex: none; }
+.sk-media-field { display: grid; grid-template-columns: 140px 1fr; gap: 12px; align-items: center; }
+.sk-media-thumb { aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; border: 1px solid var(--sk-line); background: var(--sk-sunk); display: grid; place-items: center; font-size: 12px; text-align: center; padding: 4px; }
+.sk-media-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sk-media-actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; min-width: 0; }
+
+.sk-modal { position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, .45); display: grid; place-items: center; padding: 16px; }
+.sk-modal-card { width: min(760px, 100%); max-height: 100%; background: var(--sk-surface); border: 1px solid var(--sk-line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; color: var(--sk-text); }
+.sk-modal-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.sk-modal-head h2 { font-size: 16px; font-weight: 600; }
+.sk-media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; overflow: auto; min-height: 0; padding: 2px; }
+.sk-media-tile { display: flex; flex-direction: column; gap: 4px; padding: 6px; border-radius: 8px; border: 1px solid var(--sk-line); background: var(--sk-surface); color: inherit; font: inherit; text-align: left; cursor: pointer; min-width: 0; }
+.sk-media-tile:hover { background: var(--sk-sunk); }
+.sk-media-tile.is-on { border-color: var(--sk-accent); box-shadow: 0 0 0 2px var(--sk-accent); }
+.sk-media-tile img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 5px; display: block; background: var(--sk-sunk); }
+.sk-media-tile span { font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sk-media-tile small { font-size: 11px; color: var(--sk-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* Narrow screens: the list takes the full width and the editor opens as a full-screen sheet. */
+@media (max-width: 1279px) {
+  .sk-col-grid { grid-template-columns: minmax(0, 1fr); }
+  .sk-col-edit { display: none; }
+  .sk-col-edit.is-open { display: flex; position: fixed; inset: 0; z-index: 40; max-height: none; border-radius: 0; border: 0; }
+}
+@media (max-width: 699px) {
+  .sk-col-banner { flex-direction: column; align-items: stretch; }
+  .sk-col-banner-actions { justify-content: flex-start; }
+  .sk-col-search { margin-left: 0; width: 100%; }
+  .sk-col-search .sk-input { width: 100%; flex: 1; }
+  .sk-col-head { display: none; }
+  .sk-col-row, .sk-col-table.no-cat .sk-col-row { grid-template-columns: minmax(0, 1fr) auto auto; row-gap: 8px; padding: 12px; }
+  .sk-col-pick { grid-column: 1 / -1; }
+  .sk-col-cat { grid-column: 1; }
+  .sk-col-thumb { width: 64px; height: 48px; }
+  .sk-col-move .sk-btn { width: 44px; height: 44px; }
+  .sk-switch { width: 44px; height: 26px; border-radius: 13px; }
+  .sk-switch > span { width: 20px; height: 20px; }
+  .sk-switch.on > span { left: 22px; }
+  .sk-media-field { grid-template-columns: 110px 1fr; }
+  .sk-col-edit-foot .sk-btn { height: 44px; }
+  .sk-form .sk-input { height: 44px; font-size: 16px; }
+  .sk-form textarea.sk-input { height: auto; }
+}

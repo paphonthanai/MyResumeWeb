@@ -2,11 +2,14 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { ffSample } from './tools/import-ff/src/vite-plugin.ts'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
+    // Fire First sample data for the /app Collections screen (see the plugin).
+    ffSample(),
   ],
   resolve: {
     alias: {
