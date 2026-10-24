@@ -35,7 +35,7 @@ const steps = computed(() =>
 
 <template>
   <aside class="sk-onb-rail">
-    <RouterLink to="/website-builder" class="sk-wordmark"><i></i><b>PNJ Tech</b></RouterLink>
+    <RouterLink to="/app/home" class="sk-wordmark"><i></i><span><b>PNJ Created Website</b><small>by PNJ Tech</small></span></RouterLink>
     <div class="sk-progress" aria-hidden="true"><span v-for="n in 5" :key="n" :class="{ on: n - 1 <= current }"></span></div>
     <div class="sk-onb-intro">
       <h2 style="white-space: pre-line">{{ t.title }}</h2>

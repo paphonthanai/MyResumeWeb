@@ -31,7 +31,7 @@ if (typeof window !== 'undefined' && PLANS.includes(route.query.plan)) {
 
 const t = useT({
   th: {
-    signupTitle: 'สร้างบัญชี PNJ Tech',
+    signupTitle: 'สร้างบัญชี PNJ Created Website',
     signupSub: 'เริ่มฟรี อัปเกรดเมื่อพร้อมใช้โดเมนของตัวเอง',
     loginTitle: 'เข้าสู่ระบบ',
     loginSub: 'จัดการเว็บไซต์ของบริษัทคุณ',
@@ -50,7 +50,7 @@ const t = useT({
     forgot: 'ลืมรหัสผ่าน',
     resetSent: 'ส่งลิงก์ตั้งรหัสผ่านใหม่ไปที่อีเมลแล้ว',
     pdpa: 'การสมัครถือว่ายอมรับเงื่อนไขการใช้งานและนโยบายความเป็นส่วนตัว (PDPA)',
-    back: '← กลับไปหน้า Website Builder',
+    back: '← กลับไปหน้า PNJ Created Website',
     soon: 'เร็ว ๆ นี้',
     errors: {
       'auth/email-already-in-use': 'อีเมลนี้มีบัญชีแล้ว ลองเข้าสู่ระบบแทน',
@@ -68,7 +68,7 @@ const t = useT({
     },
   },
   en: {
-    signupTitle: 'Create your PNJ Tech account',
+    signupTitle: 'Create your PNJ Created Website account',
     signupSub: 'Start free. Upgrade when you are ready for your own domain.',
     loginTitle: 'Sign in',
     loginSub: 'Manage your company website',
@@ -87,7 +87,7 @@ const t = useT({
     forgot: 'Forgot password',
     resetSent: 'We sent a password reset link to your email.',
     pdpa: 'By signing up you accept the terms of use and privacy policy (PDPA).',
-    back: '← Back to Website Builder',
+    back: '← Back to PNJ Created Website',
     soon: 'Soon',
     errors: {
       'auth/email-already-in-use': 'This email already has an account. Try signing in.',
@@ -172,7 +172,7 @@ async function resetPassword() {
       <main class="sk-onb-main">
         <div class="sk-onb-body">
           <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
-            <RouterLink to="/website-builder" class="sk-muted" style="font-size: 13px; text-decoration: none">{{ t.back }}</RouterLink>
+            <RouterLink to="/app/home" class="sk-muted" style="font-size: 13px; text-decoration: none">{{ t.back }}</RouterLink>
             <div class="sk-seg" role="group" aria-label="Language">
               <button type="button" :class="{ on: prefs.lang === 'th' }" @click="prefs.lang = 'th'">ไทย</button>
               <button type="button" :class="{ on: prefs.lang === 'en' }" @click="prefs.lang = 'en'">EN</button>

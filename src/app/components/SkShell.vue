@@ -55,7 +55,7 @@ async function signOut() {
   <SkRoot>
     <div class="sk-shell" :class="{ 'is-open': open }">
       <aside class="sk-side" :aria-label="t.group">
-        <RouterLink to="/app" class="sk-wordmark" style="padding: 4px 8px"><i></i><b>PNJ Tech</b></RouterLink>
+        <RouterLink to="/app" class="sk-wordmark" style="padding: 4px 8px"><i></i><span><b>PNJ Created Website</b><small>by PNJ Tech</small></span></RouterLink>
 
         <div class="sk-side-site">
           <span class="sk-side-tile" :style="{ background: site.color }">{{ site.initials }}</span>

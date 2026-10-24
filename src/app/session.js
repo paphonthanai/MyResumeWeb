@@ -37,6 +37,8 @@ export function clearSession() {
 /** Signed in and finished onboarding → dashboard and other builder pages. */
 export async function requireBuilder(to) {
   const { user, tenant: t } = await loadSession()
+  // Visitors who open /app without signing in see the landing page first.
+  if (!user && to.path === '/app') return { path: '/app/home' }
   if (!user) return { name: 'app-login', query: { mode: 'login', next: to.fullPath } }
   if (!t || t.onboarding !== 'done') return { name: 'app-onboarding' }
   return true

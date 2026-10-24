@@ -21,6 +21,9 @@ export default defineConfig({
     // Firestore and can be added at any time without a rebuild, and admin
     // pages need a live auth check — both are client-rendered instead
     // (see firebase.json's /blog and /admin rewrites to index.html).
-    includedRoutes: () => ['/', '/en', '/about', '/website-builder', '/en/website-builder'],
+    // /app/home and /app/index are prerendered too, so the PNJ Created
+    // Website app's landing page loads directly instead of via the
+    // /app/** rewrite to the home page.
+    includedRoutes: () => ['/', '/en', '/about', '/website-builder', '/en/website-builder', '/app/home', '/app/index'],
   }
 })

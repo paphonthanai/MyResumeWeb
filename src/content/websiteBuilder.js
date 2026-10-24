@@ -13,7 +13,7 @@ export const FIRE_FIRST_URL = 'https://firefirstsafetyandtruck.com'
 
 export const content = {
   th: {
-    kicker: 'PNJ Tech Website Builder',
+    kicker: 'PNJ Created Website · บริการโดย PNJ Tech',
     badge: 'เปิดรับลูกค้ากลุ่มแรก',
     title: 'เว็บไซต์บริษัทสองภาษา ที่ทีมของคุณแก้เองได้',
     lead: 'แพลตฟอร์มสร้างเว็บไซต์องค์กรสำหรับธุรกิจไทย หน้าเว็บโหลดเร็ว ติด Google ด้วย SEO ครบทุกหน้า และส่งคำขอใบเสนอราคาถึงทีมขายทันที',
@@ -112,7 +112,7 @@ export const content = {
     formPackages: { 'site-free': 'Free', 'site-light': 'Light', 'site-core': 'Core', 'site-business': 'Business', 'site-elite': 'Business Elite', 'site-setup': 'บริการจัดทำเว็บให้' },
   },
   en: {
-    kicker: 'PNJ Tech Website Builder',
+    kicker: 'PNJ Created Website · by PNJ Tech',
     badge: 'Now onboarding early customers',
     title: 'Bilingual company websites your team can edit',
     lead: 'A website builder for Thai businesses. Pages load fast, every page is set up for Google, and quote requests go straight to your sales team.',

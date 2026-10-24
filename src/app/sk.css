@@ -22,8 +22,10 @@
 .sk-mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 .sk-muted { color: var(--sk-muted); }
 .sk-wordmark { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; }
-.sk-wordmark i { width: 18px; height: 18px; border-radius: 5px; background: var(--sk-accent); display: block; }
-.sk-wordmark b { font: 700 18px Archivo, sans-serif; letter-spacing: -0.02em; color: #f2f2f3; }
+.sk-wordmark i { width: 18px; height: 18px; border-radius: 5px; background: var(--sk-accent); display: block; flex: none; }
+.sk-wordmark span { display: flex; flex-direction: column; line-height: 1.15; }
+.sk-wordmark b { font: 700 16px Archivo, sans-serif; letter-spacing: -0.02em; color: #f2f2f3; white-space: nowrap; }
+.sk-wordmark small { font: 500 11px Anuphan, sans-serif; color: #8b8e94; }
 
 /* Controls */
 .sk-btn {
