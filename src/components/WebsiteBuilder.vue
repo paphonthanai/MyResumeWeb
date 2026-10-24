@@ -21,6 +21,12 @@ const faqOpen = ref(0)
 function choose(id) {
   selectedPackage.value = id
 }
+
+// "ลงทะเบียนใช้งาน" and the plan buttons open the Website Builder sign-up
+// (/app/login). The plan is remembered and saved on the new website.
+function signupLink(plan) {
+  return `/app/login?mode=signup&lang=${lang.value}${plan ? `&plan=${plan}` : ''}`
+}
 </script>
 
 <template>
@@ -38,11 +44,15 @@ function choose(id) {
         </h1>
         <p class="max-w-xl text-lg leading-relaxed text-base-content/65">{{ t.lead }}</p>
         <div class="flex flex-wrap gap-3 pt-2">
-          <a href="#inquiry" class="btn btn-shimmer rounded-full border-primary px-7 text-primary-content">{{ t.ctaPrimary }}</a>
+          <RouterLink :to="signupLink()" class="btn btn-shimmer rounded-full border-primary px-7 text-primary-content">{{ t.ctaPrimary }}</RouterLink>
           <a :href="FIRE_FIRST_URL" target="_blank" rel="noopener" class="btn rounded-full border-primary/60 bg-transparent px-7 text-primary hover:bg-primary hover:text-primary-content">
             {{ t.ctaSecondary }} ↗
           </a>
         </div>
+        <p class="text-sm text-base-content/55">
+          {{ t.haveAccount }}
+          <RouterLink :to="`/app/login?mode=login&lang=${lang}`" class="text-primary underline-offset-4 hover:underline">{{ t.signIn }}</RouterLink>
+        </p>
       </div>
 
       <!-- Editor mock: Thai/English fields beside a live preview (decorative) -->
@@ -198,12 +208,11 @@ function choose(id) {
               </span>
             </li>
           </ul>
-          <a
-            href="#inquiry"
-            @click="choose(p.id)"
+          <RouterLink
+            :to="signupLink(p.id)"
             class="btn mt-8 rounded-full border-primary"
             :class="p.featured ? 'btn-shimmer text-primary-content' : 'bg-transparent text-primary hover:bg-primary hover:text-primary-content'"
-          >{{ t.choose }}</a>
+          >{{ t.choose }}</RouterLink>
         </article>
       </div>
 

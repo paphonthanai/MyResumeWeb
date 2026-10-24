@@ -4,8 +4,8 @@
 // (Node, no `window`), so anything that only works in a real browser
 // (Analytics, Auth persistence) must be created lazily on the client only.
 import { initializeApp, getApps } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
+import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
+import { getAuth, connectAuthEmulator } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCynTZxr42cuPr7D9TlcoFfz14L7Ls8LXI',
@@ -22,6 +22,14 @@ const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig)
 
 export const db = getFirestore(app)
 export const auth = getAuth(app)
+
+// Local testing against the Firebase emulators (firebase.json "emulators"):
+//   npx firebase emulators:start --only auth,firestore
+//   VITE_USE_EMULATORS=true npm run dev
+if (typeof window !== 'undefined' && import.meta.env.VITE_USE_EMULATORS === 'true') {
+  connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true })
+  connectFirestoreEmulator(db, '127.0.0.1', 8080)
+}
 
 // Analytics needs real browser APIs (IndexedDB, etc.) — only load it
 // client-side, and only after the app has hydrated.

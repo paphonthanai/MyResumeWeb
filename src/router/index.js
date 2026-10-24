@@ -1,11 +1,27 @@
 import HomeView from '../views/HomeView.vue'
 
+// Must match the admin email in firestore.rules. Website Builder customers
+// also sign in with Firebase Auth now, so "signed in" alone is not admin.
+const ADMIN_EMAIL = 'pj06052538@gmail.com'
+
 async function requireAdmin() {
   const { getCurrentUser } = await import('../composables/useAuth')
   const user = await getCurrentUser()
-  if (!user) return { name: 'admin-login' }
+  if (!user || user.email?.toLowerCase() !== ADMIN_EMAIL) return { name: 'admin-login' }
   return true
 }
+
+// Website Builder app (/app/*): client-rendered like /admin, never
+// prerendered (see firebase.json rewrites). Guards live in src/app/session.js.
+const appGuard = (name) => async (to) => (await import('../app/session'))[name](to)
+const appMeta = { title: 'PNJ Tech Website Builder', noindex: true, lang: 'th' }
+const comingSoon = (path, section) => ({
+  path,
+  name: `app-${section}`,
+  component: () => import('../app/views/ComingSoonView.vue'),
+  meta: { ...appMeta, section },
+  beforeEnter: appGuard('requireBuilder'),
+})
 
 export const routes = [
   {
@@ -119,5 +135,33 @@ export const routes = [
     component: () => import('../views/admin/AdminPostEditorView.vue'),
     meta: { title: 'Edit post | PNJ Tech', noindex: true, lang: 'en' },
     beforeEnter: requireAdmin
-  }
+  },
+  {
+    path: '/app/login',
+    name: 'app-login',
+    component: () => import('../app/views/LoginView.vue'),
+    meta: { ...appMeta, title: 'เข้าสู่ระบบ | PNJ Tech Website Builder' },
+    beforeEnter: appGuard('redirectIfSignedIn')
+  },
+  {
+    path: '/app/onboarding',
+    name: 'app-onboarding',
+    component: () => import('../app/views/OnboardingView.vue'),
+    meta: { ...appMeta, title: 'เริ่มสร้างเว็บไซต์ | PNJ Tech Website Builder' },
+    beforeEnter: appGuard('requireOnboarding')
+  },
+  {
+    path: '/app',
+    name: 'app-dashboard',
+    component: () => import('../app/views/DashboardView.vue'),
+    meta: { ...appMeta, title: 'ภาพรวม | PNJ Tech Website Builder' },
+    beforeEnter: appGuard('requireBuilder')
+  },
+  comingSoon('/app/pages', 'pages'),
+  comingSoon('/app/collections', 'collections'),
+  comingSoon('/app/media', 'media'),
+  comingSoon('/app/seo', 'seo'),
+  comingSoon('/app/leads', 'leads'),
+  comingSoon('/app/publish', 'publish'),
+  comingSoon('/app/settings', 'settings')
 ]
