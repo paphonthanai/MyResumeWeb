@@ -29,6 +29,7 @@ FIRE_FIRST_WEB=/path/to/firefirst/web npm test
 | `hero.kicker`, `hero.lead` | หน้า home → block `hero` |
 | `hero.h1` | หน้า home → block `intro.heading` |
 | `values`, `services`, `fleet`, `works`, `reviews`, `pricing`, `faq` | `collections[]` ชื่อเดียวกัน (`works.img` → `image.media`) |
+| `catalog` (หมวด → สินค้า) | `collections[catalog-groups]` (`id` → `key`, `c` → `name`) และ `collections[catalog]` (`group`, `image`, `title`, `features`) — รูป `img: "cone"` → media `products-cone` ไฟล์ `products/cone.jpg` |
 | `reviewNote` | หน้า home → block `reviews.note` |
 | `about.h` | หน้า about → block `titleBand.heading` |
 | `about.p`, `about.md`, `about.mdr`, `about.facts` | หน้า about → block `profile` (`about.p` ใช้ซ้ำใน home → `intro.body`) |
@@ -38,6 +39,7 @@ FIRE_FIRST_WEB=/path/to/firefirst/web npm test
 | `seo.{page}` | `pages[].seo.title / description` |
 | `h.services` | products → `pageHeading`, home → `serviceList.heading` และ `hero.cta.label` |
 | `h.fleet`, `h.pricing` | products → `cardGrid.heading`, `pricingList.heading` |
+| `h.catalog`, `h.catalogNote` | products → block `catalog.heading`, `catalog.note` |
 | `h.works`, `h.all` | works → `worksGrid.heading`, `allLabel` (home → `worksMosaic.heading`) |
 | `h.reviews` | home → `reviews.heading` |
 | `h.faq`, `h.contact` | contact → `faq.heading`, `contactBand.heading` |
@@ -56,4 +58,4 @@ FIRE_FIRST_WEB=/path/to/firefirst/web npm test
 - ข้อความกำลังส่ง / ส่งไม่สำเร็จ (ContactPage.vue) → `forms[contact].sendingLabel / errorMessage`
 - keywords, ข้อมูล LocalBusiness, OG_VERSION (useSeo.js) → `settings.seo`, `settings.organization`, `settings.contact.postal`
 - โลโก้ตัวอักษร FIRE / FIRST และ 24/7 (SiteRail.vue) → `settings.brand.wordmark / tagline`, `settings.header.badge`
-- ขนาดรูปและ alt (site.js `IMAGES`) → `media[]`
+- ขนาดรูปและ alt (site.js `IMAGES`) → `media[]` (key แบบ `products/cone` กลายเป็น media id `products-cone` เพราะ id ใช้ "/" ไม่ได้)

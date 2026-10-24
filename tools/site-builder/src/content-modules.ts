@@ -19,13 +19,16 @@ export function renderFfContent(snapshot: SiteSnapshot, templateFfContent: strin
   return `${HEADER}export const D = ${JSON.stringify(toLegacy(snapshot), null, 1)};\n${templateFfContent.slice(tail + 1)}`
 }
 
-/** site.js: ข้อมูลติดต่อจาก settings.contact และขนาดรูป + alt จากคลังสื่อ */
+/**
+ * site.js: ข้อมูลติดต่อจาก settings.contact และขนาดรูป + alt จากคลังสื่อ
+ * key ของ IMAGES คือ path ของไฟล์ไม่มีนามสกุล (เช่น "products/cone") แบบที่ FfImg.vue ใช้หา
+ */
 export function renderSiteJs(snapshot: SiteSnapshot): string {
   const { contact, url } = snapshot.settings
   const images: Record<string, { w: number; h: number; alt?: unknown }> = {}
   for (const m of snapshot.media) {
     if (m.kind !== 'image' || !m.w || !m.h) continue
-    images[m.id] = m.alt ? { w: m.w, h: m.h, alt: m.alt } : { w: m.w, h: m.h }
+    images[m.file.replace(/\.[a-z0-9]+$/i, '')] = m.alt ? { w: m.w, h: m.h, alt: m.alt } : { w: m.w, h: m.h }
   }
   const j = (v: unknown) => JSON.stringify(v)
   return `${HEADER}export const SITE_URL = (import.meta.env.VITE_SITE_URL || ${j(url)}).replace(/\\/$/, '')

@@ -33,7 +33,14 @@ test('แปลงกลับเป็น ff-content.js ได้ตรงท�
 test('ข้อความทุกตัวใน ff-content.js อยู่ใน snapshot', () => {
   const json = JSON.stringify(snapshot)
   const strings = leaves(D).filter(([, v]) => typeof v === 'string')
-  const missing = strings.filter(([, v]) => !json.includes(JSON.stringify(v)))
+  // ชื่อรูป (…img) เป็นการอ้างถึงไฟล์ ไม่ใช่ข้อความ — ต้องมีไฟล์นั้นในคลังสื่อ เช่น "cone" → products/cone.jpg
+  const isImage = (path: string) => path.endsWith('.img')
+  const files = snapshot.media.map((m) => m.file)
+  const missing = strings.filter(([path, v]) =>
+    isImage(path)
+      ? !files.some((f) => f === v || f.replace(/\.[a-z0-9]+$/i, '').split('/').pop() === v)
+      : !json.includes(JSON.stringify(v)),
+  )
   assert.ok(strings.length > 300, `คาดว่ามีข้อความมากกว่า 300 ค่า ได้ ${strings.length}`)
   assert.deepEqual(missing, [])
 })
@@ -51,13 +58,26 @@ test('toLegacy อ่านค่าจากตำแหน่งที่ edit
 
 test('ขนาดรูปและ alt ใน IMAGES ย้ายเข้าคลังสื่อครบ และตรงกับไฟล์จริง', () => {
   for (const [name, img] of Object.entries(site.IMAGES)) {
-    const m = snapshot.media.find((x) => x.id === name)
+    // key ใน IMAGES เป็น path เช่น "products/cone" → ไฟล์ products/cone.jpg
+    const m = snapshot.media.find((x) => x.file === `${name}.jpg`)
     assert.ok(m, `ไม่มี ${name} ในคลังสื่อ`)
     assert.equal(m.w, img.w, `${name}.w`)
     assert.equal(m.h, img.h, `${name}.h`)
     assert.deepEqual(m.alt, img.alt, `${name}.alt`)
     const real = files[`${name}.jpg`]
     assert.deepEqual([real.w, real.h], [img.w, img.h], `ขนาดใน site.js ของ ${name} ไม่ตรงกับไฟล์จริง`)
+  }
+})
+
+test('แคตตาล็อกแปลงเป็นหมวด + สินค้าครบทุกรายการ พร้อมรูปในคลังสื่อ', () => {
+  const groups = snapshot.collections.find((c) => c.def.id === 'catalog-groups')!.items
+  const products = snapshot.collections.find((c) => c.def.id === 'catalog')!.items
+  assert.equal(groups.length, D.catalog.length)
+  assert.equal(products.length, D.catalog.reduce((n, g) => n + g.items.length, 0))
+  for (const p of products) {
+    const m = snapshot.media.find((x) => x.id === (p.data.image as { media: string }).media)
+    assert.ok(m?.file.startsWith('products/'), `${p.id} ไม่มีรูปสินค้า`)
+    assert.ok(m?.variants.some((v) => v.mime === 'image/webp'), `${m?.file} ไม่มี webp`)
   }
 })
 

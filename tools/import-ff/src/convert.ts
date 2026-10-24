@@ -99,12 +99,33 @@ const COLLECTION_DEFS: CollectionDef[] = [
       { key: 'answer', type: 'localized', label: T('คำตอบ', 'Answer'), required: true },
     ],
   },
+  {
+    id: 'catalog-groups',
+    name: T('หมวดสินค้า', 'Product categories'),
+    fields: [
+      { key: 'key', type: 'text', label: T('รหัสหมวด', 'Category key'), required: true },
+      { key: 'name', type: 'localized', label: T('ชื่อหมวด', 'Name'), required: true },
+    ],
+  },
+  {
+    id: 'catalog',
+    name: T('สินค้าในแคตตาล็อก', 'Product catalogue'),
+    fields: [
+      { key: 'group', type: 'text', label: T('หมวด', 'Category'), required: true },
+      { key: 'image', type: 'media', label: T('รูป', 'Image'), required: true },
+      { key: 'title', type: 'localized', label: T('ชื่อสินค้า', 'Name'), required: true },
+      { key: 'features', type: 'localizedList', label: T('สเปกหลัก', 'Key specs'), required: false },
+    ],
+  },
 ]
 
 const toItems = <T>(list: T[], map: (x: T) => Record<string, unknown>): CollectionItem[] =>
   list.map((x, i) => ({ id: pad(i), order: i, published: true, data: map(x) }))
 
 const stem = (file: string) => file.replace(/\.[a-z0-9]+$/i, '')
+/** media id จาก path ใน img/ เช่น "products/cone" → "products-cone" (id ใช้ "/" ไม่ได้) */
+const mediaId = (path: string) => stem(path).replaceAll('/', '-')
+const productFile = (img: string) => `products/${img}.jpg`
 
 /** แปลงเนื้อหาเว็บ Fire First เดิมเป็น SiteSnapshot ของแพลตฟอร์ม */
 export function fromLegacy(D: LegacyContent, site: LegacySite, files: FileInfo): SiteSnapshot {
@@ -119,6 +140,11 @@ export function fromLegacy(D: LegacyContent, site: LegacySite, files: FileInfo):
     toItems(D.reviews, (r) => ({ quote: r.q, author: r.w })),
     toItems(D.pricing, (p) => ({ title: p.t, price: p.p, unit: p.u, features: p.f, highlight: p.hl === true })),
     toItems(D.faq, (q) => ({ question: q.q, answer: q.a })),
+    toItems(D.catalog, (g) => ({ key: g.id, name: g.c })),
+    toItems(
+      D.catalog.flatMap((g) => g.items.map((p) => ({ group: g.id, ...p }))),
+      (p) => ({ group: p.group, image: { media: mediaId(productFile(p.img)) }, title: p.t, features: p.f }),
+    ),
   ].map((items, i) => ({ def: COLLECTION_DEFS[i], items }))
 
   const pages: Page[] = [
@@ -209,6 +235,16 @@ export function fromLegacy(D: LegacyContent, site: LegacySite, files: FileInfo):
         { id: 'heading', type: 'pageHeading', heading: h.services },
         { id: 'services', type: 'serviceGrid', source: { collection: 'services' } },
         { id: 'fleet', type: 'cardGrid', heading: h.fleet, source: { collection: 'fleet' } },
+        {
+          id: 'catalog',
+          type: 'catalog',
+          heading: h.catalog,
+          note: h.catalogNote,
+          groups: { collection: 'catalog-groups' },
+          groupKeyField: 'key',
+          source: { collection: 'catalog' },
+          groupField: 'group',
+        },
         {
           id: 'pricing',
           type: 'pricingList',
@@ -364,10 +400,16 @@ function buildMedia(D: LegacyContent, site: LegacySite, files: FileInfo): Media[
   }
 
   for (const [name, img] of Object.entries(site.IMAGES)) {
-    add(name, `${name}.jpg`, { w: img.w, h: img.h, ...(img.alt ? { alt: img.alt } : {}) })
+    add(mediaId(name), `${name}.jpg`, { w: img.w, h: img.h, ...(img.alt ? { alt: img.alt } : {}) })
   }
   // รูปผลงานทุกชิ้นต้องอยู่ในคลังสื่อ แม้จะไม่มีใน IMAGES
   for (const w of D.works) if (!out.some((m) => m.id === stem(w.img))) add(stem(w.img), w.img)
+  for (const g of D.catalog) {
+    for (const p of g.items) {
+      const file = productFile(p.img)
+      if (!out.some((m) => m.id === mediaId(file))) add(mediaId(file), file)
+    }
+  }
   add('company', 'company.jpg')
   add('pitch', 'pitch.mp4')
   add('pitch-poster', 'pitch-poster.jpg')
@@ -411,6 +453,10 @@ export function toLegacy(s: SiteSnapshot): LegacyContent {
   const photo = block('about', 'photo')
   const worksGrid = block('works', 'worksGrid')
   const contactBand = block('contact', 'contactBand')
+  const catalog = block('products', 'catalog')
+  const products = items(catalog.source.collection)
+  // "products/cone.jpg" → "cone" (ff-content.js เก็บแค่ชื่อไฟล์ในโฟลเดอร์ products/)
+  const productImg = (id: string) => stem(mediaFile(id)).replace(/^products\//, '')
   const form = s.forms.find((f) => f.id === contactBand.form)!
   const field = (key: string) => L(form.fields.find((f) => f.key === key)!.label)
   const st = s.settings
@@ -427,6 +473,13 @@ export function toLegacy(s: SiteSnapshot): LegacyContent {
     values: items('values').map((d) => ({ k: d.title, s: d.subtitle, d: d.description })),
     services: items('services').map((d) => ({ t: d.title, d: d.description })),
     fleet: items('fleet').map((d) => ({ t: d.title, d: d.description })),
+    catalog: items(catalog.groups.collection).map((g) => ({
+      id: g[catalog.groupKeyField],
+      c: g.name,
+      items: products
+        .filter((p) => p[catalog.groupField] === g[catalog.groupKeyField])
+        .map((p) => ({ img: productImg(p.image.media), t: p.title, f: p.features })),
+    })),
     works: items('works').map((d) => ({ img: mediaFile(d.image.media), t: d.title, c: d.category })),
     reviews: items('reviews').map((d) => ({ q: d.quote, w: d.author })),
     reviewNote: L(reviews.note),
@@ -466,6 +519,8 @@ export function toLegacy(s: SiteSnapshot): LegacyContent {
     h: {
       services: L(block('products', 'pageHeading').heading),
       fleet: L(block('products', 'cardGrid').heading),
+      catalog: L(catalog.heading),
+      catalogNote: L(catalog.note),
       works: L(worksGrid.heading),
       reviews: L(reviews.heading),
       pricing: L(block('products', 'pricingList').heading),
