@@ -27,6 +27,8 @@ export interface LegacyContent {
   values: { k: L; s: L; d: L }[]
   services: { t: L; d: L }[]
   fleet: { t: L; d: L }[]
+  /** สินค้าจากโบรชัวร์ แบ่งหมวด — รูปอยู่ที่ public/img/products/{img}.jpg */
+  catalog: { id: string; c: L; items: { img: string; t: L; f: L[] }[] }[]
   works: { img: string; t: L; c: L }[]
   reviews: { q: L; w: L }[]
   reviewNote: L
@@ -43,6 +45,8 @@ export interface LegacyContent {
   h: {
     services: L
     fleet: L
+    catalog: L
+    catalogNote: L
     works: L
     reviews: L
     pricing: L

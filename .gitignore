@@ -29,5 +29,6 @@ coverage
 
 *.tsbuildinfo
 
-# ผลลัพธ์ของ npm run import:ff
+# ผลลัพธ์ของ npm run import:ff และโฟลเดอร์ build ของ site-builder
 tools/import-ff/out/
+tools/site-builder/.work/
