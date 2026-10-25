@@ -1,11 +1,27 @@
 import HomeView from '../views/HomeView.vue'
 
+// Must match the admin email in firestore.rules. Website Builder customers
+// also sign in with Firebase Auth now, so "signed in" alone is not admin.
+const ADMIN_EMAIL = 'pj06052538@gmail.com'
+
 async function requireAdmin() {
   const { getCurrentUser } = await import('../composables/useAuth')
   const user = await getCurrentUser()
-  if (!user) return { name: 'admin-login' }
+  if (!user || user.email?.toLowerCase() !== ADMIN_EMAIL) return { name: 'admin-login' }
   return true
 }
+
+// Website Builder app (/app/*): client-rendered like /admin, never
+// prerendered (see firebase.json rewrites). Guards live in src/app/session.js.
+const appGuard = (name) => async (to) => (await import('../app/session'))[name](to)
+const appMeta = { title: 'PNJ Created Website', noindex: true, lang: 'th' }
+const comingSoon = (path, section) => ({
+  path,
+  name: `app-${section}`,
+  component: () => import('../app/views/ComingSoonView.vue'),
+  meta: { ...appMeta, section },
+  beforeEnter: appGuard('requireBuilder'),
+})
 
 export const routes = [
   {
@@ -39,9 +55,13 @@ export const routes = [
   {
     path: '/website-builder',
     name: 'website-builder',
+    // The PNJ Created Website app's home page is the same sales page;
+    // canonical stays /website-builder so search engines see one page.
+    alias: ['/app/home', '/app/index'],
     component: () => import('../views/WebsiteBuilderView.vue'),
     meta: {
-      title: 'PNJ Tech Website Builder | สร้างเว็บไซต์บริษัทสองภาษา แก้เองได้',
+      canonical: '/website-builder',
+      title: 'PNJ Created Website | สร้างเว็บไซต์บริษัทสองภาษา แก้เองได้',
       description: 'แพลตฟอร์มสร้างเว็บไซต์บริษัทไทย-อังกฤษ โหลดเร็ว SEO ครบทุกหน้า ฟอร์มขอใบเสนอราคาส่งถึงทีมขาย เปิดรับลูกค้ากลุ่มแรก ลูกค้ารายแรกคือ Fire First Safety & Truck',
       lang: 'th',
       alternates: { th: '/website-builder', en: '/en/website-builder' }
@@ -52,7 +72,7 @@ export const routes = [
     name: 'website-builder-en',
     component: () => import('../views/WebsiteBuilderView.vue'),
     meta: {
-      title: 'PNJ Tech Website Builder | Bilingual company websites your team can edit',
+      title: 'PNJ Created Website | Bilingual company websites your team can edit',
       description: 'A website builder for Thai companies: Thai and English pages, fast loading, full SEO on every page, and quote requests delivered to your sales team. Now onboarding early customers, starting with Fire First Safety & Truck.',
       lang: 'en',
       alternates: { th: '/website-builder', en: '/en/website-builder' }
@@ -119,5 +139,39 @@ export const routes = [
     component: () => import('../views/admin/AdminPostEditorView.vue'),
     meta: { title: 'Edit post | PNJ Tech', noindex: true, lang: 'en' },
     beforeEnter: requireAdmin
-  }
+  },
+  {
+    path: '/app/login',
+    name: 'app-login',
+    component: () => import('../app/views/LoginView.vue'),
+    meta: { ...appMeta, title: 'เข้าสู่ระบบ | PNJ Created Website' },
+    beforeEnter: appGuard('redirectIfSignedIn')
+  },
+  {
+    path: '/app/onboarding',
+    name: 'app-onboarding',
+    component: () => import('../app/views/OnboardingView.vue'),
+    meta: { ...appMeta, title: 'เริ่มสร้างเว็บไซต์ | PNJ Created Website' },
+    beforeEnter: appGuard('requireOnboarding')
+  },
+  {
+    path: '/app',
+    name: 'app-dashboard',
+    component: () => import('../app/views/DashboardView.vue'),
+    meta: { ...appMeta, title: 'ภาพรวม | PNJ Created Website' },
+    beforeEnter: appGuard('requireBuilder')
+  },
+  comingSoon('/app/pages', 'pages'),
+  {
+    path: '/app/collections',
+    name: 'app-collections',
+    component: () => import('../app/views/CollectionsView.vue'),
+    meta: { ...appMeta, title: 'ผลงาน (Collection) | PNJ Created Website' },
+    beforeEnter: appGuard('requireBuilder')
+  },
+  comingSoon('/app/media', 'media'),
+  comingSoon('/app/seo', 'seo'),
+  comingSoon('/app/leads', 'leads'),
+  comingSoon('/app/publish', 'publish'),
+  comingSoon('/app/settings', 'settings')
 ]

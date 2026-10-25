@@ -39,6 +39,71 @@ service cloud.firestore {
                     && request.auth.token.email.lower() == "pj06052538@gmail.com";
     }
 
+    // ---- Website Builder (src/app) ----
+    // Any visitor may sign up, so every rule below is scoped to the signed-in
+    // user's own documents. Plan and publish status can't be changed from
+    // the browser; those will move through a trusted backend later.
+
+    function signedIn() { return request.auth != null; }
+    function optStr(d, k, max) { return !(k in d) || (d[k] is string && d[k].size() <= max); }
+    function ownsTenant(tid) {
+      return signedIn()
+        && get(/databases/$(database)/documents/tenants/$(tid)).data.ownerUid == request.auth.uid;
+    }
+    function validTenant(d) {
+      return d.keys().hasOnly(['ownerUid', 'plan', 'requestedPlan', 'businessType', 'name', 'address',
+               'phone', 'line', 'domain', 'langs', 'template', 'color', 'onboarding', 'status',
+               'createdAt', 'updatedAt'])
+        && d.ownerUid == request.auth.uid
+        && d.template == 'poster'
+        && d.onboarding in [2, 3, 4, 'done']
+        && d.updatedAt == request.time
+        && (!('requestedPlan' in d) || d.requestedPlan == null
+            || d.requestedPlan in ['site-free', 'site-light', 'site-core', 'site-business', 'site-elite'])
+        && (!('businessType' in d) || d.businessType in ['food', 'health', 'industry', 'safety',
+            'construction', 'professional', 'education', 'travel'])
+        && (!('name' in d) || (d.name is map && d.name.keys().hasOnly(['th', 'en'])
+            && d.name.th is string && d.name.th.size() <= 160
+            && d.name.en is string && d.name.en.size() <= 160))
+        && optStr(d, 'address', 300) && optStr(d, 'phone', 20)
+        && optStr(d, 'line', 40) && optStr(d, 'domain', 100)
+        && (!('langs' in d) || d.langs == ['th'] || d.langs == ['th', 'en'])
+        && (!('color' in d) || (d.color is string && d.color.matches('^#[0-9a-fA-F]{6}$')));
+    }
+
+    match /users/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      // tenantId must point at a website this user owns (checked after the
+      // batch that creates both documents).
+      allow create, update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['email', 'displayName', 'tenantId', 'createdAt', 'updatedAt'])
+        && getAfter(/databases/$(database)/documents/tenants/$(request.resource.data.tenantId)).data.ownerUid == request.auth.uid;
+      allow delete: if false;
+    }
+
+    match /tenants/{tid} {
+      allow read: if signedIn() && resource.data.ownerUid == request.auth.uid;
+      allow create: if signedIn() && validTenant(request.resource.data)
+        && request.resource.data.plan == 'free'
+        && request.resource.data.status == 'draft'
+        && request.resource.data.createdAt == request.time;
+      allow update: if signedIn() && resource.data.ownerUid == request.auth.uid
+        && validTenant(request.resource.data)
+        && request.resource.data.plan == resource.data.plan
+        && request.resource.data.status == resource.data.status
+        && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if false;
+
+      match /pages/{pageId} {
+        allow read: if ownsTenant(tid);
+        allow create, update: if ownsTenant(tid)
+          && request.resource.data.keys().hasOnly(['name', 'path', 'order', 'status', 'createdAt'])
+          && request.resource.data.status == 'draft'
+          && request.resource.data.order is int;
+        allow delete: if false;
+      }
+    }
+
     // Everything else is closed by default.
     match /{document=**} {
       allow read, write: if false;

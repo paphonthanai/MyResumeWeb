@@ -13,12 +13,14 @@ export const FIRE_FIRST_URL = 'https://firefirstsafetyandtruck.com'
 
 export const content = {
   th: {
-    kicker: 'PNJ Tech Website Builder',
+    kicker: 'PNJ Created Website · บริการโดย PNJ Tech',
     badge: 'เปิดรับลูกค้ากลุ่มแรก',
     title: 'เว็บไซต์บริษัทสองภาษา ที่ทีมของคุณแก้เองได้',
     lead: 'แพลตฟอร์มสร้างเว็บไซต์องค์กรสำหรับธุรกิจไทย หน้าเว็บโหลดเร็ว ติด Google ด้วย SEO ครบทุกหน้า และส่งคำขอใบเสนอราคาถึงทีมขายทันที',
     ctaPrimary: 'ลงทะเบียนใช้งาน',
     ctaSecondary: 'ดูเว็บลูกค้ารายแรก',
+    haveAccount: 'มีบัญชีแล้ว?',
+    signIn: 'เข้าสู่ระบบ',
     mock: { th: 'ภาษาไทย', en: 'English', field: 'หัวข้อหน้าแรก', saved: 'บันทึกฉบับร่างแล้ว', publish: 'เผยแพร่' },
 
     featuresKicker: 'Features',
@@ -102,20 +104,22 @@ export const content = {
     ],
 
     form: {
-      kicker: 'Early access',
-      title: 'ลงทะเบียนใช้งาน',
-      intro: 'บอกชื่อบริษัท เว็บไซต์เดิม (ถ้ามี) และสิ่งที่ต้องการ เราจะติดต่อกลับเพื่อเริ่มทำเว็บไซต์ของคุณ',
+      kicker: 'Done-for-you',
+      title: 'ให้ทีมเราทำเว็บให้',
+      intro: 'อยากให้ทีม PNJ Tech ย้ายเว็บเดิมหรือทำเว็บใหม่ให้ บอกชื่อบริษัท เว็บไซต์เดิม (ถ้ามี) และสิ่งที่ต้องการ เราจะติดต่อกลับ',
       message: 'บริษัทและสิ่งที่ต้องการ',
     },
     formPackages: { 'site-free': 'Free', 'site-light': 'Light', 'site-core': 'Core', 'site-business': 'Business', 'site-elite': 'Business Elite', 'site-setup': 'บริการจัดทำเว็บให้' },
   },
   en: {
-    kicker: 'PNJ Tech Website Builder',
+    kicker: 'PNJ Created Website · by PNJ Tech',
     badge: 'Now onboarding early customers',
     title: 'Bilingual company websites your team can edit',
     lead: 'A website builder for Thai businesses. Pages load fast, every page is set up for Google, and quote requests go straight to your sales team.',
-    ctaPrimary: 'Join early access',
+    ctaPrimary: 'Sign up',
     ctaSecondary: 'See our first customer',
+    haveAccount: 'Already have an account?',
+    signIn: 'Sign in',
     mock: { th: 'Thai', en: 'English', field: 'Home page headline', saved: 'Draft saved', publish: 'Publish' },
 
     featuresKicker: 'Features',
@@ -199,9 +203,9 @@ export const content = {
     ],
 
     form: {
-      kicker: 'Early access',
-      title: 'Join early access',
-      intro: 'Tell us your company name, your current website (if any) and what you need. We will get back to you to start your site.',
+      kicker: 'Done-for-you',
+      title: 'Let our team build it',
+      intro: 'Want the PNJ Tech team to move your current site or build a new one? Tell us your company name, current website (if any) and what you need, and we will get back to you.',
       message: 'Your company and what you need',
     },
     formPackages: { 'site-free': 'Free', 'site-light': 'Light', 'site-core': 'Core', 'site-business': 'Business', 'site-elite': 'Business Elite', 'site-setup': 'Done-for-you setup' },

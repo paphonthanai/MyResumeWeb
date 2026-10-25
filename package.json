@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "test": "node --test \"packages/*/test/*.test.ts\" \"tools/*/test/*.test.ts\"",
     "typecheck": "tsc -p tsconfig.platform.json",
-    "import:ff": "node tools/import-ff/src/cli.ts"
+    "import:ff": "node tools/import-ff/src/cli.ts",
+    "site:verify-ff": "node tools/site-builder/src/verify-fire-first.ts"
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
