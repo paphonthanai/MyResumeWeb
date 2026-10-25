@@ -12,7 +12,8 @@ const ogImage = `${siteUrl}/favicon.ico`
 
 const title = computed(() => route.meta.title || defaultTitle)
 const description = computed(() => route.meta.description || defaultDescription)
-const canonicalUrl = computed(() => siteUrl + (route.path === '/' ? '/' : route.path))
+// meta.canonical points alias URLs (e.g. /app/home) at their main page.
+const canonicalUrl = computed(() => siteUrl + (route.meta.canonical || (route.path === '/' ? '/' : route.path)))
 
 // Person schema: only real profile links that exist elsewhere on this site
 // (see HelloWorld.vue / AboutView.vue) — no fabricated social URLs.

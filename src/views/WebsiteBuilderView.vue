@@ -18,7 +18,7 @@ useHead({
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Service',
-        name: 'PNJ Tech Website Builder',
+        name: 'PNJ Created Website',
         serviceType: 'Website builder',
         description: route.meta.description,
         url: siteUrl + route.path,

@@ -145,6 +145,24 @@ export const WorksGridBlock = z.object({
   filterLabel: Localized,
 })
 
+/**
+ * แคตตาล็อกสินค้าแบ่งหมวด: หมวดมาจาก collection หนึ่ง (ลำดับ + ชื่อ)
+ * ส่วนสินค้ามาจากอีก collection ที่มี field ชี้ไปยัง key ของหมวด
+ */
+export const CatalogBlock = z.object({
+  ...base,
+  type: z.literal('catalog'),
+  heading: Localized,
+  /** ข้อความใต้หัวข้อ เช่น "ขนาดและรุ่นอื่นสั่งได้" */
+  note: Localized.optional(),
+  groups: CollectionRef,
+  /** field ใน collection หมวด ที่สินค้าใช้อ้างถึง */
+  groupKeyField: FieldKey,
+  source: CollectionRef,
+  /** field ในสินค้าที่เก็บ key ของหมวด */
+  groupField: FieldKey,
+})
+
 export const ContactBandBlock = z.object({
   ...base,
   type: z.literal('contactBand'),
@@ -186,6 +204,7 @@ export const Block = z.discriminatedUnion('type', [
   CardGridBlock,
   PricingListBlock,
   WorksGridBlock,
+  CatalogBlock,
   ContactBandBlock,
   MapBlock,
   FaqBlock,

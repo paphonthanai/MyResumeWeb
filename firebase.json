@@ -22,8 +22,16 @@
       { "source": "/blog", "destination": "/index.html" },
       { "source": "/blog/**", "destination": "/index.html" },
       { "source": "/admin", "destination": "/index.html" },
-      { "source": "/admin/**", "destination": "/index.html" }
+      { "source": "/admin/**", "destination": "/index.html" },
+      { "source": "/app", "destination": "/index.html" },
+      { "source": "/app/**", "destination": "/index.html" }
     ]
+  },
+  "emulators": {
+    "auth": { "port": 9099 },
+    "firestore": { "port": 8080 },
+    "ui": { "enabled": false },
+    "singleProjectMode": true
   },
   "firestore": {
     "rules": "firestore.rules",

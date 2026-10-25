@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, useRoute } from 'vue-router'
-import { ref, provide, computed } from 'vue'
+import { ref, provide } from 'vue'
 import logoGold from '@/components/image/NewLogo_Gold.png'
 
 const route = useRoute()
@@ -9,8 +9,6 @@ const route = useRoute()
 const lang = ref(route.meta.lang === 'en' ? 'en' : 'th')
 provide('lang', lang)
 
-// The Website Builder page has its own Thai and English URLs.
-const builderPath = computed(() => (lang.value === 'en' ? '/en/website-builder' : '/website-builder'))
 </script>
 
 <template>
@@ -27,7 +25,6 @@ const builderPath = computed(() => (lang.value === 'en' ? '/en/website-builder' 
             <li><RouterLink to="/" class="brand-nav-link">Home</RouterLink></li>
             <li><RouterLink to="/#portfolio" class="brand-nav-link">Portfolio</RouterLink></li>
             <li><RouterLink to="/#project" class="brand-nav-link">Project</RouterLink></li>
-            <li><RouterLink :to="builderPath" class="brand-nav-link">Website Builder</RouterLink></li>
             <li><RouterLink to="/about" class="brand-nav-link">About</RouterLink></li>
             <li><RouterLink to="/blog" class="brand-nav-link">Blog</RouterLink></li>
             <li><RouterLink to="/#contact" class="brand-nav-link">Contact</RouterLink></li>
@@ -46,7 +43,6 @@ const builderPath = computed(() => (lang.value === 'en' ? '/en/website-builder' 
           <li><RouterLink to="/" class="brand-nav-link">Home</RouterLink></li>
           <li><RouterLink to="/#portfolio" class="brand-nav-link">Portfolio</RouterLink></li>
           <li><RouterLink to="/#project" class="brand-nav-link">Project</RouterLink></li>
-          <li><RouterLink :to="builderPath" class="brand-nav-link">Website Builder</RouterLink></li>
           <li><RouterLink to="/about" class="brand-nav-link">About</RouterLink></li>
           <li><RouterLink to="/blog" class="brand-nav-link">Blog</RouterLink></li>
           <li><RouterLink to="/#contact" class="brand-nav-link">Contact</RouterLink></li>
@@ -60,6 +56,18 @@ const builderPath = computed(() => (lang.value === 'en' ? '/en/website-builder' 
         >
           {{ lang === 'th' ? 'EN' : 'TH' }}
         </button>
+        <!-- Members: PNJ Created Website customers' back office. Signed-in
+             users are sent on to their dashboard by the login page. -->
+        <RouterLink
+          :to="`/app/login?mode=login&lang=${lang}`"
+          :aria-label="lang === 'th' ? 'สมาชิก เข้าสู่ระบบ PNJ Created Website' : 'Members: sign in to PNJ Created Website'"
+          :title="lang === 'th' ? 'สมาชิก' : 'Members'"
+          class="ml-2 flex h-8 w-8 items-center justify-center rounded-full border border-primary/70 text-primary transition hover:bg-primary hover:text-primary-content"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="h-4 w-4" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+          </svg>
+        </RouterLink>
       </div>
     </header>
 
