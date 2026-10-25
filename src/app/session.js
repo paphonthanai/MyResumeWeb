@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { getCurrentUser } from '@/composables/useAuth'
-import { getTenant, getUserDoc } from './data'
+import { BRAND_COLORS, STARTER_PAGES, createDraftPage, createTenant, getTenant, getUserDoc, updateTenant } from './data'
 
 /** The signed-in builder user and their website (tenant), shared by all app views. */
 export const sessionUser = ref(null)
@@ -31,6 +31,22 @@ export function clearSession() {
   loadedFor = null
 }
 
+/**
+ * Onboarding steps 1-4 are skipped: a signed-in user without a finished
+ * website gets one created right away (starter draft pages included) and
+ * lands on the dashboard. Safe to repeat: pages are written with setDoc.
+ */
+async function ensureWebsite(user, t) {
+  if (t?.onboarding === 'done') return
+  let requestedPlan = null
+  try { requestedPlan = sessionStorage.getItem('pnj-app:plan') || null } catch { /* storage blocked */ }
+  const defaults = { template: 'poster', color: BRAND_COLORS[0], langs: ['th', 'en'], onboarding: 'done' }
+  if (!t) await createTenant(user, { requestedPlan, ...defaults })
+  else await updateTenant(t.id, defaults)
+  const { tenant: fresh } = await loadSession({ force: true })
+  await Promise.all(STARTER_PAGES.map((page, i) => createDraftPage(fresh.id, page, i)))
+}
+
 // Router guards for /app/*. Server-side (vite-ssg) there is no user, but
 // these routes are never prerendered — firebase.json serves them as an SPA.
 
@@ -40,16 +56,16 @@ export async function requireBuilder(to) {
   // Visitors who open /app without signing in see the landing page first.
   if (!user && to.path === '/app') return { path: '/app/home' }
   if (!user) return { name: 'app-login', query: { mode: 'login', next: to.fullPath } }
-  if (!t || t.onboarding !== 'done') return { name: 'app-onboarding' }
+  await ensureWebsite(user, t)
   return true
 }
 
-/** Signed in but not done with onboarding. */
+/** /app/onboarding no longer shows its steps: it sets the website up and opens the dashboard. */
 export async function requireOnboarding() {
   const { user, tenant: t } = await loadSession()
   if (!user) return { name: 'app-login', query: { mode: 'signup' } }
-  if (t?.onboarding === 'done') return { name: 'app-dashboard' }
-  return true
+  await ensureWebsite(user, t)
+  return { name: 'app-dashboard' }
 }
 
 /** The login page sends already signed-in users onward. */
