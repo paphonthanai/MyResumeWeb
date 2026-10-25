@@ -3,7 +3,7 @@ import { computed, inject } from 'vue'
 import { vReveal } from '../utils/reveal'
 import { selectedPackage } from '../utils/inquiryState'
 
-const props = defineProps({ part: { type: String, default: 'top' } }) // 'top' = services + process, 'packages'
+const props = defineProps({ part: { type: String, default: 'services' } }) // 'services', 'process' or 'packages'
 const lang = inject('lang')
 
 // Copy is derived from the real work shown in the Skills section and the
@@ -101,7 +101,7 @@ function choosePackage(id) {
 
 <template>
   <!-- Services -->
-  <section v-if="props.part === 'top'" id="services" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
+  <section v-if="props.part === 'services'" id="services" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
     <div class="mx-auto max-w-6xl">
       <div v-reveal>
         <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.servicesKicker }}</p>
@@ -130,7 +130,7 @@ function choosePackage(id) {
   </section>
 
   <!-- Process -->
-  <section v-if="props.part === 'top'" id="process" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
+  <section v-if="props.part === 'process'" id="process" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
     <div class="mx-auto max-w-6xl">
       <div v-reveal>
         <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.processKicker }}</p>

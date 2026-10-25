@@ -29,8 +29,8 @@ export const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      title: 'ปพนธนัย ใจมา (PNJ Tech) | Fullstack Developer Portfolio',
-      description: 'พอร์ตโฟลิโอและเรซูเม่ของปพนธนัย ใจมา (PNJ Tech) นักพัฒนาซอฟต์แวร์ฟรีแลนซ์ ประสบการณ์กว่า 5 ปี พัฒนาเว็บและแอปด้วย Vue.js, Flutter, Firebase, PHP รวมผลงานจริงและทักษะด้าน Security/CTF',
+      title: 'PNJ Tech | From code to Hardware: SaaS ซอฟต์แวร์ Server และกล้องวงจรปิด',
+      description: 'PNJ Tech ผู้ให้บริการเทคโนโลยีครบวงจร: SaaS สร้างเว็บบริษัทสองภาษา (Created Website) พัฒนาซอฟต์แวร์ ติดตั้งระบบ Server กล้องวงจรปิด เครือข่าย LAN/Wi-Fi งานเดินสาย IoT หุ่นยนต์ และอบรม ทีมเดียวที่เปลี่ยนความต้องการเป็นผลลัพธ์ที่จับต้องได้',
       lang: 'th',
       // Marks this and '/en' as language alternates of the same page,
       // so App.vue can emit hreflang links between them.
@@ -46,8 +46,8 @@ export const routes = [
     // crawlable, prerendered URL instead of only a client-side toggle.
     component: HomeView,
     meta: {
-      title: 'Paphonthanai Jaima (PNJ Tech) | Fullstack Developer Portfolio',
-      description: 'Portfolio and resume of Paphonthanai Jaima (PNJ Tech), a freelance software developer with 5+ years of experience building web and mobile apps with Vue.js, Flutter, Firebase and PHP. Includes real projects and Security/CTF skills.',
+      title: 'PNJ Tech | From code to Hardware: SaaS, software, servers and CCTV',
+      description: 'PNJ Tech is a full-service technology team in Thailand: Created Website (bilingual company sites as a service), custom software, server setup, CCTV, LAN/Wi-Fi and cabling, IoT, robotics and training, with one team turning a need into a result you can touch.',
       lang: 'en',
       alternates: { th: '/', en: '/en' }
     }

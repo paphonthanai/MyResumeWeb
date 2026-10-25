@@ -4,6 +4,8 @@ import { RouterLink } from 'vue-router'
 import loanAppImage from './image/Project/AppsLone/01.png'
 import websiteImage from './image/Project/web-vue/01.png'
 // เลือกภาษา
+// 'profile' = skills + experience, 'proof' = projects + reviews, 'contact' = ways to reach me
+const props = defineProps({ part: { type: String, default: 'profile' } })
 const lang = inject('lang')
 
 // เนื้อหาทั้งหมดแยกตามภาษา
@@ -524,7 +526,7 @@ const fastwork = {
 </script>
 
 <template>
-  <section id="portfolio" class="border-b border-base-300 bg-base-100 py-20 px-6 md:px-10">
+  <section v-if="props.part === 'profile'" id="portfolio" class="border-b border-base-300 bg-base-100 py-20 px-6 md:px-10">
     <div class="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-[1.15fr_0.85fr]">
       <!-- Left Column: Skills -->
       <div>
@@ -643,7 +645,7 @@ const fastwork = {
           </div>
         </div>
 
-        <div id="contact" class="grid grid-cols-1 gap-8 rounded-lg border border-base-300 bg-base-200/40 p-7 sm:grid-cols-2">
+        <div class="rounded-lg border border-base-300 bg-base-200/40 p-7">
           <div>
             <h4 class="font-display text-base font-semibold text-primary">{{ t.recognition }}</h4>
             <ul class="mt-3 space-y-2 text-sm text-base-content/70">
@@ -666,36 +668,65 @@ const fastwork = {
               </li>
             </ul>
           </div>
+        </div>
 
+        <div class="grid grid-cols-2 gap-6 rounded-lg border border-base-300 bg-base-200/40 p-7">
           <div>
-            <h4 class="font-display text-base font-semibold text-primary">{{ t.contact }}</h4>
-            <div class="mt-3 space-y-3 text-sm">
-              <div class="flex items-center gap-2 text-base-content/70">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 shrink-0 text-primary/70">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-                </svg>
-                <a href="mailto:Pj06052538@gmail.com" class="hover:text-primary">Pj06052538@gmail.com</a>
-              </div>
-              <div class="flex items-center gap-2 text-base-content/70">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 text-primary/70" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.271c-.966 0-1.75-.787-1.75-1.75s.784-1.75 1.75-1.75 1.75.787 1.75 1.75-.784 1.75-1.75 1.75zm13.5 10.271h-3v-4.5c0-1.074-.021-2.458-1.5-2.458s-1.731 1.174-1.731 2.382v4.576h-3v-9h2.881v1.233h.042c.401-.761 1.379-1.561 2.839-1.561 3.033 0 3.591 1.996 3.591 4.59v4.738z" />
-                </svg>
-                <a href="https://www.linkedin.com/in/%E0%B8%9B%E0%B8%9E%E0%B8%99%E0%B8%98%E0%B8%99%E0%B8%B1%E0%B8%A2-%E0%B9%83%E0%B8%88%E0%B8%A1%E0%B8%B2-aa57b2269/" target="_blank" rel="noopener noreferrer" class="hover:text-primary">linkedin.com/in/npjtech</a>
-              </div>
-              <div class="flex items-center gap-2 text-base-content/70">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 text-primary/70" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-                </svg>
-                <a href="https://www.facebook.com/Paphonthanai.name" target="_blank" rel="noopener noreferrer" class="hover:text-primary">Facebook — Paphonthanai.name</a>
-              </div>
-              <div class="flex items-start gap-2 text-base-content/70">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mt-0.5 h-5 w-5 shrink-0 text-primary/70" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
-                </svg>
-                <a href="https://m.me/Paphonthanai.name" target="_blank" rel="noopener noreferrer" class="hover:text-primary">{{ t.messengerLabel }}</a>
-              </div>
-            </div>
+            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.projectStatus }}</p>
+            <p class="mt-1 font-display text-lg font-semibold text-primary">In Progress</p>
           </div>
+          <div>
+            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.trustScore }}</p>
+            <p class="mt-1 font-display text-lg font-semibold text-primary">99.5%</p>
+          </div>
+          <div>
+            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.username }}</p>
+            <p class="mt-1 text-sm text-base-content/70">npj.tech</p>
+          </div>
+          <div>
+            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.github }}</p>
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/paphonthanai" class="mt-1 block text-sm text-base-content/70 hover:text-primary">github.com/paphonthanai</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section v-else-if="props.part === 'proof'" id="project" class="border-b border-base-300 bg-base-100 py-20 px-6 md:px-10">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="font-display text-3xl font-semibold text-base-content">{{ t.featuredProjects }}</h2>
+      <div class="mt-3 h-px w-16 bg-primary/60"></div>
+
+      <div class="mt-10 grid gap-8 lg:grid-cols-[1fr_20rem]">
+        <div class="grid gap-8 md:grid-cols-2">
+        <div
+          v-for="(project, i) in featuredProjects"
+          :key="i"
+          class="group overflow-hidden rounded-lg border border-base-300 bg-base-200/40 transition hover:border-primary/40"
+        >
+          <div v-if="project.builder" class="flex aspect-[400/212] w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-primary/20 via-base-200 to-base-300">
+            <span class="font-display text-2xl font-semibold tracking-[0.15em] text-base-content">PNJ <span class="text-primary">CREATED</span></span>
+            <span class="text-xs uppercase tracking-[0.25em] text-base-content/60">Website</span>
+          </div>
+          <div v-else class="overflow-hidden">
+            <img
+              :src="project.image"
+              :alt="`${project.title} project screenshot`"
+              width="400" height="212" loading="lazy"
+              class="w-full transition duration-500 group-hover:scale-105"
+            />
+          </div>
+          <div class="p-6">
+            <p class="font-display text-lg font-semibold text-base-content">{{ project.title }}</p>
+            <p class="mt-1 text-sm text-base-content/60">{{ project.desc }}</p>
+            <RouterLink v-if="project.builder" :to="builderPath" class="btn btn-sm mt-4 rounded-full border-primary/70 bg-transparent px-5 text-xs uppercase tracking-widest text-primary transition hover:bg-primary hover:text-primary-content">
+              {{ t.viewMore }}
+            </RouterLink>
+            <button v-else class="btn btn-sm mt-4 rounded-full border-primary/70 bg-transparent px-5 text-xs uppercase tracking-widest text-primary transition hover:bg-primary hover:text-primary-content">
+              {{ t.viewMore }}
+            </button>
+          </div>
+        </div>
         </div>
 
         <div class="rounded-lg border border-base-300 bg-base-200/40 p-7">
@@ -751,64 +782,39 @@ const fastwork = {
             </li>
           </ul>
         </div>
-
-        <div class="grid grid-cols-2 gap-6 rounded-lg border border-base-300 bg-base-200/40 p-7">
-          <div>
-            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.projectStatus }}</p>
-            <p class="mt-1 font-display text-lg font-semibold text-primary">In Progress</p>
-          </div>
-          <div>
-            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.trustScore }}</p>
-            <p class="mt-1 font-display text-lg font-semibold text-primary">99.5%</p>
-          </div>
-          <div>
-            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.username }}</p>
-            <p class="mt-1 text-sm text-base-content/70">npj.tech</p>
-          </div>
-          <div>
-            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.github }}</p>
-            <a target="_blank" rel="noopener noreferrer" href="https://github.com/paphonthanai" class="mt-1 block text-sm text-base-content/70 hover:text-primary">github.com/paphonthanai</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 📁 Featured Projects -->
-    <div id="project" class="mx-auto mt-20 max-w-6xl">
-      <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.featuredProjects }}</p>
-      <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.featuredProjects }}</h2>
-      <div class="mt-3 h-px w-16 bg-primary/60"></div>
-
-      <div class="mt-10 grid gap-8 md:grid-cols-2">
-        <div
-          v-for="(project, i) in featuredProjects"
-          :key="i"
-          class="group overflow-hidden rounded-lg border border-base-300 bg-base-200/40 transition hover:border-primary/40"
-        >
-          <div v-if="project.builder" class="flex aspect-[400/212] w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-primary/20 via-base-200 to-base-300">
-            <span class="font-display text-2xl font-semibold tracking-[0.15em] text-base-content">PNJ <span class="text-primary">CREATED</span></span>
-            <span class="text-xs uppercase tracking-[0.25em] text-base-content/60">Website</span>
-          </div>
-          <div v-else class="overflow-hidden">
-            <img
-              :src="project.image"
-              :alt="`${project.title} project screenshot`"
-              width="400" height="212" loading="lazy"
-              class="w-full transition duration-500 group-hover:scale-105"
-            />
-          </div>
-          <div class="p-6">
-            <p class="font-display text-lg font-semibold text-base-content">{{ project.title }}</p>
-            <p class="mt-1 text-sm text-base-content/60">{{ project.desc }}</p>
-            <RouterLink v-if="project.builder" :to="builderPath" class="btn btn-sm mt-4 rounded-full border-primary/70 bg-transparent px-5 text-xs uppercase tracking-widest text-primary transition hover:bg-primary hover:text-primary-content">
-              {{ t.viewMore }}
-            </RouterLink>
-            <button v-else class="btn btn-sm mt-4 rounded-full border-primary/70 bg-transparent px-5 text-xs uppercase tracking-widest text-primary transition hover:bg-primary hover:text-primary-content">
-              {{ t.viewMore }}
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </section>
+
+  <div v-else-if="props.part === 'contact'" id="contact">
+          <div>
+            <h4 class="font-display text-base font-semibold text-primary">{{ t.contact }}</h4>
+            <div class="mt-3 space-y-3 text-sm">
+              <div class="flex items-center gap-2 text-base-content/70">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 shrink-0 text-primary/70">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                </svg>
+                <a href="mailto:Pj06052538@gmail.com" class="hover:text-primary">Pj06052538@gmail.com</a>
+              </div>
+              <div class="flex items-center gap-2 text-base-content/70">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 text-primary/70" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.271c-.966 0-1.75-.787-1.75-1.75s.784-1.75 1.75-1.75 1.75.787 1.75 1.75-.784 1.75-1.75 1.75zm13.5 10.271h-3v-4.5c0-1.074-.021-2.458-1.5-2.458s-1.731 1.174-1.731 2.382v4.576h-3v-9h2.881v1.233h.042c.401-.761 1.379-1.561 2.839-1.561 3.033 0 3.591 1.996 3.591 4.59v4.738z" />
+                </svg>
+                <a href="https://www.linkedin.com/in/%E0%B8%9B%E0%B8%9E%E0%B8%99%E0%B8%98%E0%B8%99%E0%B8%B1%E0%B8%A2-%E0%B9%83%E0%B8%88%E0%B8%A1%E0%B8%B2-aa57b2269/" target="_blank" rel="noopener noreferrer" class="hover:text-primary">linkedin.com/in/npjtech</a>
+              </div>
+              <div class="flex items-center gap-2 text-base-content/70">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 text-primary/70" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                </svg>
+                <a href="https://www.facebook.com/Paphonthanai.name" target="_blank" rel="noopener noreferrer" class="hover:text-primary">Facebook — Paphonthanai.name</a>
+              </div>
+              <div class="flex items-start gap-2 text-base-content/70">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mt-0.5 h-5 w-5 shrink-0 text-primary/70" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
+                </svg>
+                <a href="https://m.me/Paphonthanai.name" target="_blank" rel="noopener noreferrer" class="hover:text-primary">{{ t.messengerLabel }}</a>
+              </div>
+            </div>
+          </div>
+  </div>
 </template>

@@ -13,6 +13,18 @@ module.exports = {
         displayThai: ['"Noto Serif Thai"', 'serif'],
         sans: ['"Outfit"', 'sans-serif'],
         thai: ['"Noto Sans Thai"', 'sans-serif'],
+        plex: ['"IBM Plex Sans Thai"', 'system-ui', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+      },
+      // Company-site palette (design handoff): warm black, hairline borders, one gold.
+      colors: {
+        pnj: {
+          bg: '#0F0E0C', surface: '#151310', s2: '#1A1814', s3: '#1E1B16',
+          line: '#2A2722', line2: '#3A362F',
+          text: '#F3EFE7', text2: '#C9C2B5', muted: '#A39C8F', faint: '#7D766A',
+          gold: '#D9AE5B', goldhi: '#F0CE86', ongold: '#1A1408', ok: '#8FC79A',
+          paper: '#F4F1EA', ink: '#1C1A16', goldink: '#8A6A2A',
+        },
       },
       
     },

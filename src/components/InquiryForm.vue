@@ -120,6 +120,7 @@ async function submit() {
         <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.title }}</h2>
         <div class="mt-3 h-px w-16 bg-primary/60"></div>
         <p class="mt-5 text-base-content/60">{{ t.intro }}</p>
+        <div class="mt-8 border-t border-base-300 pt-6"><slot /></div>
       </div>
 
       <div v-reveal class="rounded-lg border border-base-300 bg-base-200/40 p-7">
