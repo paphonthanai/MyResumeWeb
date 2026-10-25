@@ -91,6 +91,10 @@ export function validateSnapshot(input: unknown): Issue[] {
       walkRefs(b, at, { link: checkLink, media: checkMedia, source: checkSource })
       if (b.type === 'contactBand' && !formIds.has(b.form)) issues.push({ path: at, message: `ไม่มีฟอร์ม ${b.form}` })
       if (b.type === 'worksGrid') checkSource({ collection: b.source.collection, field: b.categoryField }, `${at}.categoryField`)
+      if (b.type === 'catalog') {
+        checkSource({ collection: b.groups.collection, field: b.groupKeyField }, `${at}.groupKeyField`)
+        checkSource({ collection: b.source.collection, field: b.groupField }, `${at}.groupField`)
+      }
     })
   }
 

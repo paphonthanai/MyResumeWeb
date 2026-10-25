@@ -20,7 +20,7 @@ watch(() => route.fullPath, () => (open.value = false))
 const NAV = [
   { id: 'dashboard', to: '/app', ready: true },
   { id: 'pages', to: '/app/pages' },
-  { id: 'collections', to: '/app/collections' },
+  { id: 'collections', to: '/app/collections', ready: true },
   { id: 'media', to: '/app/media' },
   { id: 'seo', to: '/app/seo' },
   { id: 'leads', to: '/app/leads' },
