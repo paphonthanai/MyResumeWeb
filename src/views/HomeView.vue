@@ -2,6 +2,7 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 import TheWelcome from '../components/TheWelcome.vue'
 import HomeSections from '../components/HomeSections.vue'
+import WorkGallery from '../components/WorkGallery.vue'
 import InquiryForm from '../components/InquiryForm.vue'
 import UserLayout from '../layout/UserLayout.vue'
 </script>
@@ -11,6 +12,7 @@ import UserLayout from '../layout/UserLayout.vue'
     <main>
       <TheWelcome />
       <HomeSections part="top" />
+      <WorkGallery />
       <HelloWorld />
       <HomeSections part="packages" />
       <InquiryForm />

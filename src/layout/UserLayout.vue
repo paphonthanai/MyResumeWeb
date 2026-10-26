@@ -24,6 +24,7 @@ provide('lang', lang)
           <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 w-56 gap-1 rounded-box border border-base-300 bg-base-200 p-3 shadow-xl z-20">
             <li><RouterLink to="/" class="brand-nav-link">Home</RouterLink></li>
             <li><RouterLink to="/#portfolio" class="brand-nav-link">Portfolio</RouterLink></li>
+            <li><RouterLink to="/#gallery" class="brand-nav-link">Gallery</RouterLink></li>
             <li><RouterLink to="/#project" class="brand-nav-link">Project</RouterLink></li>
             <li><RouterLink to="/about" class="brand-nav-link">About</RouterLink></li>
             <li><RouterLink to="/blog" class="brand-nav-link">Blog</RouterLink></li>
@@ -42,6 +43,7 @@ provide('lang', lang)
         <ul class="flex items-center gap-8 text-sm uppercase tracking-[0.12em]">
           <li><RouterLink to="/" class="brand-nav-link">Home</RouterLink></li>
           <li><RouterLink to="/#portfolio" class="brand-nav-link">Portfolio</RouterLink></li>
+          <li><RouterLink to="/#gallery" class="brand-nav-link">Gallery</RouterLink></li>
           <li><RouterLink to="/#project" class="brand-nav-link">Project</RouterLink></li>
           <li><RouterLink to="/about" class="brand-nav-link">About</RouterLink></li>
           <li><RouterLink to="/blog" class="brand-nav-link">Blog</RouterLink></li>

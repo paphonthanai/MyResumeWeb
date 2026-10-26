@@ -1,6 +1,7 @@
 <script setup>
 import { computed, inject } from 'vue'
 import logoGold from './image/NewLogo_Gold.png'
+import heroDesk from './image/hero-desk.webp'
 
 // เลือกภาษา
 const lang = inject('lang')
@@ -41,9 +42,11 @@ const chips = [
 </script>
 
 <template>
-  <section class="hero relative overflow-hidden border-b border-base-300 bg-base-100">
+  <section class="hero relative isolate overflow-hidden border-b border-base-300 bg-base-100">
     <!-- Ambient layers: tech grid, drifting glows, slow scan line -->
     <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+      <!-- The real multi-monitor workstation, dimmed so the text stays readable -->
+      <div class="hero-photo absolute inset-0 bg-cover bg-center" :style="{ backgroundImage: `url(${heroDesk})` }"></div>
       <div class="hero-grid absolute inset-0"></div>
       <div class="hero-orb hero-orb-a absolute -top-24 right-[-10%] h-[420px] w-[420px] rounded-full bg-primary/10 blur-3xl"></div>
       <div class="hero-orb hero-orb-b absolute bottom-[-15%] left-[-10%] h-[320px] w-[320px] rounded-full bg-primary/5 blur-3xl"></div>
@@ -119,6 +122,19 @@ const chips = [
 </template>
 
 <style scoped>
+/* Desk photo: strongest behind the logo side, fading into the page colour under the copy */
+.hero-photo {
+  opacity: 0.32;
+  filter: saturate(0.7);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.35) 35%, #000 75%), linear-gradient(to bottom, #000 70%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.35) 35%, #000 75%), linear-gradient(to bottom, #000 70%, transparent);
+  mask-composite: intersect;
+}
+@media (max-width: 767px) {
+  .hero-photo { opacity: 0.18; -webkit-mask-image: none; mask-image: none; }
+}
+
 /* Tech grid that fades out toward the edges */
 .hero-grid {
   background-image:
