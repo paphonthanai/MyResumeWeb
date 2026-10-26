@@ -13,7 +13,7 @@ const content = {
   th: {
     kicker: 'Portfolio',
     title: 'ผลงานจริงจากหน้างาน',
-    intro: 'ภาพจากงานที่ลงมือทำจริง ตั้งแต่หุ่นยนต์ ติดตั้งกล้องวงจรปิด ซ่อมฮาร์ดแวร์ ไปจนถึงพัฒนาซอฟต์แวร์และการแข่งขันด้าน Cybersecurity',
+    intro: 'ภาพจากงานที่ลงมือทำจริง ตั้งแต่หุ่นยนต์ ติดตั้งกล้องวงจรปิด ซ่อมฮาร์ดแวร์ ไปจนถึงพัฒนาซอฟต์แวร์และการอบรมด้าน Cyber Security',
     more: 'ดูเพิ่มเติม',
     close: 'ปิด',
     prev: 'ภาพก่อนหน้า',
@@ -22,7 +22,7 @@ const content = {
   en: {
     kicker: 'Portfolio',
     title: 'Real work, on site',
-    intro: 'Photos from hands-on jobs — robotics, CCTV installs, hardware repair, software development and cybersecurity competitions.',
+    intro: 'Photos from hands-on jobs — robotics, CCTV installs, hardware repair, software development and Cyber Security training.',
     more: 'Show more',
     close: 'Close',
     prev: 'Previous photo',
