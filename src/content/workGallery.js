@@ -61,11 +61,11 @@ export const items = [
   { id: 'app-flow', cat: 'software', th: 'ผังการทำงานของแอป', en: 'App screen flow' },
   { id: 'data-analysis', cat: 'software', th: 'วิเคราะห์ข้อมูลด้วย Python', en: 'Data analysis in Python' },
 
-  { id: 'ctf-group', cat: 'security', th: 'ร่วมกิจกรรมแข่งขัน Cybersecurity', en: 'Cybersecurity competition' },
-  { id: 'ctf-room', cat: 'security', th: 'บรรยากาศห้องแข่งขัน CTF', en: 'In the CTF competition room' },
+  { id: 'ctf-group', cat: 'security', th: 'ผ่านการอบรมหลักสูตร Cyber Security', en: 'Completed a Cyber Security training course' },
+  { id: 'ctf-room', cat: 'security', th: 'บรรยากาศห้องอบรม Cyber Security', en: 'In the Cyber Security training room' },
   { id: 'ctf-flag', cat: 'security', th: 'ถอดรหัสหา Flag', en: 'Decoding a CTF flag' },
   { id: 'ctf-setup', cat: 'security', th: 'โต๊ะทำงานฝึก Ethical Hacking', en: 'Ethical hacking practice setup' },
-  { id: 'ctf-pin', cat: 'security', th: 'ได้รับเข็มกลัดจากการแข่งขัน', en: 'Competition pin' },
+  { id: 'ctf-pin', cat: 'security', th: 'เข็มกลัดจากการอบรม Cyber Security', en: 'Cyber Security training pin' },
 
   { id: 'design-ragnarok', cat: 'design', th: 'ออกแบบโลโก้และแบนเนอร์เกม', en: 'Game logo and banner design' },
   { id: 'design-mascot', cat: 'design', th: 'ออกแบบมาสคอต', en: 'Mascot illustration' },
