@@ -12,7 +12,7 @@ export const categories = [
   { id: 'hardware', th: 'ซ่อมและอัปเกรดฮาร์ดแวร์', en: 'Hardware repair' },
   { id: 'software', th: 'ซอฟต์แวร์และระบบ', en: 'Software & systems' },
   { id: 'security', th: 'Cybersecurity / CTF', en: 'Cybersecurity / CTF' },
-  { id: 'design', th: 'ออกแบบกราฟิก', en: 'Graphic design' },
+  { id: 'design', th: 'ออกแบบกราฟิกและวิดีโอ', en: 'Graphic & video' },
 ]
 
 export const items = [
@@ -42,8 +42,17 @@ export const items = [
   { id: 'laptop-board', cat: 'hardware', th: 'ซ่อมบอร์ดโน้ตบุ๊ก', en: 'Laptop board repair' },
   { id: 'desktop-gpu', cat: 'hardware', th: 'ตรวจเช็กคอมพิวเตอร์ตั้งโต๊ะ', en: 'Desktop PC servicing' },
   { id: 'appliance-repair', cat: 'hardware', th: 'ซ่อมเครื่องใช้ไฟฟ้า', en: 'Appliance repair' },
+  { id: 'gpu-upgrade', cat: 'hardware', th: 'อัปเกรดการ์ดจอ Radeon RX 5600 XT', en: 'Radeon RX 5600 XT graphics upgrade' },
+  { id: 'pc-ram', cat: 'hardware', th: 'ติดตั้งแรมคอมพิวเตอร์ตั้งโต๊ะ', en: 'Installing desktop RAM' },
+  { id: 'tv-board', cat: 'hardware', th: 'ซ่อมบอร์ดจอภาพ', en: 'Display mainboard repair' },
+  { id: 'motorcycle-wiring', cat: 'hardware', th: 'ซ่อมระบบไฟรถจักรยานยนต์', en: 'Motorcycle wiring repair' },
+  { id: 'laptop-dell', cat: 'hardware', th: 'โน้ตบุ๊ก Dell หลังซ่อมเสร็จ', en: 'Dell laptop after repair' },
 
   { id: 'flutter-dev', cat: 'software', th: 'พัฒนาแอปมือถือด้วย Flutter', en: 'Building a Flutter mobile app' },
+  { id: 'coop-app-home', cat: 'software', th: 'แอปสหกรณ์ออมทรัพย์ หน้าสรุปเงินกู้', en: 'Co-op savings app: loan summary' },
+  { id: 'coop-app-menu', cat: 'software', th: 'แอปสหกรณ์ออมทรัพย์ เมนูบริการ', en: 'Co-op savings app: services menu' },
+  { id: 'dev-workstation', cat: 'software', th: 'เขียนโค้ดบนเวิร์กสเตชันหลายจอ', en: 'Coding on a multi-monitor workstation' },
+  { id: 'game-unreal', cat: 'software', th: 'พัฒนาเกมด้วย Unreal Engine Blueprint', en: 'Game prototyping with Unreal Engine Blueprints' },
   { id: 'cctv-app', cat: 'software', th: 'แอป Operator ดูภาพกล้องและ ANPR', en: 'Operator app with CCTV and ANPR' },
   { id: 'cctv-web', cat: 'software', th: 'เว็บแดชบอร์ดกล้องวงจรปิด', en: 'CCTV web dashboard' },
   { id: 'driver-app', cat: 'software', th: 'แอปคนขับสำหรับระบบขนส่ง', en: 'Driver app for a transport system' },
@@ -61,4 +70,5 @@ export const items = [
   { id: 'design-ragnarok', cat: 'design', th: 'ออกแบบโลโก้และแบนเนอร์เกม', en: 'Game logo and banner design' },
   { id: 'design-mascot', cat: 'design', th: 'ออกแบบมาสคอต', en: 'Mascot illustration' },
   { id: 'design-logo', cat: 'design', th: 'ออกแบบตราสัญลักษณ์', en: 'Emblem design' },
+  { id: 'video-edit', cat: 'design', th: 'ตัดต่อวิดีโอ', en: 'Video editing' },
 ]
