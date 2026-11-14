@@ -44,6 +44,32 @@ module.exports = {
           "--tab-radius": "0.25rem",
         },
       },
+      {
+        // Homepage look: near-black, cool silver text, magenta/violet accent
+        // taken from the Contact button gradient. Set via UserLayout's `theme`.
+        studio: {
+          "color-scheme": "dark",
+          primary: "#d36ce3",
+          "primary-content": "#0c0c0c",
+          secondary: "#9a5ce0",
+          "secondary-content": "#0c0c0c",
+          accent: "#be4c00",
+          "accent-content": "#ffffff",
+          neutral: "#161616",
+          "neutral-content": "#d7e2ea",
+          "base-100": "#0c0c0c",
+          "base-200": "#151515",
+          "base-300": "#262626",
+          "base-content": "#d7e2ea",
+          info: "#8fb8c9",
+          success: "#8fae6f",
+          warning: "#e0a84f",
+          error: "#d0654a",
+          "--rounded-box": "1.5rem",
+          "--rounded-btn": "9999px",
+          "--tab-radius": "9999px",
+        },
+      },
     ],
   },
 }

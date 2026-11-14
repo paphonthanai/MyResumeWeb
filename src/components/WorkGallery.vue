@@ -2,6 +2,7 @@
 import { computed, inject, onBeforeUnmount, ref, watch } from 'vue'
 import { vReveal } from '../utils/reveal'
 import { categories, items } from '../content/workGallery'
+import { galleryFilter as active } from '../utils/galleryState'
 
 const lang = inject('lang')
 
@@ -31,7 +32,6 @@ const content = {
 }
 const t = computed(() => content[lang.value])
 
-const active = ref('all')
 const expanded = ref(false)
 const PAGE = 12
 

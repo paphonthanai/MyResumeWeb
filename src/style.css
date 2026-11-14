@@ -39,6 +39,51 @@ h1, h2, h3, h4, h5, h6 {
   background: #d4af37;
 }
 
+/* Studio theme (homepage): Kanit everywhere, including the serif "display" headings */
+[data-theme='studio'],
+[data-theme='studio'] :is(h1, h2, h3, h4, h5, h6),
+[data-theme='studio'] .font-display,
+[data-theme='studio'] .font-sans {
+  font-family: 'Kanit', 'Noto Sans Thai', sans-serif;
+}
+[data-theme='studio'] .btn-shimmer {
+  background-image: linear-gradient(123deg, #18011f 7%, #b600a8 37%, #7621b0 72%, #be4c00 100%);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Silver gradient for the oversized studio headings */
+.studio-heading {
+  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Studio fade-in (see utils/fade.js); offsets come from --fx/--fy */
+.fade-init {
+  opacity: 0;
+  transform: translate(var(--fx, 0), var(--fy, 30px));
+  transition: opacity var(--fd, 0.7s) cubic-bezier(0.25, 0.1, 0.25, 1), transform var(--fd, 0.7s) cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.fade-init.fade-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero entrance: CSS-only so the prerendered page animates without waiting for JS */
+@keyframes studio-enter {
+  from { opacity: 0; transform: translate(var(--fx, 0), var(--fy, 30px)); }
+  to { opacity: 1; transform: none; }
+}
+.studio-enter {
+  animation: studio-enter 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  animation-delay: var(--delay, 0s);
+}
+@media (prefers-reduced-motion: reduce) {
+  .studio-enter { animation: none; }
+}
+
 /* Scroll reveal (see utils/reveal.js) */
 .reveal-init {
   opacity: 0;

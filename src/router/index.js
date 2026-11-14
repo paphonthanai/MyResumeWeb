@@ -40,7 +40,7 @@ export const routes = [
   {
     path: '/en',
     name: 'home-en',
-    // Same component as Home — HelloWorld/TheWelcome already render from
+    // Same component as Home — the homepage sections already render from
     // the shared th/en content dictionary via the language toggle's
     // provide/inject; this route just makes the English version its own
     // crawlable, prerendered URL instead of only a client-side toggle.

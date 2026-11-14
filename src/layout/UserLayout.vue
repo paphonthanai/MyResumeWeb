@@ -3,6 +3,13 @@ import { RouterLink, useRoute } from 'vue-router'
 import { ref, provide } from 'vue'
 import logoGold from '@/components/image/NewLogo_Gold.png'
 
+// theme: a daisyUI theme for this page only (the site default is "luxe").
+// bare: the page draws its own navigation, so the shared header is left out.
+const props = defineProps({
+  theme: { type: String, default: undefined },
+  bare: { type: Boolean, default: false },
+})
+
 const route = useRoute()
 // Initial language follows the route (e.g. "/en" prerenders in English for
 // crawlers); the toggle button below still flips it client-side after that.
@@ -12,8 +19,8 @@ provide('lang', lang)
 </script>
 
 <template>
-  <div class="min-h-screen bg-base-100">
-    <header class="navbar sticky top-0 z-30 border-b border-base-300 bg-base-100/90 backdrop-blur-md px-4 md:px-10">
+  <div class="min-h-screen bg-base-100" :data-theme="props.theme">
+    <header v-if="!props.bare" class="navbar sticky top-0 z-30 border-b border-base-300 bg-base-100/90 backdrop-blur-md px-4 md:px-10">
       <div class="navbar-start">
         <div class="dropdown">
           <div tabindex="0" role="button" class="btn btn-ghost btn-circle lg:hidden">
