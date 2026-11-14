@@ -23,7 +23,7 @@ const content = {
 const t = computed(() => content[lang.value])
 
 // Corner photos from the work gallery, each tilted a little. The tilt sits on
-// the <img>: v-fade animates the wrapper's transform and would undo it.
+// the image itself: v-fade animates the wrapper's transform and would undo it.
 const corners = [
   { src: robot, cls: 'left-[1%] top-[4%] w-[120px] sm:left-[2%] sm:w-[160px] md:left-[4%] md:w-[210px]', rot: '-rotate-6', fade: { delay: 0.1, x: -80, y: 0, duration: 0.9 } },
   { src: board, cls: 'bottom-[8%] left-[3%] w-[100px] sm:left-[6%] sm:w-[140px] md:left-[10%] md:w-[180px]', rot: 'rotate-6', fade: { delay: 0.25, x: -80, y: 0, duration: 0.9 } },
