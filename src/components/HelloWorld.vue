@@ -1,8 +1,5 @@
 <script setup>
 import { computed, inject } from 'vue'
-import { RouterLink } from 'vue-router'
-import loanAppImage from './image/Project/AppsLone/01.png'
-import websiteImage from './image/Project/web-vue/01.png'
 // เลือกภาษา
 const lang = inject('lang')
 
@@ -29,8 +26,6 @@ const content = {
     trustScore: 'คะแนนความน่าเชื่อถือ',
     username: 'ชื่อผู้ใช้',
     github: 'GitHub',
-    featuredProjects: 'โปรเจกต์เด่น',
-    viewMore: 'ดูเพิ่มเติม',
     status: 'สถานะ',
     customer: 'ลูกค้า',
     fastworkTitle: 'รีวิวจาก FastWork',
@@ -165,8 +160,6 @@ const content = {
     trustScore: 'Trust Score',
     username: 'Username',
     github: 'GitHub',
-    featuredProjects: 'Featured Projects',
-    viewMore: 'View More',
     status: 'Status',
     customer: 'Customer',
     fastworkTitle: 'Reviews from FastWork',
@@ -498,15 +491,7 @@ const statusTextClass = {
   error: 'text-error',
 }
 
-const featuredProjects = [
-  { title: 'Loan App System', desc: 'Flutter + Firebase for Co-op Lending', image: loanAppImage },
-  { title: 'Website 2.0', desc: 'Vue.js + back-end dashboards', image: websiteImage },
-  // No screenshot: shown as a branded panel and links to the Created Website sales page.
-  { title: 'Created Website', desc: 'Bilingual website builder for Thai businesses', builder: true },
-]
 
-// The Created Website page has its own Thai and English URLs.
-const builderPath = computed(() => (lang.value === 'en' ? '/en/website-builder' : '/website-builder'))
 
 // ข้อมูลจริงจากโปรไฟล์ FastWork (ไม่แปลข้อความรีวิวจริงของลูกค้าข้ามภาษา
 // เพื่อคงคำพูดต้นฉบับไว้ตามที่ลูกค้าเขียนจริง)
@@ -768,44 +753,6 @@ const fastwork = {
           <div>
             <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.github }}</p>
             <a target="_blank" rel="noopener noreferrer" href="https://github.com/paphonthanai" class="mt-1 block text-sm text-base-content/70 hover:text-primary">github.com/paphonthanai</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 📁 Featured Projects -->
-    <div id="project" class="mx-auto mt-20 max-w-6xl">
-      <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.featuredProjects }}</p>
-      <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.featuredProjects }}</h2>
-      <div class="mt-3 h-px w-16 bg-primary/60"></div>
-
-      <div class="mt-10 grid gap-8 md:grid-cols-2">
-        <div
-          v-for="(project, i) in featuredProjects"
-          :key="i"
-          class="group overflow-hidden rounded-lg border border-base-300 bg-base-200/40 transition hover:border-primary/40"
-        >
-          <div v-if="project.builder" class="flex aspect-[400/212] w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-primary/20 via-base-200 to-base-300">
-            <span class="font-display text-2xl font-semibold tracking-[0.15em] text-base-content">PNJ <span class="text-primary">CREATED</span></span>
-            <span class="text-xs uppercase tracking-[0.25em] text-base-content/60">Website</span>
-          </div>
-          <div v-else class="overflow-hidden">
-            <img
-              :src="project.image"
-              :alt="`${project.title} project screenshot`"
-              width="400" height="212" loading="lazy"
-              class="w-full transition duration-500 group-hover:scale-105"
-            />
-          </div>
-          <div class="p-6">
-            <p class="font-display text-lg font-semibold text-base-content">{{ project.title }}</p>
-            <p class="mt-1 text-sm text-base-content/60">{{ project.desc }}</p>
-            <RouterLink v-if="project.builder" :to="builderPath" class="btn btn-sm mt-4 rounded-full border-primary/70 bg-transparent px-5 text-xs uppercase tracking-widest text-primary transition hover:bg-primary hover:text-primary-content">
-              {{ t.viewMore }}
-            </RouterLink>
-            <button v-else class="btn btn-sm mt-4 rounded-full border-primary/70 bg-transparent px-5 text-xs uppercase tracking-widest text-primary transition hover:bg-primary hover:text-primary-content">
-              {{ t.viewMore }}
-            </button>
           </div>
         </div>
       </div>
