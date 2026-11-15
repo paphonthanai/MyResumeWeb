@@ -51,7 +51,7 @@ const CARDS = [
   <li>กล้องวงจรปิดและเครือข่าย</li>
   <li>IoT แขนกล และหุ่นยนต์</li>
 </ul>
-<a href="/#inquiry">ปรึกษาโปรเจกต์</a>`,
+<a href="/pricing#inquiry">ปรึกษาโปรเจกต์</a>`,
   },
   {
     id: 'price',

@@ -36,8 +36,8 @@ const nav = computed(() => [
   { label: en.value ? 'Blog' : 'บทความ', to: '/blog', top: true },
 ])
 const topNav = computed(() => nav.value.filter((i) => i.top))
-// The Website Builder page has its own inquiry form; elsewhere go to the homepage's.
-const contactTo = computed(() => (route.path.includes('website-builder') ? '#inquiry' : `${home.value}#inquiry`))
+// The Website Builder and Pricing pages have their own inquiry form; elsewhere go to Pricing's.
+const contactTo = computed(() => (route.path.includes('website-builder') || route.path === '/pricing' ? '#inquiry' : '/pricing#inquiry'))
 const isActive = (to) => !to.includes('#') && route.path === to
 </script>
 
