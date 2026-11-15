@@ -1,6 +1,8 @@
 <script setup>
 import { computed, inject, ref, watch } from 'vue'
 import { vReveal } from '../utils/reveal'
+import SectionHeading from './SectionHeading.vue'
+import ContactButton from './studio/ContactButton.vue'
 import { selectedPackage } from '../utils/inquiryState'
 
 const lang = inject('lang')
@@ -17,6 +19,8 @@ const content = {
   th: {
     kicker: 'Contact',
     title: 'ปรึกษาโปรเจกต์',
+    accent: 'โปรเจกต์',
+    orChat: 'หรือคุยกันตรง ๆ ทาง Messenger',
     intro: 'เล่าโจทย์คร่าว ๆ มาได้เลย จะติดต่อกลับเพื่อคุยรายละเอียดและประเมินใบเสนอราคา',
     name: 'ชื่อ',
     contact: 'อีเมลหรือเบอร์โทร',
@@ -35,6 +39,8 @@ const content = {
   en: {
     kicker: 'Contact',
     title: 'Discuss your project',
+    accent: 'project',
+    orChat: 'or chat directly on Messenger',
     intro: 'Tell me roughly what you need — I will get back to you to talk details and prepare a quotation.',
     name: 'Name',
     contact: 'Email or phone',
@@ -113,23 +119,26 @@ async function submit() {
 </script>
 
 <template>
-  <section id="inquiry" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
-    <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-      <div v-reveal>
-        <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.kicker }}</p>
-        <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.title }}</h2>
-        <div class="mt-3 h-px w-16 bg-primary/60"></div>
-        <p class="mt-5 text-base-content/60">{{ t.intro }}</p>
+  <section id="inquiry" class="relative overflow-hidden bg-base-100 px-6 py-24 md:px-10">
+    <!-- soft violet glow behind the form -->
+    <div class="pointer-events-none absolute -right-40 top-10 h-[480px] w-[480px] rounded-full bg-[#7621b0]/20 blur-[120px]" aria-hidden="true"></div>
+    <div class="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.85fr_1.15fr]">
+      <div>
+        <SectionHeading :kicker="t.kicker" :title="t.title" :accent="t.accent" :intro="t.intro" />
+        <div v-reveal class="mt-8 flex flex-col items-start gap-3">
+          <p class="text-sm text-base-content/50">{{ t.orChat }}</p>
+          <ContactButton />
+        </div>
       </div>
 
-      <div v-reveal class="rounded-lg border border-base-300 bg-base-200/40 p-7">
+      <div v-reveal class="card-studio p-7 md:p-9">
         <div v-if="status === 'done'" class="py-10 text-center" role="status">
           <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-primary text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
             </svg>
           </div>
-          <p class="mt-4 font-display text-xl font-semibold text-base-content">{{ t.okTitle }}</p>
+          <p class="mt-4 text-xl font-semibold text-white">{{ t.okTitle }}</p>
           <p class="mt-1 text-sm text-base-content/60">{{ t.okBody }}</p>
         </div>
 
@@ -137,17 +146,17 @@ async function submit() {
           <div class="grid gap-4 sm:grid-cols-2">
             <label class="block">
               <span class="mb-1 block text-xs uppercase tracking-widest text-base-content/50">{{ t.name }}</span>
-              <input v-model="name" type="text" maxlength="100" autocomplete="name" class="input input-bordered w-full bg-base-100" />
+              <input v-model="name" type="text" maxlength="100" autocomplete="name" class="input input-bordered w-full rounded-2xl bg-base-100" />
             </label>
             <label class="block">
               <span class="mb-1 block text-xs uppercase tracking-widest text-base-content/50">{{ t.contact }}</span>
-              <input v-model="contact" type="text" maxlength="150" autocomplete="email" class="input input-bordered w-full bg-base-100" />
+              <input v-model="contact" type="text" maxlength="150" autocomplete="email" class="input input-bordered w-full rounded-2xl bg-base-100" />
             </label>
           </div>
 
           <label class="block">
             <span class="mb-1 block text-xs uppercase tracking-widest text-base-content/50">{{ t.pkg }}</span>
-            <select v-model="pkg" class="select select-bordered w-full bg-base-100">
+            <select v-model="pkg" class="select select-bordered w-full rounded-2xl bg-base-100">
               <option value="">{{ t.pkgNone }}</option>
               <option v-for="(label, id) in t.pkgs" :key="id" :value="id">{{ label }}</option>
             </select>
@@ -155,7 +164,7 @@ async function submit() {
 
           <label class="block">
             <span class="mb-1 block text-xs uppercase tracking-widest text-base-content/50">{{ t.message }}</span>
-            <textarea v-model="message" rows="5" maxlength="2000" class="textarea textarea-bordered w-full bg-base-100"></textarea>
+            <textarea v-model="message" rows="5" maxlength="2000" class="textarea textarea-bordered w-full rounded-2xl bg-base-100"></textarea>
           </label>
 
           <!-- honeypot -->
@@ -168,7 +177,7 @@ async function submit() {
           <button
             type="submit"
             :disabled="status === 'sending'"
-            class="btn btn-shimmer rounded-full border-primary px-8 text-primary-content disabled:opacity-60"
+            class="btn btn-shimmer rounded-full px-8 disabled:opacity-60"
           >
             {{ status === 'sending' ? t.sending : t.send }}
           </button>

@@ -1,6 +1,7 @@
 <script setup>
 import { computed, inject } from 'vue'
 import { vReveal } from '../utils/reveal'
+import SectionHeading from './SectionHeading.vue'
 import { selectedPackage } from '../utils/inquiryState'
 
 const props = defineProps({ part: { type: String, default: 'process' } }) // 'process' or 'packages'
@@ -13,6 +14,7 @@ const content = {
   th: {
     processKicker: 'Process',
     processTitle: 'ขั้นตอนการทำงาน',
+    processAccent: 'การทำงาน',
     processIntro: 'ทำงานเป็นลำดับชัดเจน ลูกค้าเห็นภาพทุกขั้นก่อนลงมือพัฒนา',
     steps: [
       { title: 'คุยโจทย์', desc: 'ทำความเข้าใจปัญหา เป้าหมาย และกระบวนการทำงานจริงขององค์กร' },
@@ -24,6 +26,7 @@ const content = {
     stepLabel: 'ขั้นที่',
     packagesKicker: 'Packages',
     packagesTitle: 'แพ็กเกจการทำงาน',
+    packagesAccent: 'แพ็กเกจ',
     packagesIntro: 'ราคาขึ้นกับขอบเขตงานจริง บอกโจทย์มาแล้วจะประเมินและส่งใบเสนอราคาให้',
     packages: [
       { id: 'starter', name: 'เริ่มต้น', tag: 'Starter', for: 'ธุรกิจที่ต้องการหน้าเว็บหรือปรับปรุงเว็บเดิม', items: ['Landing page / เว็บบริษัท', 'แก้ไข ปรับปรุง เว็บที่มีอยู่', 'ฟอร์มติดต่อและ SEO พื้นฐาน'] },
@@ -36,6 +39,7 @@ const content = {
   en: {
     processKicker: 'Process',
     processTitle: 'How it works',
+    processAccent: 'works',
     processIntro: 'A clear sequence, so you see the plan at every step before development starts.',
     steps: [
       { title: 'Understand the brief', desc: 'Learn the problem, the goal and how your organization actually works.' },
@@ -47,6 +51,7 @@ const content = {
     stepLabel: 'Step',
     packagesKicker: 'Packages',
     packagesTitle: 'Ways to work together',
+    packagesAccent: 'together',
     packagesIntro: 'Pricing depends on the real scope. Tell me what you need and I will estimate and send a quotation.',
     packages: [
       { id: 'starter', name: 'Starter', tag: 'Starter', for: 'Businesses that need a web presence or a refresh', items: ['Landing page / company site', 'Fixes and upgrades to an existing site', 'Contact form and basic SEO'] },
@@ -67,25 +72,16 @@ function choosePackage(id) {
 </script>
 
 <template>
-  <!-- Process -->
-  <section v-if="props.part === 'process'" id="process" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
+  <!-- Process: numbered cards in a row, big outlined numerals -->
+  <section v-if="props.part === 'process'" id="process" class="bg-base-100 px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
-      <div v-reveal>
-        <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.processKicker }}</p>
-        <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.processTitle }}</h2>
-        <div class="mt-3 h-px w-16 bg-primary/60"></div>
-        <p class="mt-5 max-w-2xl text-base-content/60">{{ t.processIntro }}</p>
-      </div>
+      <SectionHeading :kicker="t.processKicker" :title="t.processTitle" :accent="t.processAccent" :intro="t.processIntro" />
 
-      <ol class="relative mt-12 grid gap-8 md:grid-cols-5 md:gap-4">
-        <!-- connecting line (desktop) -->
-        <div class="pointer-events-none absolute left-0 right-0 top-5 hidden h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent md:block"></div>
-        <li v-for="(step, i) in t.steps" :key="i" v-reveal="i" class="relative">
-          <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-primary bg-base-100 font-display text-sm font-semibold text-primary">
-            {{ i + 1 }}
-          </div>
-          <p class="mt-4 text-[11px] uppercase tracking-widest text-base-content/40">{{ t.stepLabel }} {{ i + 1 }}</p>
-          <h3 class="mt-1 font-display text-base font-semibold text-base-content">{{ step.title }}</h3>
+      <ol class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <li v-for="(step, i) in t.steps" :key="i" v-reveal="i" class="card-studio flex flex-col p-6 hover:-translate-y-1">
+          <span class="step-num text-6xl font-black leading-none" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
+          <p class="mt-6 text-[11px] uppercase tracking-widest text-base-content/40">{{ t.stepLabel }} {{ i + 1 }}</p>
+          <h3 class="mt-1 text-lg font-semibold text-white">{{ step.title }}</h3>
           <p class="mt-2 text-sm leading-relaxed text-base-content/60">{{ step.desc }}</p>
         </li>
       </ol>
@@ -93,33 +89,28 @@ function choosePackage(id) {
   </section>
 
   <!-- Packages -->
-  <section v-if="props.part === 'packages'" id="packages" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
+  <section v-if="props.part === 'packages'" id="packages" class="bg-base-100 px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
-      <div v-reveal>
-        <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.packagesKicker }}</p>
-        <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.packagesTitle }}</h2>
-        <div class="mt-3 h-px w-16 bg-primary/60"></div>
-        <p class="mt-5 max-w-2xl text-base-content/60">{{ t.packagesIntro }}</p>
-      </div>
+      <SectionHeading :kicker="t.packagesKicker" :title="t.packagesTitle" :accent="t.packagesAccent" :intro="t.packagesIntro" />
 
-      <div class="mt-10 grid gap-6 md:grid-cols-3">
+      <div class="mt-12 grid gap-5 md:grid-cols-3">
         <article
           v-for="(p, i) in t.packages"
           :key="p.id"
           v-reveal="i"
-          class="relative flex flex-col rounded-lg border bg-base-200/40 p-7 transition duration-300 hover:-translate-y-1"
-          :class="p.featured ? 'border-primary/70 shadow-[0_12px_40px_-16px_rgba(212,175,55,0.35)]' : 'border-base-300 hover:border-primary/40'"
+          class="relative flex flex-col rounded-3xl p-7 transition duration-300 hover:-translate-y-1"
+          :class="p.featured ? 'featured-card' : 'card-studio'"
         >
           <span
             v-if="p.featured"
-            class="absolute -top-3 left-7 rounded-full bg-primary px-3 py-0.5 text-[11px] font-semibold uppercase tracking-widest text-primary-content"
+            class="absolute right-6 top-6 rounded-full bg-white px-3 py-0.5 text-[11px] font-semibold uppercase tracking-widest text-black"
           >
             {{ t.popular }}
           </span>
-          <p class="text-xs uppercase tracking-[0.2em] text-primary/80">{{ p.tag }}</p>
-          <h3 class="mt-1 font-display text-2xl font-semibold text-base-content">{{ p.name }}</h3>
-          <p class="mt-2 text-sm text-base-content/55">{{ p.for }}</p>
-          <ul class="mt-6 flex-1 space-y-3 text-sm text-base-content/75">
+          <p class="text-xs uppercase tracking-[0.2em] text-base-content/45">{{ p.tag }}</p>
+          <h3 class="mt-2 text-3xl font-bold text-white">{{ p.name }}</h3>
+          <p class="mt-2 text-sm text-base-content/60">{{ p.for }}</p>
+          <ul class="mt-6 flex-1 space-y-3 border-t border-white/10 pt-6 text-sm text-base-content/80">
             <li v-for="item in p.items" :key="item" class="flex gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="mt-0.5 h-4 w-4 shrink-0 text-primary">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
@@ -130,13 +121,27 @@ function choosePackage(id) {
           <a
             href="#inquiry"
             @click="choosePackage(p.id)"
-            class="btn mt-8 rounded-full border-primary"
-            :class="p.featured ? 'btn-shimmer text-primary-content' : 'bg-transparent text-primary hover:bg-primary hover:text-primary-content'"
+            class="mt-8"
+            :class="p.featured ? 'btn-glow' : 'inline-flex justify-center rounded-full border border-white/15 px-6 py-3 text-sm text-white transition hover:border-white/40'"
           >
-            {{ t.quote }}
+            {{ t.quote }} →
           </a>
         </article>
       </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+.step-num {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(215, 226, 234, 0.35);
+}
+.featured-card {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#151515, #151515) padding-box,
+    linear-gradient(135deg, #d0b2ff, #b600a8 45%, #e8400d) border-box;
+  box-shadow: 0 20px 60px -30px rgba(182, 0, 168, 0.7);
+}
+</style>

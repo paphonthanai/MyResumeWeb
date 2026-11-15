@@ -1,6 +1,7 @@
 <script setup>
 import { computed, inject, onBeforeUnmount, ref, watch } from 'vue'
 import { vReveal } from '../utils/reveal'
+import SectionHeading from './SectionHeading.vue'
 import { categories, items } from '../content/workGallery'
 import { galleryFilter as active } from '../utils/galleryState'
 
@@ -14,6 +15,7 @@ const content = {
   th: {
     kicker: 'Portfolio',
     title: 'ผลงานจริงจากหน้างาน',
+    accent: 'หน้างาน',
     intro: 'ภาพจากงานที่ลงมือทำจริง ตั้งแต่หุ่นยนต์ ติดตั้งกล้องวงจรปิด ซ่อมฮาร์ดแวร์ ไปจนถึงพัฒนาซอฟต์แวร์และการอบรมด้าน Cyber Security',
     more: 'ดูเพิ่มเติม',
     close: 'ปิด',
@@ -23,6 +25,7 @@ const content = {
   en: {
     kicker: 'Portfolio',
     title: 'Real work, on site',
+    accent: 'on site',
     intro: 'Photos from hands-on jobs — robotics, CCTV installs, hardware repair, software development and Cyber Security training.',
     more: 'Show more',
     close: 'Close',
@@ -31,6 +34,16 @@ const content = {
   },
 }
 const t = computed(() => content[lang.value])
+
+// Short category tag shown beside each caption
+const TAGS = {
+  robotics: { th: 'หุ่นยนต์', en: 'Robotics' },
+  network: { th: 'เครือข่าย', en: 'Network' },
+  hardware: { th: 'ฮาร์ดแวร์', en: 'Hardware' },
+  software: { th: 'ซอฟต์แวร์', en: 'Software' },
+  security: { th: 'Security', en: 'Security' },
+  design: { th: 'ดีไซน์', en: 'Design' },
+}
 
 const expanded = ref(false)
 const PAGE = 12
@@ -72,60 +85,48 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section id="gallery" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
+  <section id="gallery" class="bg-base-100 px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
-      <div v-reveal>
-        <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.kicker }}</p>
-        <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.title }}</h2>
-        <div class="mt-3 h-px w-16 bg-primary/60"></div>
-        <p class="mt-5 max-w-2xl text-base-content/60">{{ t.intro }}</p>
-      </div>
+      <SectionHeading :kicker="t.kicker" :title="t.title" :accent="t.accent" :intro="t.intro" />
 
-      <div class="mt-8 flex flex-wrap gap-2" role="tablist">
+      <div class="pill-group mt-10 w-fit" role="tablist">
         <button
           v-for="c in categories"
           :key="c.id"
           type="button"
           role="tab"
           :aria-selected="active === c.id"
-          class="rounded-full border px-4 py-1.5 text-xs tracking-wide transition"
-          :class="active === c.id
-            ? 'border-primary bg-primary text-primary-content'
-            : 'border-base-300 text-base-content/60 hover:border-primary/60 hover:text-primary'"
+          class="pill"
           @click="active = c.id"
         >
-          {{ c[lang] }} <span class="opacity-60">· {{ countFor(c.id) }}</span>
+          {{ c[lang] }} <span class="opacity-50">{{ countFor(c.id) }}</span>
         </button>
       </div>
 
+      <!-- Image cards with the caption underneath, not over the photo -->
       <ul class="mt-8 columns-2 gap-4 md:columns-3 lg:columns-4">
-        <li v-for="(item, i) in visible" :key="item.id" class="mb-4 break-inside-avoid">
-          <button
-            type="button"
-            class="group relative block w-full overflow-hidden rounded-lg border border-base-300 bg-base-200 text-left transition hover:border-primary/50"
-            @click="open = i"
-          >
-            <img
-              :src="src(item.id, true)"
-              :alt="item[lang]"
-              loading="lazy"
-              decoding="async"
-              class="w-full transition duration-500 group-hover:scale-105"
-            />
-            <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-3 pb-2.5 pt-8 text-xs leading-snug text-white/90">
-              {{ item[lang] }}
+        <li v-for="(item, i) in visible" :key="item.id" class="mb-6 break-inside-avoid">
+          <button type="button" class="group block w-full text-left" @click="open = i">
+            <span class="block overflow-hidden rounded-2xl border border-white/5 bg-base-200">
+              <img
+                :src="src(item.id, true)"
+                :alt="item[lang]"
+                loading="lazy"
+                decoding="async"
+                class="w-full transition duration-500 group-hover:scale-105"
+              />
+            </span>
+            <span class="mt-2.5 flex items-start justify-between gap-2 px-1">
+              <span class="text-sm font-medium leading-snug text-white/90">{{ item[lang] }}</span>
+              <span class="mt-0.5 shrink-0 text-[11px] text-base-content/40">{{ TAGS[item.cat][lang] }}</span>
             </span>
           </button>
         </li>
       </ul>
 
-      <div v-if="!expanded && filtered.length > PAGE" class="mt-4 text-center">
-        <button
-          type="button"
-          class="btn btn-sm rounded-full border-primary/70 bg-transparent px-6 text-xs uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-content"
-          @click="expanded = true"
-        >
-          {{ t.more }} ({{ filtered.length - PAGE }})
+      <div v-if="!expanded && filtered.length > PAGE" class="mt-6 text-center">
+        <button type="button" class="btn-glow text-sm" @click="expanded = true">
+          {{ t.more }} ({{ filtered.length - PAGE }}) →
         </button>
       </div>
     </div>
@@ -140,14 +141,14 @@ onBeforeUnmount(() => {
         @click.self="open = -1"
       >
         <figure class="flex max-h-full max-w-5xl flex-col items-center">
-          <img :src="src(current.id)" :alt="current[lang]" class="max-h-[80vh] w-auto rounded-md object-contain" />
+          <img :src="src(current.id)" :alt="current[lang]" class="max-h-[80vh] w-auto rounded-2xl object-contain" />
           <figcaption class="mt-3 text-center text-sm text-white/80">
             {{ current[lang] }} <span class="text-white/40">· {{ open + 1 }}/{{ filtered.length }}</span>
           </figcaption>
         </figure>
-        <button type="button" class="absolute right-4 top-4 rounded-full border border-white/30 px-3 py-1 text-sm text-white hover:border-primary hover:text-primary" :aria-label="t.close" @click="open = -1">✕</button>
-        <button type="button" class="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-white/30 px-3 py-2 text-white hover:border-primary hover:text-primary md:left-6" :aria-label="t.prev" @click="step(-1)">‹</button>
-        <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-white/30 px-3 py-2 text-white hover:border-primary hover:text-primary md:right-6" :aria-label="t.next" @click="step(1)">›</button>
+        <button type="button" class="absolute right-4 top-4 rounded-full border border-white/30 px-3 py-1 text-sm text-white hover:border-white hover:bg-white/10" :aria-label="t.close" @click="open = -1">✕</button>
+        <button type="button" class="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-white/30 px-3 py-2 text-white hover:border-white hover:bg-white/10 md:left-6" :aria-label="t.prev" @click="step(-1)">‹</button>
+        <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-white/30 px-3 py-2 text-white hover:border-white hover:bg-white/10 md:right-6" :aria-label="t.next" @click="step(1)">›</button>
       </div>
     </Teleport>
   </section>

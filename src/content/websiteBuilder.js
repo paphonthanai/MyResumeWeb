@@ -16,6 +16,7 @@ export const content = {
     kicker: 'PNJ Created Website · บริการโดย PNJ Tech',
     badge: 'เปิดรับลูกค้ากลุ่มแรก',
     title: 'เว็บไซต์บริษัทสองภาษา ที่ทีมของคุณแก้เองได้',
+    titleAccent: 'แก้เองได้',
     lead: 'แพลตฟอร์มสร้างเว็บไซต์องค์กรสำหรับธุรกิจไทย หน้าเว็บโหลดเร็ว ติด Google ด้วย SEO ครบทุกหน้า และส่งคำขอใบเสนอราคาถึงทีมขายทันที',
     ctaPrimary: 'ลงทะเบียนใช้งาน',
     ctaSecondary: 'ดูเว็บลูกค้ารายแรก',
@@ -25,6 +26,7 @@ export const content = {
 
     featuresKicker: 'Features',
     featuresTitle: 'ทุกอย่างที่เว็บบริษัทต้องมี',
+    featuresAccent: 'ทุกอย่าง',
     features: [
       { icon: 'edit', title: 'แก้เนื้อหาเองได้', desc: 'เปลี่ยนข้อความ รูป ราคา และผลงานผ่านหน้าจัดการ ไม่ต้องรอนักพัฒนา' },
       { icon: 'lang', title: 'ไทย-อังกฤษในตัว', desc: 'แต่ละภาษามี URL ของตัวเอง กรอกสองภาษาคู่กันในหน้าจอเดียว' },
@@ -36,6 +38,7 @@ export const content = {
 
     stepsKicker: 'How it works',
     stepsTitle: 'เริ่มใช้งานอย่างไร',
+    stepsAccent: 'เริ่มใช้งาน',
     stepsIntro: 'ช่วงเปิดรับลูกค้ากลุ่มแรก ทีม PNJ Tech จัดทำและเผยแพร่เว็บให้ แล้วเปิดหน้าจัดการให้ทีมของคุณแก้เองทีละราย',
     steps: [
       { title: 'ส่งข้อมูลบริษัท', desc: 'โลโก้ บริการ ผลงาน และข้อมูลติดต่อ ภาษาไทยหรืออังกฤษก็ได้' },
@@ -47,6 +50,7 @@ export const content = {
 
     caseKicker: 'ลูกค้ารายแรก',
     caseTitle: 'Fire First Safety & Truck',
+    caseAccent: 'Fire First',
     caseDesc: 'บริษัทจำหน่ายรถดับเพลิง อุปกรณ์ดับเพลิง และบริการฝึกอบรม เว็บไซต์ของบริษัทที่ PNJ Tech ทำให้เป็นต้นแบบของแพลตฟอร์มนี้ และเป็นเว็บแรกที่ย้ายขึ้นระบบ',
     caseStats: [
       { value: '5 × 2', label: 'หน้า ไทย และ อังกฤษ' },
@@ -57,6 +61,7 @@ export const content = {
 
     pricingKicker: 'Pricing',
     pricingTitle: 'แพ็กเกจ',
+    pricingAccent: 'แพ็กเกจ',
     pricingIntro: 'ราคาเปิดตัวสำหรับลูกค้ากลุ่มแรก ต่อเว็บไซต์ต่อเดือน',
     freeNote: 'ไม่ต้องใช้บัตรเครดิต',
     perMonth: '/ เดือน',
@@ -96,6 +101,7 @@ export const content = {
 
     faqKicker: 'FAQ',
     faqTitle: 'คำถามที่พบบ่อย',
+    faqAccent: 'พบบ่อย',
     faq: [
       { q: 'ต้องมีโดเมนของตัวเองไหม', a: 'ไม่จำเป็น เริ่มด้วยที่อยู่ .web.app ได้ แล้วเชื่อมโดเมนของคุณเมื่อพร้อม' },
       { q: 'ย้ายเว็บเดิมมาได้ไหม', a: 'ได้ เราย้ายข้อความ รูป และ URL เดิมให้ เพื่อไม่ให้อันดับใน Google หายไป' },
@@ -106,6 +112,8 @@ export const content = {
     form: {
       kicker: 'Done-for-you',
       title: 'ให้ทีมเราทำเว็บให้',
+      accent: 'ทำเว็บให้',
+      orChat: 'หรือทักแชตทาง Messenger',
       intro: 'อยากให้ทีม PNJ Tech ย้ายเว็บเดิมหรือทำเว็บใหม่ให้ บอกชื่อบริษัท เว็บไซต์เดิม (ถ้ามี) และสิ่งที่ต้องการ เราจะติดต่อกลับ',
       message: 'บริษัทและสิ่งที่ต้องการ',
     },
@@ -115,6 +123,7 @@ export const content = {
     kicker: 'PNJ Created Website · by PNJ Tech',
     badge: 'Now onboarding early customers',
     title: 'Bilingual company websites your team can edit',
+    titleAccent: 'can edit',
     lead: 'A website builder for Thai businesses. Pages load fast, every page is set up for Google, and quote requests go straight to your sales team.',
     ctaPrimary: 'Sign up',
     ctaSecondary: 'See our first customer',
@@ -124,6 +133,7 @@ export const content = {
 
     featuresKicker: 'Features',
     featuresTitle: 'Everything a company website needs',
+    featuresAccent: 'Everything',
     features: [
       { icon: 'edit', title: 'Edit it yourself', desc: 'Change text, images, prices and projects from the editor. No developer needed.' },
       { icon: 'lang', title: 'Thai and English built in', desc: 'Each language gets its own URL, and you fill in both side by side.' },
@@ -135,6 +145,7 @@ export const content = {
 
     stepsKicker: 'How it works',
     stepsTitle: 'Getting started',
+    stepsAccent: 'started',
     stepsIntro: 'During early access, the PNJ Tech team builds and publishes your site, then opens the editor to your team.',
     steps: [
       { title: 'Send your company details', desc: 'Logo, services, projects and contact details, in Thai or English.' },
@@ -146,6 +157,7 @@ export const content = {
 
     caseKicker: 'First customer',
     caseTitle: 'Fire First Safety & Truck',
+    caseAccent: 'Fire First',
     caseDesc: 'A supplier of fire trucks, fire equipment and training. The company website PNJ Tech built for them is the prototype for this platform, and the first site moving onto it.',
     caseStats: [
       { value: '5 × 2', label: 'pages in Thai and English' },
@@ -156,6 +168,7 @@ export const content = {
 
     pricingKicker: 'Pricing',
     pricingTitle: 'Plans',
+    pricingAccent: 'Plans',
     pricingIntro: 'Launch pricing for early customers, per website per month.',
     freeNote: 'No credit card required',
     perMonth: '/ month',
@@ -195,6 +208,7 @@ export const content = {
 
     faqKicker: 'FAQ',
     faqTitle: 'Questions',
+    faqAccent: 'Questions',
     faq: [
       { q: 'Do I need my own domain?', a: 'No. You can start on a .web.app address and connect your domain when you are ready.' },
       { q: 'Can you move my existing website?', a: 'Yes. We move your text, images and existing URLs so you keep your Google rankings.' },
@@ -205,6 +219,8 @@ export const content = {
     form: {
       kicker: 'Done-for-you',
       title: 'Let our team build it',
+      accent: 'build it',
+      orChat: 'or message us on Messenger',
       intro: 'Want the PNJ Tech team to move your current site or build a new one? Tell us your company name, current website (if any) and what you need, and we will get back to you.',
       message: 'Your company and what you need',
     },

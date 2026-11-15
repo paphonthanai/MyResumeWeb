@@ -9,9 +9,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Playfair Display"', 'serif'],
-        displayThai: ['"Noto Serif Thai"', 'serif'],
-        sans: ['"Outfit"', 'sans-serif'],
+        display: ['"Kanit"', '"Noto Sans Thai"', 'sans-serif'],
+        sans: ['"Kanit"', '"Noto Sans Thai"', 'sans-serif'],
         thai: ['"Noto Sans Thai"', 'sans-serif'],
       },
       
@@ -45,8 +44,8 @@ module.exports = {
         },
       },
       {
-        // Homepage look: near-black, cool silver text, magenta/violet accent
-        // taken from the Contact button gradient. Set via UserLayout's `theme`.
+        // Site-wide look (set on <html> in index.html): near-black, cool
+        // silver text, magenta/violet accent from the Contact button gradient.
         studio: {
           "color-scheme": "dark",
           primary: "#d36ce3",
