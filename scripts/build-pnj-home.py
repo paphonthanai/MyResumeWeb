@@ -23,6 +23,8 @@ import shutil
 import subprocess
 from pathlib import Path
 
+from workshop_room import workshop
+
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / 'public/landing-pages/sublevel-studio.html'
 OUT_DIR = ROOT / 'public/landing-pages'
@@ -424,6 +426,9 @@ def build(lang):
 {defender}];
 '''
     s = sub(s, r"const PORTFOLIO = \[\n.*?\n\];\n", lambda m: portfolio)
+
+    # The 3D lobby becomes a tech workshop (see workshop_room.py)
+    s = workshop(s)
 
     if re.search(r'sublevel\.studio|hello@sublevel', s):
         left = sorted(set(re.findall(r'.{30}(?:sublevel\.studio|hello@sublevel).{30}', s)))
