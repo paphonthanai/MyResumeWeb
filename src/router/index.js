@@ -79,6 +79,16 @@ export const routes = [
     }
   },
   {
+    path: '/iot',
+    name: 'iot',
+    component: () => import('../views/IotView.vue'),
+    meta: {
+      title: 'IoT แขนกล และหุ่นยนต์ | PNJ Tech',
+      description: 'งานวิจัยและพัฒนาระบบ IoT แขนกล และหุ่นยนต์ของ PNJ Tech ออกแบบ พิมพ์ชิ้นส่วน 3 มิติ เดินสาย และเขียนโปรแกรมควบคุมเองทุกขั้นตอน พร้อมต่อยอดเป็นระบบสำหรับธุรกิจ',
+      lang: 'th'
+    }
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting

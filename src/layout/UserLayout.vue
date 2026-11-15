@@ -25,6 +25,7 @@ const nav = computed(() => [
   { label: en.value ? 'Home' : 'หน้าแรก', to: home.value },
   { label: en.value ? 'Projects' : 'ผลงาน', to: `${home.value}#projects` },
   { label: en.value ? 'Gallery' : 'แกลเลอรี', to: `${home.value}#gallery` },
+  { label: 'IoT', to: '/iot' },
   { label: en.value ? 'Website Builder' : 'สร้างเว็บไซต์', to: en.value ? '/en/website-builder' : '/website-builder' },
   { label: en.value ? 'About' : 'เกี่ยวกับ', to: '/about' },
   { label: en.value ? 'Blog' : 'บทความ', to: '/blog' },
