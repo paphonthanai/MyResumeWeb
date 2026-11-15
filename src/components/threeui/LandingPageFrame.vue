@@ -17,6 +17,8 @@ const props = defineProps({
   className: { type: String, default: '' },
   // Runs against the live frame on every load (for pages with a scene API).
   applyScene: { type: Function, default: undefined },
+  // Extra sandbox tokens, e.g. so links in our own pages can open in the main window.
+  sandboxExtra: { type: String, default: '' },
 })
 
 const URL_FRAME_SANDBOX = 'allow-downloads allow-forms allow-modals allow-popups allow-same-origin allow-scripts'
@@ -40,7 +42,7 @@ function onLoad(event) {
       :title="props.title"
       :src="props.srcDoc ? undefined : props.sourceUrl"
       :srcdoc="props.srcDoc"
-      :sandbox="props.srcDoc ? SRCDOC_FRAME_SANDBOX : URL_FRAME_SANDBOX"
+      :sandbox="[props.srcDoc ? SRCDOC_FRAME_SANDBOX : URL_FRAME_SANDBOX, props.sandboxExtra].filter(Boolean).join(' ')"
       loading="eager"
       style="position: absolute; inset: 0; display: block; width: 100%; height: 100%; border: 0; background: #080808; opacity: 1; pointer-events: auto"
       @load="onLoad"
