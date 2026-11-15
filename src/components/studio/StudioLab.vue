@@ -10,12 +10,14 @@ import handVideo from '../image/video/iot-hand.mp4'
 import handPoster from '../image/video/iot-hand.webp'
 import { categories, items } from '../../content/workGallery'
 import { galleryFilter } from '../../utils/galleryState'
+import { useRouter } from 'vue-router'
 
 // "PNJ Lab": a full-screen particle cloud stirred by the cursor, with a
 // column of work clips on the left and notes on the right. Layout and
 // particle idea adapted from the AXON design on motionsites.ai.
 
 const lang = inject('lang')
+const router = useRouter()
 const en = computed(() => lang.value === 'en')
 
 const work = import.meta.glob('../image/work/*.webp', { eager: true, import: 'default' })
@@ -65,7 +67,7 @@ const copy = computed(() =>
 
 function openGallery() {
   galleryFilter.value = 'all'
-  document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })
+  router.push('/gallery')
 }
 
 // ---- WebGL: loaded and run only while the section is on screen ----
@@ -187,7 +189,7 @@ onBeforeUnmount(() => {
         </div>
         <div class="pointer-events-auto">
           <h2 class="lab-h">[connect]</h2>
-          <a href="#gallery" class="lab-a" @click.prevent="openGallery">{{ copy.gallery }} -> PNJ Tech</a>
+          <a href="/gallery" class="lab-a" @click.prevent="openGallery">{{ copy.gallery }} -> PNJ Tech</a>
           <a href="https://m.me/Paphonthanai.name" target="_blank" rel="noopener noreferrer" class="lab-a">{{ copy.mail }} -> Paphonthanai.name</a>
         </div>
       </div>

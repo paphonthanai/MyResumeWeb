@@ -16,7 +16,6 @@ const COPY = {
   en: { kicker: 'R&D', title: 'IoT and robotics, built by hand', accent: 'built by hand', intro: 'Designed, 3D printed, soldered, wired and programmed in-house, every step of the way.', lab: 'See PNJ Lab', gallery: 'See the full gallery' },
 }
 const t = computed(() => COPY[lang.value])
-const home = computed(() => (lang.value === 'en' ? '/en' : '/'))
 </script>
 
 <template>
@@ -37,8 +36,8 @@ const home = computed(() => (lang.value === 'en' ? '/en' : '/'))
       </div>
 
       <div class="mt-10 flex flex-wrap gap-3">
-        <RouterLink :to="`${home}#lab`" class="btn-glow">{{ t.lab }} →</RouterLink>
-        <RouterLink :to="`${home}#gallery`" class="inline-flex items-center rounded-full border border-white/15 px-6 py-3 text-sm text-white transition hover:border-white/40">{{ t.gallery }}</RouterLink>
+        <RouterLink to="/lab" class="btn-glow">{{ t.lab }} →</RouterLink>
+        <RouterLink to="/gallery" class="inline-flex items-center rounded-full border border-white/15 px-6 py-3 text-sm text-white transition hover:border-white/40">{{ t.gallery }}</RouterLink>
       </div>
     </div>
   </section>

@@ -18,6 +18,36 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://myresume-ae906.web.app/" />
   </url>
   <url>
+    <loc>https://myresume-ae906.web.app/projects</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://myresume-ae906.web.app/lab</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://myresume-ae906.web.app/gallery</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://myresume-ae906.web.app/skills</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://myresume-ae906.web.app/process</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://myresume-ae906.web.app/pricing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://myresume-ae906.web.app/iot</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

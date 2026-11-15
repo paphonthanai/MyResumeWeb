@@ -1,10 +1,12 @@
 <script setup>
-import { computed, inject } from 'vue'
+import { computed, inject, onBeforeUnmount, onMounted, ref } from 'vue'
 import { vReveal } from '../utils/reveal'
+import { clamp01, onScrollFrame } from '../utils/fade'
 import SectionHeading from './SectionHeading.vue'
 import { selectedPackage } from '../utils/inquiryState'
 
-const props = defineProps({ part: { type: String, default: 'process' } }) // 'process' or 'packages'
+// part: 'process' or 'packages'. bare: the page already carries the title, so skip the heading.
+const props = defineProps({ part: { type: String, default: 'process' }, bare: { type: Boolean, default: false } })
 const lang = inject('lang')
 
 // Copy is derived from the real work shown in the Skills section and the
@@ -65,66 +67,118 @@ const content = {
 
 const t = computed(() => content[lang.value])
 
-
 function choosePackage(id) {
   selectedPackage.value = id
 }
+
+// Process: scroll position drives a glowing rail through the five steps.
+// Desktop pins the section (sticky) and reads progress from the section;
+// phones read it from the list as it passes the middle of the screen.
+const sectionEl = ref(null)
+const listEl = ref(null)
+const progress = ref(0)
+const active = computed(() => Math.min(4, Math.floor(progress.value * 5)))
+let stop = null
+
+onMounted(() => {
+  if (props.part !== 'process') return
+  stop = onScrollFrame(() => {
+    const vh = window.innerHeight
+    if (window.innerWidth >= 1024 && sectionEl.value) {
+      const r = sectionEl.value.getBoundingClientRect()
+      progress.value = clamp01(-r.top / Math.max(1, r.height - vh))
+    } else if (listEl.value) {
+      const r = listEl.value.getBoundingClientRect()
+      progress.value = clamp01((vh * 0.55 - r.top) / Math.max(1, r.height))
+    }
+  })
+})
+onBeforeUnmount(() => stop?.())
 </script>
 
 <template>
-  <!-- Process: numbered cards in a row, big outlined numerals -->
-  <section v-if="props.part === 'process'" id="process" class="bg-base-100 px-6 py-24 md:px-10">
-    <div class="mx-auto max-w-6xl">
-      <SectionHeading :kicker="t.processKicker" :title="t.processTitle" :accent="t.processAccent" :intro="t.processIntro" />
+  <!-- Process: a pinned scroll rail. The active step is shown large on the left. -->
+  <section v-if="props.part === 'process'" id="process" ref="sectionEl" class="process bg-base-100">
+    <div class="process-pin mx-auto grid max-w-6xl gap-12 px-6 py-24 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20 lg:py-0">
+      <div>
+        <SectionHeading v-if="!props.bare" :title="t.processTitle" :accent="t.processAccent" :intro="t.processIntro" />
+        <p v-else class="max-w-md text-lg leading-relaxed text-white/60">{{ t.processIntro }}</p>
 
-      <ol class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        <li v-for="(step, i) in t.steps" :key="i" v-reveal="i" class="card-studio flex flex-col p-6 hover:-translate-y-1">
-          <span class="step-num text-6xl font-black leading-none" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
-          <p class="mt-6 text-[11px] uppercase tracking-widest text-base-content/40">{{ t.stepLabel }} {{ i + 1 }}</p>
-          <h3 class="mt-1 text-lg font-semibold text-white">{{ step.title }}</h3>
-          <p class="mt-2 text-sm leading-relaxed text-base-content/60">{{ step.desc }}</p>
+        <div class="mt-14 hidden lg:block" aria-hidden="true">
+          <p class="font-mono text-sm tabular-nums text-white/40">
+            <span class="text-white">{{ String(active + 1).padStart(2, '0') }}</span> / 05
+          </p>
+          <div class="relative mt-4 h-40">
+            <div
+              v-for="(step, i) in t.steps"
+              :key="i"
+              class="stage absolute inset-0"
+              :class="i === active && 'is-on'"
+            >
+              <p class="text-4xl font-bold leading-tight tracking-tight text-white xl:text-5xl" style="text-wrap: balance">{{ step.title }}</p>
+              <p class="mt-4 max-w-md text-base leading-relaxed text-white/60">{{ step.desc }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ol ref="listEl" class="rail relative" :style="{ '--p': progress }">
+        <span class="rail-track" aria-hidden="true"><span class="rail-fill"></span></span>
+        <li
+          v-for="(step, i) in t.steps"
+          :key="i"
+          class="rail-step relative pb-10 pl-12 last:pb-0 lg:pb-12"
+          :class="{ 'is-past': i <= active, 'is-on': i === active }"
+        >
+          <span class="rail-node" aria-hidden="true"></span>
+          <p class="font-mono text-xs tabular-nums text-white/40">{{ t.stepLabel }} {{ i + 1 }}</p>
+          <h3 class="mt-1 text-xl font-semibold text-white md:text-2xl">{{ step.title }}</h3>
+          <p class="mt-2 max-w-md text-sm leading-relaxed text-white/60 lg:hidden">{{ step.desc }}</p>
         </li>
       </ol>
     </div>
   </section>
 
-  <!-- Packages -->
+  <!-- Packages: one row per package, read side by side like a price list -->
   <section v-if="props.part === 'packages'" id="packages" class="bg-base-100 px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
-      <SectionHeading :kicker="t.packagesKicker" :title="t.packagesTitle" :accent="t.packagesAccent" :intro="t.packagesIntro" />
+      <SectionHeading v-if="!props.bare" :title="t.packagesTitle" :accent="t.packagesAccent" :intro="t.packagesIntro" />
 
-      <div class="mt-12 grid gap-5 md:grid-cols-3">
+      <div :class="props.bare ? '' : 'mt-14'">
         <article
           v-for="(p, i) in t.packages"
           :key="p.id"
           v-reveal="i"
-          class="relative flex flex-col rounded-3xl p-7 transition duration-300 hover:-translate-y-1"
-          :class="p.featured ? 'featured-card' : 'card-studio'"
+          class="pkg group relative grid gap-6 px-2 py-9 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_auto] md:items-center md:gap-10 md:px-8"
+          :class="p.featured ? 'pkg-featured my-3 rounded-[1.75rem]' : 'border-t border-white/10 last:border-b'"
         >
-          <span
-            v-if="p.featured"
-            class="absolute right-6 top-6 rounded-full bg-white px-3 py-0.5 text-[11px] font-semibold uppercase tracking-widest text-black"
-          >
-            {{ t.popular }}
-          </span>
-          <p class="text-xs uppercase tracking-[0.2em] text-base-content/45">{{ p.tag }}</p>
-          <h3 class="mt-2 text-3xl font-bold text-white">{{ p.name }}</h3>
-          <p class="mt-2 text-sm text-base-content/60">{{ p.for }}</p>
-          <ul class="mt-6 flex-1 space-y-3 border-t border-white/10 pt-6 text-sm text-base-content/80">
-            <li v-for="item in p.items" :key="item" class="flex gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="mt-0.5 h-4 w-4 shrink-0 text-primary">
-                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
-              </svg>
-              {{ item }}
-            </li>
-          </ul>
+          <div>
+            <p class="flex items-center gap-3 text-sm text-white/45">
+              {{ p.tag }}
+              <span v-if="p.featured" class="rounded-full bg-white px-2.5 py-0.5 text-[11px] font-semibold text-black">{{ t.popular }}</span>
+            </p>
+            <h3 class="mt-1 text-4xl font-bold tracking-tight text-white md:text-5xl">{{ p.name }}</h3>
+          </div>
+
+          <div>
+            <p class="text-base text-white/80">{{ p.for }}</p>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              <li
+                v-for="item in p.items"
+                :key="item"
+                class="rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-sm text-white/70 transition-colors duration-300 group-hover:border-white/20"
+              >{{ item }}</li>
+            </ul>
+          </div>
+
           <a
             href="#inquiry"
             @click="choosePackage(p.id)"
-            class="mt-8"
-            :class="p.featured ? 'btn-glow' : 'inline-flex justify-center rounded-full border border-white/15 px-6 py-3 text-sm text-white transition hover:border-white/40'"
+            :class="p.featured ? 'btn-glow' : 'pkg-cta'"
+            class="justify-self-start whitespace-nowrap md:justify-self-end"
           >
-            {{ t.quote }} →
+            {{ t.quote }}
+            <svg viewBox="0 0 16 16" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" /></svg>
           </a>
         </article>
       </div>
@@ -133,15 +187,94 @@ function choosePackage(id) {
 </template>
 
 <style scoped>
-.step-num {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(215, 226, 234, 0.35);
+/* ---- Process rail ---- */
+@media (min-width: 1024px) {
+  .process { height: 320svh; }
+  .process-pin {
+    position: sticky;
+    top: 0;
+    min-height: 100svh;
+  }
 }
-.featured-card {
+.rail-track {
+  position: absolute;
+  left: 11px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.rail-fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: top;
+  transform: scaleY(var(--p, 0));
+  background: linear-gradient(180deg, var(--accent-soft, #d0b2ff), var(--accent, #b600a8) 55%, var(--accent-2, #e8400d));
+}
+.rail-node {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  border: 2px solid #333;
+  background: #0c0c0c;
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s, box-shadow 0.4s;
+}
+.rail-step h3,
+.rail-step p {
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rail-step:not(.is-past) h3 { opacity: 0.4; }
+.rail-step.is-past .rail-node {
+  border-color: var(--accent-soft, #d0b2ff);
+  background: var(--accent, #b600a8);
+}
+.rail-step.is-on .rail-node {
+  box-shadow: 0 4px 18px 2px color-mix(in srgb, var(--accent, #b600a8) 55%, transparent);
+}
+@media (min-width: 1024px) {
+  .rail-step:not(.is-on) h3 { opacity: 0.35; }
+}
+
+/* The big step text on the left crossfades with a short blur */
+.stage {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(14px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.stage.is-on {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+/* ---- Package rows ---- */
+.pkg { transition: background-color 0.3s ease; }
+.pkg:not(.pkg-featured):hover { background: rgba(255, 255, 255, 0.02); }
+.pkg-featured {
   border: 1px solid transparent;
   background:
-    linear-gradient(#151515, #151515) padding-box,
-    linear-gradient(135deg, #d0b2ff, #b600a8 45%, #e8400d) border-box;
-  box-shadow: 0 20px 60px -30px rgba(182, 0, 168, 0.7);
+    linear-gradient(#141414, #141414) padding-box,
+    linear-gradient(120deg, var(--accent-soft, #d0b2ff), var(--accent, #b600a8) 45%, var(--accent-2, #e8400d)) border-box;
+  box-shadow: 0 30px 80px -40px color-mix(in srgb, var(--accent, #b600a8) 75%, transparent);
 }
+.pkg-featured + .pkg { border-top: 0; }
+.pkg-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  color: #fff;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.pkg-cta:hover { border-color: rgba(255, 255, 255, 0.45); background: rgba(255, 255, 255, 0.04); }
 </style>

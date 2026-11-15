@@ -1,11 +1,13 @@
 <script setup>
-import { computed, inject, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, inject, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { vReveal } from '../utils/reveal'
 import SectionHeading from './SectionHeading.vue'
 import { categories, items } from '../content/workGallery'
 import { galleryFilter as active } from '../utils/galleryState'
 
 const lang = inject('lang')
+// bare: the page already carries the title, so skip the heading
+const props = defineProps({ bare: { type: Boolean, default: false } })
 
 // `<id>-t.webp` is the grid thumbnail, `<id>.webp` the full image.
 const files = import.meta.glob('./image/work/*.webp', { eager: true, import: 'default' })
@@ -45,18 +47,65 @@ const TAGS = {
   design: { th: 'ดีไซน์', en: 'Design' },
 }
 
-const expanded = ref(false)
-const PAGE = 12
-
-// "All" deals one photo per category in turn, so the first page shows every kind of work.
+// "All" deals one photo per category in turn, so the strip starts with every kind of work.
 const byCat = categories.slice(1).map((c) => items.filter((i) => i.cat === c.id))
 const mixed = Array.from({ length: Math.max(...byCat.map((l) => l.length)) }, (_, r) => byCat.map((l) => l[r])).flat().filter(Boolean)
 
 const filtered = computed(() => (active.value === 'all' ? mixed : items.filter((i) => i.cat === active.value)))
-const visible = computed(() => (expanded.value ? filtered.value : filtered.value.slice(0, PAGE)))
 const countFor = (id) => (id === 'all' ? items.length : items.filter((i) => i.cat === id).length)
 
-watch(active, () => { expanded.value = false })
+// Frames cycle through a few shapes so the strip reads like a contact sheet.
+const SHAPES = ['4 / 5', '1 / 1', '3 / 4', '5 / 4', '4 / 5', '3 / 4']
+
+// Filmstrip: native horizontal scroll with snap, arrows, a progress bar,
+// and click-and-drag for mouse users.
+const strip = ref(null)
+const stripProgress = ref(0)
+const atStart = ref(true)
+const atEnd = ref(false)
+function onStripScroll() {
+  const el = strip.value
+  if (!el) return
+  const max = el.scrollWidth - el.clientWidth
+  stripProgress.value = max > 0 ? el.scrollLeft / max : 1
+  atStart.value = el.scrollLeft < 4
+  atEnd.value = el.scrollLeft > max - 4
+}
+function page(d) {
+  const el = strip.value
+  if (el) el.scrollBy({ left: d * el.clientWidth * 0.8, behavior: 'smooth' })
+}
+watch(active, () => {
+  strip.value?.scrollTo({ left: 0 })
+  requestAnimationFrame(onStripScroll)
+})
+
+let drag = null
+let dragged = false
+function onDown(e) {
+  if (e.pointerType !== 'mouse' || !strip.value) return
+  drag = { x: e.clientX, left: strip.value.scrollLeft }
+  dragged = false
+}
+function onMove(e) {
+  if (!drag) return
+  const dx = e.clientX - drag.x
+  if (Math.abs(dx) > 5 && !dragged) {
+    dragged = true
+    strip.value.classList.add('is-dragging')
+  }
+  if (dragged) strip.value.scrollLeft = drag.left - dx
+}
+function onUp() {
+  if (!drag) return
+  drag = null
+  strip.value?.classList.remove('is-dragging')
+}
+function openAt(i) {
+  if (dragged) { dragged = false; return }
+  open.value = i
+}
+onMounted(onStripScroll)
 
 // Lightbox: index into `filtered`, so prev/next stay inside the chosen category.
 const open = ref(-1)
@@ -85,50 +134,70 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section id="gallery" class="bg-base-100 px-6 py-24 md:px-10">
-    <div class="mx-auto max-w-6xl">
-      <SectionHeading :kicker="t.kicker" :title="t.title" :accent="t.accent" :intro="t.intro" />
+  <section id="gallery" class="overflow-hidden bg-base-100" :class="props.bare ? 'pb-24' : 'py-24'">
+    <div class="mx-auto max-w-6xl px-6 md:px-10">
+      <SectionHeading v-if="!props.bare" :title="t.title" :accent="t.accent" :intro="t.intro" />
 
-      <div class="pill-group mt-10 w-fit" role="tablist">
-        <button
-          v-for="c in categories"
-          :key="c.id"
-          type="button"
-          role="tab"
-          :aria-selected="active === c.id"
-          class="pill"
-          @click="active = c.id"
-        >
-          {{ c[lang] }} <span class="opacity-50">{{ countFor(c.id) }}</span>
-        </button>
-      </div>
-
-      <!-- Image cards with the caption underneath, not over the photo -->
-      <ul class="mt-8 columns-2 gap-4 md:columns-3 lg:columns-4">
-        <li v-for="(item, i) in visible" :key="item.id" class="mb-6 break-inside-avoid">
-          <button type="button" class="group block w-full text-left" @click="open = i">
-            <span class="block overflow-hidden rounded-2xl border border-white/5 bg-base-200">
-              <img
-                :src="src(item.id, true)"
-                :alt="item[lang]"
-                loading="lazy"
-                decoding="async"
-                class="w-full transition duration-500 group-hover:scale-105"
-              />
-            </span>
-            <span class="mt-2.5 flex items-start justify-between gap-2 px-1">
-              <span class="text-sm font-medium leading-snug text-white/90">{{ item[lang] }}</span>
-              <span class="mt-0.5 shrink-0 text-[11px] text-base-content/40">{{ TAGS[item.cat][lang] }}</span>
-            </span>
+      <div class="flex flex-wrap items-center justify-between gap-4" :class="!props.bare && 'mt-10'">
+        <div class="pill-group w-fit" role="tablist">
+          <button
+            v-for="c in categories"
+            :key="c.id"
+            type="button"
+            role="tab"
+            :aria-selected="active === c.id"
+            class="pill"
+            @click="active = c.id"
+          >
+            {{ c[lang] }} <span class="opacity-50">{{ countFor(c.id) }}</span>
           </button>
-        </li>
-      </ul>
-
-      <div v-if="!expanded && filtered.length > PAGE" class="mt-6 text-center">
-        <button type="button" class="btn-glow text-sm" @click="expanded = true">
-          {{ t.more }} ({{ filtered.length - PAGE }}) →
-        </button>
+        </div>
+        <div class="hidden gap-2 md:flex">
+          <button type="button" class="strip-btn" :disabled="atStart" :aria-label="t.prev" @click="page(-1)">
+            <svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </button>
+          <button type="button" class="strip-btn" :disabled="atEnd" :aria-label="t.next" @click="page(1)">
+            <svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </button>
+        </div>
       </div>
+    </div>
+
+    <!-- Filmstrip: starts aligned with the content column, bleeds off the right edge -->
+    <ul
+      ref="strip"
+      class="strip mt-8 flex gap-4 overflow-x-auto pb-2 md:gap-5"
+      @scroll.passive="onStripScroll"
+      @pointerdown="onDown"
+      @pointermove="onMove"
+      @pointerup="onUp"
+      @pointerleave="onUp"
+    >
+      <li v-for="(item, i) in filtered" :key="item.id" class="frame shrink-0" :style="{ '--ar': SHAPES[i % SHAPES.length] }">
+        <button type="button" class="group block w-full text-left" draggable="false" @click="openAt(i)">
+          <span class="block overflow-hidden rounded-2xl bg-base-200" :style="{ aspectRatio: 'var(--ar)' }">
+            <img
+              :src="src(item.id, true)"
+              :alt="item[lang]"
+              loading="lazy"
+              decoding="async"
+              draggable="false"
+              class="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
+            />
+          </span>
+          <span class="mt-3 flex items-start justify-between gap-3 px-1">
+            <span class="text-sm font-medium leading-snug text-white/90">{{ item[lang] }}</span>
+            <span class="mt-0.5 shrink-0 text-xs text-white/45">{{ TAGS[item.cat][lang] }}</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+
+    <div class="mx-auto mt-6 flex max-w-6xl items-center gap-4 px-6 md:px-10" aria-hidden="true">
+      <span class="relative h-px flex-1 bg-white/10">
+        <span class="absolute inset-y-0 left-0 w-full origin-left bg-[var(--accent,#fff)]" :style="{ transform: `scaleX(${Math.max(0.04, stripProgress)})` }"></span>
+      </span>
+      <span class="font-mono text-xs tabular-nums text-white/45">{{ filtered.length }}</span>
     </div>
 
     <Teleport to="body">
@@ -153,3 +222,44 @@ onBeforeUnmount(() => {
     </Teleport>
   </section>
 </template>
+
+<style scoped>
+/* Left padding lines the first frame up with the content column above */
+.strip {
+  --gutter: max(1.5rem, calc((100vw - 72rem) / 2 + 2.5rem));
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  scroll-padding-left: var(--gutter);
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  cursor: grab;
+}
+.strip::-webkit-scrollbar { display: none; }
+@media (max-width: 767px) {
+  .strip { --gutter: 1.5rem; }
+}
+.strip.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+.frame {
+  scroll-snap-align: start;
+  height: auto;
+  width: calc(min(58vh, 460px) * var(--ar));
+  max-width: 78vw;
+}
+.strip-btn {
+  display: inline-flex;
+  height: 2.75rem;
+  width: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+.strip-btn:hover:not(:disabled) { border-color: rgba(255, 255, 255, 0.5); }
+.strip-btn:disabled { opacity: 0.3; cursor: default; }
+</style>

@@ -89,6 +89,66 @@ export const routes = [
     }
   },
   {
+    path: '/projects',
+    name: 'projects',
+    component: () => import('../views/ProjectsView.vue'),
+    meta: {
+      title: 'ผลงาน | PNJ Tech',
+      description: 'ผลงานที่ส่งมอบจริงของ PNJ Tech แอป Android และ iOS ระบบกล้องวงจรปิดและเครือข่าย IoT แขนกล หุ่นยนต์ และเว็บไซต์พร้อมระบบจัดการ',
+      lang: 'th'
+    }
+  },
+  {
+    path: '/lab',
+    name: 'lab',
+    component: () => import('../views/LabView.vue'),
+    meta: {
+      title: 'PNJ Lab | PNJ Tech',
+      description: 'PNJ Lab บันทึกงานวิจัยและพัฒนาของ PNJ Tech ทั้ง IoT แขนกล ระบบเครือข่าย และซอฟต์แวร์ ที่เผยแพร่ระหว่างทาง',
+      lang: 'th'
+    }
+  },
+  {
+    path: '/gallery',
+    name: 'gallery',
+    component: () => import('../views/GalleryView.vue'),
+    meta: {
+      title: 'แกลเลอรีผลงาน | PNJ Tech',
+      description: 'ภาพจากงานที่ลงมือทำจริง หุ่นยนต์ ติดตั้งกล้องวงจรปิด ซ่อมและอัปเกรดฮาร์ดแวร์ พัฒนาซอฟต์แวร์ และการอบรม Cyber Security',
+      lang: 'th'
+    }
+  },
+  {
+    path: '/skills',
+    name: 'skills',
+    component: () => import('../views/SkillsView.vue'),
+    meta: {
+      title: 'Skills & Achievements | PNJ Tech',
+      description: 'โปรเจกต์ที่ทำให้ลูกค้าจริง เทคโนโลยีที่ใช้ ประสบการณ์ รางวัล และรีวิวจากผู้ว่าจ้างของปพนธนัย ใจมา (PNJ Tech)',
+      lang: 'th'
+    }
+  },
+  {
+    path: '/process',
+    name: 'process',
+    component: () => import('../views/ProcessView.vue'),
+    meta: {
+      title: 'ขั้นตอนการทำงาน | PNJ Tech',
+      description: 'ขั้นตอนการทำงานของ PNJ Tech ตั้งแต่คุยโจทย์ วางแผนผังงาน พัฒนา ทดสอบและส่งมอบ ไปจนถึงดูแลต่อเนื่อง',
+      lang: 'th'
+    }
+  },
+  {
+    path: '/pricing',
+    name: 'pricing',
+    component: () => import('../views/PricingView.vue'),
+    meta: {
+      title: 'แพ็กเกจและราคา | PNJ Tech',
+      description: 'แพ็กเกจการทำงานของ PNJ Tech ตั้งแต่เว็บไซต์เริ่มต้นจนถึงระบบองค์กร บอกโจทย์แล้วรับใบเสนอราคาตามขอบเขตงานจริง',
+      lang: 'th'
+    }
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting

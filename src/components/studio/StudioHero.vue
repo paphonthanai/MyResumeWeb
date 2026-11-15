@@ -10,8 +10,8 @@ const content = {
   th: {
     nav: [
       { label: 'เกี่ยวกับ', href: '#about' },
-      { label: 'ราคา', href: '#packages' },
-      { label: 'ผลงาน', href: '#projects' },
+      { label: 'ราคา', href: '/pricing' },
+      { label: 'ผลงาน', href: '/projects' },
       { label: 'ติดต่อ', href: '#inquiry' },
     ],
     tagline: 'นักพัฒนาที่สร้างระบบใช้งานจริง ตั้งแต่เว็บ แอป ไปจนถึงหุ่นยนต์',
@@ -21,8 +21,8 @@ const content = {
   en: {
     nav: [
       { label: 'About', href: '#about' },
-      { label: 'Price', href: '#packages' },
-      { label: 'Projects', href: '#projects' },
+      { label: 'Price', href: '/pricing' },
+      { label: 'Projects', href: '/projects' },
       { label: 'Contact', href: '#inquiry' },
     ],
     tagline: 'a developer building real, working systems from web and mobile to robotics',
