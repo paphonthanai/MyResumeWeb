@@ -27,6 +27,6 @@ export default defineConfig({
     // /app/home and /app/index are prerendered too, so the PNJ Created
     // Website app's landing page loads directly instead of via the
     // /app/** rewrite to the home page.
-    includedRoutes: () => ['/', '/en', '/about', '/iot', '/projects', '/lab', '/gallery', '/skills', '/process', '/pricing', '/website-builder', '/en/website-builder', '/app/home', '/app/index'],
+    includedRoutes: () => ['/', '/en', '/about', '/iot', '/projects', '/lab', '/gallery', '/skills', '/process', '/pricing', '/sublevel-studio', '/website-builder', '/en/website-builder', '/app/home', '/app/index'],
   }
 })

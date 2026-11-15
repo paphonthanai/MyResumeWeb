@@ -149,6 +149,18 @@ export const routes = [
     }
   },
   {
+    // ThreeUI "Sublevel Studio" landing page, shown full screen in its own frame.
+    // It is a third-party demo brand, so it stays out of search results.
+    path: '/sublevel-studio',
+    name: 'sublevel-studio',
+    component: () => import('../views/SublevelStudioView.vue'),
+    meta: {
+      title: 'sublevel.studio | We build the stuff people remember.',
+      noindex: true,
+      lang: 'en'
+    }
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
