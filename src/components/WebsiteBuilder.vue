@@ -1,6 +1,7 @@
 <script setup>
 import { computed, inject, ref } from 'vue'
 import { vReveal } from '../utils/reveal'
+import SectionHeading from './SectionHeading.vue'
 import { selectedPackage } from '../utils/inquiryState'
 import { content, FIRE_FIRST_URL } from '../content/websiteBuilder'
 
@@ -30,33 +31,27 @@ function signupLink(plan) {
 </script>
 
 <template>
-  <!-- Hero -->
-  <section class="relative overflow-hidden border-b border-base-300 bg-base-100">
-    <div class="pointer-events-none absolute -top-32 right-[-10%] -z-0 h-[420px] w-[420px] rounded-full bg-primary/10 blur-3xl" aria-hidden="true"></div>
-    <div class="relative mx-auto grid max-w-6xl items-center gap-14 px-6 py-20 md:grid-cols-[1.05fr_0.95fr] md:px-10 md:py-28">
-      <div class="space-y-6">
-        <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.kicker }}</p>
-        <span class="inline-flex items-center gap-2 rounded-full border border-primary/50 px-3 py-1 text-xs text-primary">
-          <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>{{ t.badge }}
-        </span>
-        <h1 class="font-display text-4xl font-semibold leading-tight text-base-content md:text-5xl" style="text-wrap: balance">
-          {{ t.title }}
-        </h1>
-        <p class="max-w-xl text-lg leading-relaxed text-base-content/65">{{ t.lead }}</p>
-        <div class="flex flex-wrap gap-3 pt-2">
-          <RouterLink :to="signupLink()" class="btn btn-shimmer rounded-full border-primary px-7 text-primary-content">{{ t.ctaPrimary }}</RouterLink>
-          <a :href="FIRE_FIRST_URL" target="_blank" rel="noopener" class="btn rounded-full border-primary/60 bg-transparent px-7 text-primary hover:bg-primary hover:text-primary-content">
-            {{ t.ctaSecondary }} ↗
-          </a>
-        </div>
-        <p class="text-sm text-base-content/55">
-          {{ t.haveAccount }}
-          <RouterLink :to="`/app/login?mode=login&lang=${lang}`" class="text-primary underline-offset-4 hover:underline">{{ t.signIn }}</RouterLink>
-        </p>
+  <!-- Hero: centred headline over a glow, the editor mock below it -->
+  <section class="relative overflow-hidden bg-base-100">
+    <div class="hero-glow pointer-events-none absolute inset-x-0 top-0 h-[640px]" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-6xl px-6 pb-20 pt-16 text-center md:px-10 md:pb-28 md:pt-24">
+      <span class="eyebrow">{{ t.badge }}</span>
+      <p class="mt-5 text-xs uppercase tracking-[0.25em] text-base-content/45">{{ t.kicker }}</p>
+      <h1 class="mx-auto mt-4 max-w-4xl text-4xl font-black leading-[1.08] tracking-tight text-white sm:text-5xl md:text-7xl" style="text-wrap: balance">
+        {{ t.title.replace(t.titleAccent, '') }}<span class="glow-text">{{ t.titleAccent }}</span>
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-base-content/65">{{ t.lead }}</p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <RouterLink :to="signupLink()" class="btn btn-shimmer rounded-full px-8">{{ t.ctaPrimary }} →</RouterLink>
+        <a :href="FIRE_FIRST_URL" target="_blank" rel="noopener" class="btn-glow">{{ t.ctaSecondary }} ↗</a>
       </div>
+      <p class="mt-5 text-sm text-base-content/55">
+        {{ t.haveAccount }}
+        <RouterLink :to="`/app/login?mode=login&lang=${lang}`" class="text-white underline underline-offset-4 hover:text-primary">{{ t.signIn }}</RouterLink>
+      </p>
 
       <!-- Editor mock: Thai/English fields beside a live preview (decorative) -->
-      <div class="rounded-lg border border-base-300 bg-base-200/70 shadow-[0_30px_60px_-30px_rgba(212,175,55,0.35)]" aria-hidden="true">
+      <div class="mx-auto mt-16 max-w-3xl rounded-3xl border border-white/10 bg-base-200/80 text-left shadow-[0_40px_120px_-40px_rgba(182,0,168,0.6)] backdrop-blur" aria-hidden="true">
         <div class="flex items-center gap-2 border-b border-base-300 px-4 py-3">
           <span class="h-2.5 w-2.5 rounded-full bg-base-300"></span>
           <span class="h-2.5 w-2.5 rounded-full bg-base-300"></span>
@@ -104,26 +99,22 @@ function signupLink(plan) {
   </section>
 
   <!-- Features -->
-  <section id="features" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
+  <section id="features" class="bg-base-100 px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
-      <div v-reveal>
-        <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.featuresKicker }}</p>
-        <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.featuresTitle }}</h2>
-        <div class="mt-3 h-px w-16 bg-primary/60"></div>
-      </div>
+      <SectionHeading :kicker="t.featuresKicker" :title="t.featuresTitle" :accent="t.featuresAccent" />
       <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <article
           v-for="(f, i) in t.features"
           :key="f.icon"
           v-reveal="i"
-          class="group rounded-lg border border-base-300 bg-base-200/40 p-6 transition duration-300 hover:-translate-y-1 hover:border-primary/50"
+          class="group card-studio p-7 hover:-translate-y-1"
         >
-          <div class="flex h-11 w-11 items-center justify-center rounded-full border border-primary/40 bg-primary/5 text-primary transition group-hover:bg-primary group-hover:text-primary-content">
+          <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-white ring-1 ring-white/10 transition group-hover:bg-gradient-to-br group-hover:from-[#7621b0] group-hover:to-[#b600a8]">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-5 w-5" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" :d="ICONS[f.icon]" />
             </svg>
           </div>
-          <h3 class="mt-5 font-display text-lg font-semibold text-base-content">{{ f.title }}</h3>
+          <h3 class="mt-5 text-lg font-semibold text-base-content">{{ f.title }}</h3>
           <p class="mt-2 text-sm leading-relaxed text-base-content/60">{{ f.desc }}</p>
         </article>
       </div>
@@ -131,20 +122,14 @@ function signupLink(plan) {
   </section>
 
   <!-- How it works -->
-  <section id="how" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
+  <section id="how" class="bg-base-100 px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
-      <div v-reveal>
-        <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.stepsKicker }}</p>
-        <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.stepsTitle }}</h2>
-        <div class="mt-3 h-px w-16 bg-primary/60"></div>
-        <p class="mt-5 max-w-2xl text-base-content/60">{{ t.stepsIntro }}</p>
-      </div>
-      <ol class="relative mt-12 grid gap-8 md:grid-cols-4 md:gap-6">
-        <div class="pointer-events-none absolute left-0 right-0 top-5 hidden h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent md:block"></div>
-        <li v-for="(s, i) in t.steps" :key="i" v-reveal="i" class="relative">
-          <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-primary bg-base-100 font-display text-sm font-semibold text-primary">{{ i + 1 }}</div>
-          <p class="mt-4 text-[11px] uppercase tracking-widest text-base-content/40">{{ t.stepLabel }} {{ i + 1 }}</p>
-          <h3 class="mt-1 font-display text-base font-semibold text-base-content">{{ s.title }}</h3>
+      <SectionHeading :kicker="t.stepsKicker" :title="t.stepsTitle" :accent="t.stepsAccent" :intro="t.stepsIntro" />
+      <ol class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <li v-for="(s, i) in t.steps" :key="i" v-reveal="i" class="card-studio p-6 hover:-translate-y-1">
+          <span class="step-num text-6xl font-black leading-none" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
+          <p class="mt-6 text-[11px] uppercase tracking-widest text-base-content/40">{{ t.stepLabel }} {{ i + 1 }}</p>
+          <h3 class="mt-1 text-base font-semibold text-base-content">{{ s.title }}</h3>
           <p class="mt-2 text-sm leading-relaxed text-base-content/60">{{ s.desc }}</p>
         </li>
       </ol>
@@ -152,48 +137,40 @@ function signupLink(plan) {
   </section>
 
   <!-- First customer -->
-  <section id="customer" class="border-b border-base-300 bg-base-200/30 px-6 py-20 md:px-10">
+  <section id="customer" class="bg-base-100 px-6 py-24 md:px-10">
     <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1fr_1fr] md:items-center">
-      <div v-reveal>
-        <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.caseKicker }}</p>
-        <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.caseTitle }}</h2>
-        <div class="mt-3 h-px w-16 bg-primary/60"></div>
-        <p class="mt-5 max-w-xl leading-relaxed text-base-content/65">{{ t.caseDesc }}</p>
-        <a :href="FIRE_FIRST_URL" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 text-sm text-primary underline-offset-4 hover:underline">
+      <div>
+        <SectionHeading :kicker="t.caseKicker" :title="t.caseTitle" :accent="t.caseAccent" :intro="t.caseDesc" />
+        <a v-reveal :href="FIRE_FIRST_URL" target="_blank" rel="noopener" class="btn-glow mt-8">
           {{ t.caseLink }} ↗
         </a>
       </div>
-      <dl class="grid grid-cols-3 divide-x divide-base-300 rounded-lg border border-base-300 bg-base-100" v-reveal>
-        <div v-for="s in t.caseStats" :key="s.label" class="flex flex-col-reverse p-5">
+      <dl class="card-studio grid grid-cols-3 divide-x divide-white/10" v-reveal>
+        <div v-for="s in t.caseStats" :key="s.label" class="flex flex-col-reverse p-5 md:p-7">
           <dt class="mt-2 text-xs leading-snug text-base-content/55">{{ s.label }}</dt>
-          <dd class="font-display text-3xl font-semibold text-primary" style="font-variant-numeric: tabular-nums">{{ s.value }}</dd>
+          <dd class="glow-text text-3xl font-black lg:text-5xl" style="font-variant-numeric: tabular-nums">{{ s.value }}</dd>
         </div>
       </dl>
     </div>
   </section>
 
   <!-- Pricing -->
-  <section id="pricing" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
+  <section id="pricing" class="bg-base-100 px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
-      <div v-reveal>
-        <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.pricingKicker }}</p>
-        <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.pricingTitle }}</h2>
-        <div class="mt-3 h-px w-16 bg-primary/60"></div>
-        <p class="mt-5 max-w-2xl text-base-content/60">{{ t.pricingIntro }}</p>
-      </div>
+      <SectionHeading :kicker="t.pricingKicker" :title="t.pricingTitle" :accent="t.pricingAccent" :intro="t.pricingIntro" />
       <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <article
           v-for="(p, i) in t.plans"
           :key="p.id"
           v-reveal="i"
-          class="relative flex flex-col rounded-lg border bg-base-200/40 p-6 transition duration-300 hover:-translate-y-1"
-          :class="p.featured ? 'border-primary/70 shadow-[0_12px_40px_-16px_rgba(212,175,55,0.35)]' : 'border-base-300 hover:border-primary/40'"
+          class="relative flex flex-col rounded-3xl p-6 transition duration-300 hover:-translate-y-1"
+          :class="p.featured ? 'featured-card' : 'card-studio'"
         >
-          <span v-if="p.featured" class="absolute -top-3 left-6 rounded-full bg-primary px-3 py-0.5 text-[11px] font-semibold uppercase tracking-widest text-primary-content">{{ t.popular }}</span>
-          <h3 class="font-display text-xl font-semibold text-base-content">{{ p.name }}</h3>
+          <span v-if="p.featured" class="absolute -top-3 left-6 rounded-full bg-white px-3 py-0.5 text-[11px] font-semibold uppercase tracking-widest text-black">{{ t.popular }}</span>
+          <h3 class="text-xl font-semibold text-base-content">{{ p.name }}</h3>
           <p class="mt-1 text-xs uppercase tracking-widest text-base-content/45">{{ p.tagline }}</p>
           <p class="mt-4 flex items-baseline gap-1">
-            <span class="font-display text-4xl font-semibold text-primary" style="font-variant-numeric: tabular-nums">฿{{ p.price }}</span>
+            <span class="text-4xl font-black text-white" style="font-variant-numeric: tabular-nums">฿{{ p.price }}</span>
             <span class="text-sm text-base-content/50">{{ t.perMonth }}</span>
           </p>
           <p v-if="p.price === '0'" class="mt-1 text-xs text-success">{{ t.freeNote }}</p>
@@ -210,46 +187,42 @@ function signupLink(plan) {
           </ul>
           <RouterLink
             :to="signupLink(p.id)"
-            class="btn mt-8 rounded-full border-primary"
-            :class="p.featured ? 'btn-shimmer text-primary-content' : 'bg-transparent text-primary hover:bg-primary hover:text-primary-content'"
+            class="mt-8"
+            :class="p.featured ? 'btn-glow' : 'inline-flex justify-center rounded-full border border-white/15 px-6 py-3 text-sm text-white transition hover:border-white/40'"
           >{{ t.choose }}</RouterLink>
         </article>
       </div>
 
-      <div v-reveal class="mt-8 flex flex-col gap-4 rounded-lg border border-base-300 p-6 md:flex-row md:items-center md:justify-between">
+      <div v-reveal class="card-studio mt-8 flex flex-col gap-4 p-7 md:flex-row md:items-center md:justify-between">
         <div>
-          <h3 class="font-display text-lg font-semibold text-base-content">{{ t.setupTitle }}</h3>
+          <h3 class="text-lg font-semibold text-base-content">{{ t.setupTitle }}</h3>
           <p class="mt-1 max-w-2xl text-sm text-base-content/60">{{ t.setupDesc }}</p>
         </div>
         <div class="flex shrink-0 items-center gap-5">
-          <span class="font-display text-lg text-primary">{{ t.setupPrice }}</span>
-          <a href="#inquiry" @click="choose('site-setup')" class="btn rounded-full border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-content">{{ t.setupCta }}</a>
+          <span class="text-lg font-semibold text-white">{{ t.setupPrice }}</span>
+          <a href="#inquiry" @click="choose('site-setup')" class="btn btn-shimmer rounded-full px-6">{{ t.setupCta }}</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section id="faq" class="border-b border-base-300 bg-base-100 px-6 py-20 md:px-10">
+  <section id="faq" class="bg-base-100 px-6 py-24 md:px-10">
     <div class="mx-auto max-w-3xl">
-      <div v-reveal>
-        <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.faqKicker }}</p>
-        <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">{{ t.faqTitle }}</h2>
-        <div class="mt-3 h-px w-16 bg-primary/60"></div>
-      </div>
-      <div class="mt-8 divide-y divide-base-300 border-y border-base-300">
-        <div v-for="(f, i) in t.faq" :key="i">
+      <SectionHeading :kicker="t.faqKicker" :title="t.faqTitle" :accent="t.faqAccent" />
+      <div class="mt-10 space-y-3">
+        <div v-for="(f, i) in t.faq" :key="i" class="card-studio px-6">
           <h3>
             <button
               :id="`wb-faq-q-${i}`"
               type="button"
-              class="flex w-full items-center justify-between gap-4 py-5 text-left font-display text-lg text-base-content transition hover:text-primary"
+              class="flex w-full items-center justify-between gap-4 py-5 text-left text-lg font-medium text-white transition hover:text-primary"
               :aria-expanded="faqOpen === i"
               :aria-controls="`wb-faq-a-${i}`"
               @click="faqOpen = faqOpen === i ? -1 : i"
             >
               <span>{{ f.q }}</span>
-              <span class="text-primary" aria-hidden="true">{{ faqOpen === i ? '−' : '+' }}</span>
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/5 text-white" aria-hidden="true">{{ faqOpen === i ? '−' : '+' }}</span>
             </button>
           </h3>
           <!-- Answers stay in the HTML (hidden) so search engines can read them -->
@@ -259,3 +232,22 @@ function signupLink(plan) {
     </div>
   </section>
 </template>
+
+<style scoped>
+.hero-glow {
+  background:
+    radial-gradient(40% 50% at 30% 20%, rgba(118, 33, 176, 0.35), transparent 70%),
+    radial-gradient(35% 45% at 75% 30%, rgba(232, 64, 13, 0.18), transparent 70%);
+}
+.step-num {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(215, 226, 234, 0.35);
+}
+.featured-card {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#151515, #151515) padding-box,
+    linear-gradient(135deg, #d0b2ff, #b600a8 45%, #e8400d) border-box;
+  box-shadow: 0 20px 60px -30px rgba(182, 0, 168, 0.7);
+}
+</style>

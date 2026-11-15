@@ -57,23 +57,24 @@ useHead({
       <div v-if="loading" class="text-sm text-base-content/50">กำลังโหลด...</div>
 
       <div v-else-if="notFound" class="py-20 text-center">
-        <p class="font-display text-2xl font-semibold text-base-content">ไม่พบบทความนี้</p>
-        <RouterLink to="/blog" class="mt-4 inline-block text-sm text-primary hover:underline">กลับไปหน้าบทความ</RouterLink>
+        <p class="text-2xl font-bold text-white">ไม่พบบทความนี้</p>
+        <RouterLink to="/blog" class="btn-glow mt-6 text-sm">← กลับไปหน้าบทความ</RouterLink>
       </div>
 
       <article v-else>
-        <p class="text-xs uppercase tracking-widest text-primary/70">{{ formatDate(post.publishedAt) }}</p>
-        <h1 class="mt-2 font-display text-3xl font-semibold leading-tight text-base-content md:text-4xl">
+        <RouterLink to="/blog" class="text-sm text-base-content/50 transition hover:text-white">← บทความทั้งหมด</RouterLink>
+        <p class="mt-8"><span class="eyebrow">{{ formatDate(post.publishedAt) }}</span></p>
+        <h1 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-white md:text-5xl" style="text-wrap: balance">
           {{ post.title }}
         </h1>
         <img
           v-if="post.coverImage"
           :src="post.coverImage"
           :alt="post.title"
-          class="mt-8 w-full rounded-lg border border-base-300"
+          class="mt-10 w-full rounded-3xl border border-white/5"
         />
         <div
-          class="prose prose-invert prose-headings:font-display prose-a:text-primary prose-img:rounded-lg prose-img:border prose-img:border-base-300 mt-8 max-w-none"
+          class="prose prose-invert prose-headings:text-white prose-a:text-primary prose-img:rounded-2xl prose-img:border prose-img:border-white/5 mt-8 max-w-none"
           v-html="contentHtml"
         ></div>
       </article>

@@ -7,19 +7,18 @@ html {
 }
 
 body {
-  background-color: #0a0906;
-  color: #eee7d6;
-  font-family: 'Outfit', 'Noto Sans Thai', sans-serif;
+  background-color: #0c0c0c;
+  color: #d7e2ea;
+  font-family: 'Kanit', 'Noto Sans Thai', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', 'Noto Serif Thai', serif;
-  letter-spacing: 0.01em;
+  font-family: 'Kanit', 'Noto Sans Thai', sans-serif;
 }
 
 ::selection {
-  background-color: #d4af37;
-  color: #0a0906;
+  background-color: #d36ce3;
+  color: #0c0c0c;
 }
 
 ::-webkit-scrollbar {
@@ -27,29 +26,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0906;
+  background: #0c0c0c;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3a3527;
+  background: #2a2a2a;
   border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #d4af37;
+  background: #d36ce3;
 }
 
-/* Studio theme (homepage): Kanit everywhere, including the serif "display" headings */
+/* Studio theme (site-wide): Kanit everywhere, including the old serif "display" headings */
 [data-theme='studio'],
 [data-theme='studio'] :is(h1, h2, h3, h4, h5, h6),
 [data-theme='studio'] .font-display,
 [data-theme='studio'] .font-sans {
   font-family: 'Kanit', 'Noto Sans Thai', sans-serif;
-}
-[data-theme='studio'] .btn-shimmer {
-  background-image: linear-gradient(123deg, #18011f 7%, #b600a8 37%, #7621b0 72%, #be4c00 100%);
-  color: #fff;
-  border-color: transparent;
 }
 
 /* Silver gradient for the oversized studio headings */
@@ -95,17 +89,21 @@ h1, h2, h3, h4, h5, h6 {
   transform: none;
 }
 
-/* Gold shimmer sweep for primary CTAs */
-@keyframes gold-shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+/* Primary CTA: the Contact button's magenta-to-ember gradient, sweeping on hover */
+@keyframes cta-sweep {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
+.btn.btn-shimmer,
 .btn-shimmer {
-  background-image: linear-gradient(110deg, #d4af37 35%, #f3dd8a 50%, #d4af37 65%);
-  background-size: 200% 100%;
+  background-image: linear-gradient(123deg, #18011f 0%, #b600a8 30%, #7621b0 60%, #be4c00 85%, #b600a8 100%);
+  background-size: 180% 100%;
+  color: #fff;
+  border-color: transparent;
+  box-shadow: inset 3px 3px 10px rgba(119, 33, 177, 0.8), 0 6px 24px -10px rgba(182, 0, 168, 0.6);
 }
 .btn-shimmer:hover {
-  animation: gold-shimmer 1.4s linear infinite;
+  animation: cta-sweep 1.2s ease-in-out infinite alternate;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -113,8 +111,91 @@ h1, h2, h3, h4, h5, h6 {
   .btn-shimmer:hover { animation: none; }
 }
 
-/* A restrained gold hairline, used instead of daisyUI's default divider color */
 .divider::before,
 .divider::after {
-  background-color: #2a2620;
+  background-color: #262626;
 }
+
+/* ---- Shared studio pieces (ideas from motionsites.ai's own UI) ---- */
+
+/* Accent words in headings: violet -> cream -> ember, with a soft glow */
+.glow-text {
+  background: radial-gradient(80% 110% at 30% 55%, #d0b2ff 0%, #ffeed8 43%, #e8400d 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 22px rgba(208, 178, 255, 0.28));
+}
+
+/* Small outlined label above a heading */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(232, 64, 13, 0.55);
+  border-radius: 9999px;
+  background: rgba(232, 64, 13, 0.08);
+  padding: 0.2rem 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffeed8;
+}
+
+/* Light pill button with a lavender glow, for secondary CTAs */
+.btn-glow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.75rem 1.6rem;
+  font-weight: 500;
+  color: #141414;
+  background: linear-gradient(180deg, #ffffff 0%, #ddd5ff 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), 0 8px 30px -8px rgba(190, 170, 255, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-glow:hover {
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 12px 40px -6px rgba(190, 170, 255, 0.8);
+}
+
+/* Segmented filter: pills inside one rounded track */
+.pill-group {
+  display: flex;
+  gap: 0.25rem;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border: 1px solid #262626;
+  border-radius: 9999px;
+  background: #151515;
+  padding: 0.3rem;
+}
+.pill-group::-webkit-scrollbar { display: none; }
+.pill {
+  flex-shrink: 0;
+  white-space: nowrap;
+  border-radius: 9999px;
+  padding: 0.45rem 1rem;
+  font-size: 0.8rem;
+  color: rgba(215, 226, 234, 0.6);
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.pill:hover { color: #fff; }
+.pill[aria-selected='true'],
+.pill.is-active {
+  background: #2c2c2c;
+  color: #fff;
+}
+
+/* Rounded dark card used across sections */
+.card-studio {
+  border: 1px solid #262626;
+  border-radius: 1.5rem;
+  background: #151515;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.card-studio:hover { border-color: #3a3a3a; }

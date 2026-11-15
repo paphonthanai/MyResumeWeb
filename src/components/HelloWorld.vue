@@ -1,5 +1,6 @@
 <script setup>
 import { computed, inject } from 'vue'
+import SectionHeading from './SectionHeading.vue'
 // เลือกภาษา
 const lang = inject('lang')
 
@@ -509,21 +510,17 @@ const fastwork = {
 </script>
 
 <template>
-  <section id="portfolio" class="border-b border-base-300 bg-base-100 py-20 px-6 md:px-10">
+  <section id="portfolio" class="bg-base-100 px-6 py-24 md:px-10">
     <div class="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-[1.15fr_0.85fr]">
       <!-- Left Column: Skills -->
       <div>
-        <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.primaryStack }}</p>
-        <h2 class="mt-2 font-display text-3xl font-semibold text-base-content">
-          {{ t.sectionTitle }}
-        </h2>
-        <div class="mt-3 h-px w-16 bg-primary/60"></div>
+        <SectionHeading :kicker="t.primaryStack" :title="t.sectionTitle" accent="Achievements" />
 
         <div class="mt-10 grid gap-5">
           <article
             v-for="(skill, i) in skills"
             :key="i"
-            class="rounded-lg border border-base-300 bg-base-200/40 p-6 transition hover:border-primary/40"
+            class="card-studio p-6"
           >
             <div class="flex items-start gap-4">
               <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-primary/40 bg-primary/5 text-primary">
@@ -545,7 +542,7 @@ const fastwork = {
                 </svg>
               </div>
               <div class="min-w-0 flex-1">
-                <h3 class="font-display text-lg font-semibold leading-snug text-base-content">
+                <h3 class="text-lg font-semibold leading-snug text-base-content">
                   {{ skill.title }}
                 </h3>
                 <p class="mt-1 text-sm text-base-content/70">{{ skill.desc1 }}</p>
@@ -590,8 +587,8 @@ const fastwork = {
 
       <!-- Right Column -->
       <div class="grid gap-6">
-        <div class="rounded-lg border border-base-300 bg-base-200/40 p-7">
-          <h4 class="font-display text-lg font-semibold text-base-content">{{ t.primaryStack }}</h4>
+        <div class="card-studio p-7">
+          <h4 class="text-lg font-semibold text-base-content">{{ t.primaryStack }}</h4>
           <div class="mt-5 grid gap-6">
             <div v-for="(category, index) in techCategories" :key="index">
               <h5 class="mb-3 border-b border-base-300 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">
@@ -613,24 +610,24 @@ const fastwork = {
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-6 rounded-lg border border-base-300 bg-base-200/40 p-7">
+        <div class="grid grid-cols-2 gap-6 card-studio p-7">
           <div>
-            <h4 class="font-display text-base font-semibold text-primary">{{ t.experience }}</h4>
+            <h4 class="text-base font-semibold text-white">{{ t.experience }}</h4>
             <p class="mt-2 text-sm text-base-content/70">{{ t.experlemceDetail1 }}</p>
             <p class="mt-1 text-sm text-base-content/70">{{ t.experlemceDetail2 }}</p>
             <p class="mt-1 text-sm text-base-content/70">{{ t.experlemceDetail3 }}</p>
           </div>
           <div>
-            <h4 class="font-display text-base font-semibold text-primary">{{ t.provenUxImpact }}</h4>
+            <h4 class="text-base font-semibold text-white">{{ t.provenUxImpact }}</h4>
             <p class="mt-2 text-sm text-base-content/70">{{ t.provenDetail1 }}</p>
             <p class="mt-1 text-sm text-base-content/70">{{ t.provenDetail2 }}</p>
             <p class="mt-1 text-sm text-base-content/70">{{ t.provenDetail3 }}</p>
           </div>
         </div>
 
-        <div id="contact" class="grid grid-cols-1 gap-8 rounded-lg border border-base-300 bg-base-200/40 p-7 sm:grid-cols-2">
+        <div id="contact" class="grid grid-cols-1 gap-8 card-studio p-7 sm:grid-cols-2">
           <div>
-            <h4 class="font-display text-base font-semibold text-primary">{{ t.recognition }}</h4>
+            <h4 class="text-base font-semibold text-white">{{ t.recognition }}</h4>
             <ul class="mt-3 space-y-2 text-sm text-base-content/70">
               <li>
                 <a href="https://www.borntodev.com/devlab/certificate" target="_blank" rel="noopener noreferrer" class="text-base-content/80 underline-offset-4 hover:text-primary hover:underline">Certificate</a>
@@ -653,7 +650,7 @@ const fastwork = {
           </div>
 
           <div>
-            <h4 class="font-display text-base font-semibold text-primary">{{ t.contact }}</h4>
+            <h4 class="text-base font-semibold text-white">{{ t.contact }}</h4>
             <div class="mt-3 space-y-3 text-sm">
               <div class="flex items-center gap-2 text-base-content/70">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 shrink-0 text-primary/70">
@@ -683,9 +680,9 @@ const fastwork = {
           </div>
         </div>
 
-        <div class="rounded-lg border border-base-300 bg-base-200/40 p-7">
+        <div class="card-studio p-7">
           <div class="flex items-center justify-between">
-            <h4 class="font-display text-base font-semibold text-primary">{{ t.fastworkTitle }}</h4>
+            <h4 class="text-base font-semibold text-white">{{ t.fastworkTitle }}</h4>
             <span class="inline-flex items-center gap-1 text-sm text-base-content/70">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 text-primary">
                 <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
@@ -696,15 +693,15 @@ const fastwork = {
 
           <div class="mt-4 grid grid-cols-3 gap-3 text-center">
             <div>
-              <p class="font-display text-lg font-semibold text-base-content">{{ fastwork.orders }}</p>
+              <p class="text-lg font-semibold text-base-content">{{ fastwork.orders }}</p>
               <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.fastworkOrders }}</p>
             </div>
             <div>
-              <p class="font-display text-lg font-semibold text-base-content">{{ fastwork.clients }}</p>
+              <p class="text-lg font-semibold text-base-content">{{ fastwork.clients }}</p>
               <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.fastworkClients }}</p>
             </div>
             <div>
-              <p class="font-display text-lg font-semibold text-base-content">{{ fastwork.repeatHires }}</p>
+              <p class="text-lg font-semibold text-base-content">{{ fastwork.repeatHires }}</p>
               <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.fastworkRepeat }}</p>
             </div>
           </div>
@@ -713,7 +710,7 @@ const fastwork = {
             :href="fastwork.profileUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-sm mt-5 w-full rounded-full border-primary/70 bg-transparent text-xs uppercase tracking-widest text-primary transition hover:bg-primary hover:text-primary-content"
+            class="btn-glow mt-5 w-full py-2.5 text-sm"
           >
             {{ t.fastworkViewProfile }}
           </a>
@@ -737,14 +734,14 @@ const fastwork = {
           </ul>
         </div>
 
-        <div class="grid grid-cols-2 gap-6 rounded-lg border border-base-300 bg-base-200/40 p-7">
+        <div class="grid grid-cols-2 gap-6 card-studio p-7">
           <div>
             <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.projectStatus }}</p>
-            <p class="mt-1 font-display text-lg font-semibold text-primary">In Progress</p>
+            <p class="mt-1 text-lg font-semibold glow-text">In Progress</p>
           </div>
           <div>
             <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.trustScore }}</p>
-            <p class="mt-1 font-display text-lg font-semibold text-primary">99.5%</p>
+            <p class="mt-1 text-lg font-semibold glow-text">99.5%</p>
           </div>
           <div>
             <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.username }}</p>

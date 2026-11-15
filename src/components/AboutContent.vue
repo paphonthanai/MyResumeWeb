@@ -1,5 +1,7 @@
 <script setup>
 import { computed, inject } from 'vue'
+import SectionHeading from './SectionHeading.vue'
+import portrait from './studio/portrait.webp'
 
 // Rendered inside UserLayout's slot, so it can inject the shared th/en toggle.
 const lang = inject('lang')
@@ -149,24 +151,28 @@ const languages = computed(() => [
 </script>
 
 <template>
-  <div class="mx-auto max-w-6xl px-6 py-16 md:px-10">
-    <p class="text-xs uppercase tracking-[0.25em] text-primary/90">{{ t.kicker }}</p>
-    <h1 class="mt-2 font-display text-4xl font-semibold text-base-content">{{ t.title }}</h1>
-    <p class="mt-5 max-w-2xl text-base leading-relaxed text-base-content/70">{{ t.intro }}</p>
+  <div class="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20">
+    <!-- Intro: heading beside the illustrated portrait, on a soft glow -->
+    <div class="relative grid items-end gap-8 md:grid-cols-[1.4fr_1fr]">
+      <SectionHeading as="h1" :kicker="t.kicker" :title="t.title" :accent="t.title" :intro="t.intro" />
+      <div class="relative mx-auto w-48 md:w-64" aria-hidden="true">
+        <div class="absolute inset-x-0 bottom-0 h-3/4 rounded-full bg-[#7621b0]/40 blur-3xl"></div>
+        <img :src="portrait" alt="" width="998" height="1496" class="relative w-full" />
+      </div>
+    </div>
 
-    <div class="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-[1.4fr_1fr]">
+    <div class="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_1fr]">
       <!-- Timeline -->
-      <div class="space-y-14">
-        <section>
-          <h2 class="font-display text-2xl font-semibold text-base-content">{{ t.education }}</h2>
-          <div class="mt-2 h-px w-14 bg-primary/60"></div>
+      <div class="space-y-6">
+        <section class="card-studio p-7 md:p-9">
+          <h2 class="text-2xl font-bold text-white">{{ t.education }}</h2>
 
-          <div class="mt-8 space-y-10 border-l border-base-300 pl-8">
+          <div class="mt-8 space-y-10 border-l border-white/10 pl-8">
             <div v-for="(edu, i) in t.edu" :key="i" class="relative">
-              <span class="absolute -left-[calc(2rem+3px)] top-1 h-2.5 w-2.5 rounded-full bg-primary"></span>
+              <span class="absolute -left-[calc(2rem+3px)] top-1 h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_12px_rgba(211,108,227,0.8)]"></span>
               <div class="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
-                <p class="font-display text-lg font-semibold text-base-content">{{ edu.major }}</p>
-                <p class="text-xs uppercase tracking-widest text-primary/80">{{ edu.year }}</p>
+                <p class="text-lg font-semibold text-base-content">{{ edu.major }}</p>
+                <p class="text-xs uppercase tracking-widest text-base-content/45">{{ edu.year }}</p>
               </div>
               <a
                 :href="eduLinks[i]" target="_blank" rel="noopener noreferrer"
@@ -179,18 +185,17 @@ const languages = computed(() => [
           </div>
         </section>
 
-        <section>
-          <h2 class="font-display text-2xl font-semibold text-base-content">{{ t.employment }}</h2>
-          <div class="mt-2 h-px w-14 bg-primary/60"></div>
+        <section class="card-studio p-7 md:p-9">
+          <h2 class="text-2xl font-bold text-white">{{ t.employment }}</h2>
 
-          <div class="mt-8 border-l border-base-300 pl-8">
+          <div class="mt-8 border-l border-white/10 pl-8">
             <div class="relative">
-              <span class="absolute -left-[calc(2rem+3px)] top-1 h-2.5 w-2.5 rounded-full bg-primary"></span>
+              <span class="absolute -left-[calc(2rem+3px)] top-1 h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_12px_rgba(211,108,227,0.8)]"></span>
               <div class="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
-                <a href="http://www.bpp.go.th/" target="_blank" rel="noopener noreferrer" class="font-display text-lg font-semibold text-base-content underline-offset-4 hover:text-primary hover:underline">
+                <a href="http://www.bpp.go.th/" target="_blank" rel="noopener noreferrer" class="text-lg font-semibold text-base-content underline-offset-4 hover:text-primary hover:underline">
                   {{ t.bpp }}
                 </a>
-                <p class="text-xs uppercase tracking-widest text-primary/80">{{ lang === 'th' ? 'ก.พ. 2558' : 'Feb 2015' }} – {{ t.present }}</p>
+                <p class="text-xs uppercase tracking-widest text-base-content/45">{{ lang === 'th' ? 'ก.พ. 2558' : 'Feb 2015' }} – {{ t.present }}</p>
               </div>
               <a
                 href="http://www.bpp.go.th/bpp24/home/indexbpp24.html" target="_blank" rel="noopener noreferrer"
@@ -220,16 +225,15 @@ const languages = computed(() => [
       </div>
 
       <!-- Sidebar -->
-      <aside class="space-y-10">
-        <section>
-          <h2 class="font-display text-xl font-semibold text-base-content">{{ t.activity }}</h2>
-          <div class="mt-2 h-px w-12 bg-primary/60"></div>
+      <aside class="space-y-6">
+        <section class="card-studio p-7 md:p-9">
+          <h2 class="text-xl font-bold text-white">{{ t.activity }}</h2>
           <p class="mt-4 text-sm text-base-content/60">{{ t.activityDesc }}</p>
           <ul class="mt-4 flex flex-col gap-2">
             <li v-for="(a, i) in activities" :key="i">
               <a
                 :href="a.href" target="_blank" rel="noopener noreferrer"
-                class="block rounded-full border border-base-300 px-4 py-2 text-sm text-base-content/70 transition hover:border-primary/60 hover:text-primary"
+                class="block rounded-full border border-white/10 px-4 py-2 text-sm text-base-content/70 transition hover:border-white/30 hover:text-white"
               >
                 {{ a.name }}
               </a>
@@ -237,18 +241,17 @@ const languages = computed(() => [
           </ul>
         </section>
 
-        <section>
-          <h2 class="font-display text-xl font-semibold text-base-content">{{ t.language }}</h2>
-          <div class="mt-2 h-px w-12 bg-primary/60"></div>
+        <section class="card-studio p-7 md:p-9">
+          <h2 class="text-xl font-bold text-white">{{ t.language }}</h2>
 
           <div class="mt-5 space-y-6">
             <div v-for="(l, li) in languages" :key="li">
               <div class="flex items-baseline justify-between">
-                <p class="font-display text-base font-semibold text-base-content">{{ l.name }}</p>
+                <p class="text-base font-semibold text-base-content">{{ l.name }}</p>
                 <p class="text-xs text-base-content/40">{{ l.overall }}%</p>
               </div>
               <div class="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-base-300">
-                <div class="h-full rounded-full bg-primary" :style="{ width: l.overall + '%' }"></div>
+                <div class="h-full rounded-full bg-gradient-to-r from-[#7621b0] via-[#b600a8] to-[#e8400d]" :style="{ width: l.overall + '%' }"></div>
               </div>
 
               <ul class="mt-4 space-y-2">
