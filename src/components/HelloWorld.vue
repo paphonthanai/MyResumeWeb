@@ -1,5 +1,6 @@
 <script setup>
-import { computed, inject } from 'vue'
+import { computed, inject, ref } from 'vue'
+import { vReveal } from '../utils/reveal'
 import SectionHeading from './SectionHeading.vue'
 // เลือกภาษา
 const lang = inject('lang')
@@ -507,252 +508,288 @@ const fastwork = {
     { name: '', date: '18/12/2025', rating: 4.8, text: 'ทำงานรวดเร็วมาก เข้าใจในเนื้องานดีมากครับ แนะนำน้องคนนี้เลยย', anonymous: true },
   ],
 }
+
+// Project index: one row is open at a time; desktop shows it in the side panel.
+const activeSkill = ref(0)
+const current = computed(() => skills.value[activeSkill.value])
+
+// Stack marquee: every tool in two rows that drift in opposite directions.
+const allTech = techCategories.flatMap((c) => c.items)
+const half = Math.ceil(allTech.length / 2)
+const techRows = [allTech.slice(0, half), allTech.slice(half)]
+// Black logos that would vanish on the dark page
+const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
 </script>
 
 <template>
-  <section id="portfolio" class="bg-base-100 px-6 py-24 md:px-10">
-    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-      <!-- Left Column: Skills -->
-      <div>
-        <SectionHeading :kicker="t.primaryStack" :title="t.sectionTitle" accent="Achievements" />
+  <section id="portfolio" class="overflow-hidden bg-base-100 py-24">
+    <div class="mx-auto max-w-6xl px-6 md:px-10">
+      <SectionHeading :title="t.sectionTitle" accent="Achievements" />
 
-        <div class="mt-10 grid gap-5">
-          <article
-            v-for="(skill, i) in skills"
-            :key="i"
-            class="card-studio p-6"
-          >
-            <div class="flex items-start gap-4">
-              <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-primary/40 bg-primary/5 text-primary">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5"
-                  :viewBox="ICONS[skill.icon].viewBox"
-                  :fill="ICONS[skill.icon].stroke ? 'none' : 'currentColor'"
-                  :stroke="ICONS[skill.icon].stroke ? 'currentColor' : undefined"
-                  stroke-width="1.5"
-                >
-                  <path
-                    :stroke-linecap="ICONS[skill.icon].stroke ? 'round' : undefined"
-                    :stroke-linejoin="ICONS[skill.icon].stroke ? 'round' : undefined"
-                    :fill-rule="ICONS[skill.icon].fillRule"
-                    :clip-rule="ICONS[skill.icon].fillRule ? 'evenodd' : undefined"
-                    :d="ICONS[skill.icon].d"
-                  />
-                </svg>
+      <!-- Project index + detail panel -->
+      <div class="mt-12 grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-14">
+        <ol class="border-t border-white/10">
+          <li v-for="(skill, i) in skills" :key="i" class="border-b border-white/10">
+            <button
+              type="button"
+              class="idx-row group flex w-full items-baseline gap-4 py-4 text-left md:gap-6"
+              :class="i === activeSkill && 'is-on'"
+              :aria-expanded="i === activeSkill"
+              @click="activeSkill = i"
+              @mouseenter="activeSkill = i"
+            >
+              <span class="w-6 shrink-0 font-mono text-xs tabular-nums text-white/35">{{ String(i + 1).padStart(2, '0') }}</span>
+              <span class="min-w-0 flex-1">
+                <span class="idx-title block text-base font-medium leading-snug md:text-lg">{{ skill.title }}</span>
+                <span class="mt-1 block truncate text-xs text-white/40">{{ skill.customers.map((c) => c.name).join(' · ') }}</span>
+              </span>
+              <span class="h-2 w-2 shrink-0 self-center rounded-full" :class="statusDotClass[skill.statuses[0].variant]" aria-hidden="true"></span>
+            </button>
+
+            <!-- Phones: the open row shows its detail inline -->
+            <div v-if="i === activeSkill" class="pb-6 pl-10 lg:hidden">
+              <p class="text-sm leading-relaxed text-white/70">{{ skill.desc1 }}</p>
+              <p class="mt-2 text-sm leading-relaxed text-white/50">{{ skill.desc2 }}</p>
+              <div class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs">
+                <span v-for="(st, si) in skill.statuses" :key="si" class="inline-flex items-center gap-1.5" :class="statusTextClass[st.variant]">
+                  <span class="h-1.5 w-1.5 rounded-full" :class="statusDotClass[st.variant]"></span>{{ st.label }}
+                </span>
               </div>
-              <div class="min-w-0 flex-1">
-                <h3 class="text-lg font-semibold leading-snug text-base-content">
-                  {{ skill.title }}
-                </h3>
-                <p class="mt-1 text-sm text-base-content/70">{{ skill.desc1 }}</p>
-                <p class="mt-1 text-sm text-base-content/50">{{ skill.desc2 }}</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <component
+                  :is="c.link && c.link !== '#' ? 'a' : 'span'"
+                  v-for="(c, ci) in skill.customers"
+                  :key="ci"
+                  :href="c.link && c.link !== '#' ? c.link : undefined"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="client-chip"
+                >{{ c.name }}</component>
+              </div>
+            </div>
+          </li>
+        </ol>
 
-                <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
-                  <span
-                    v-for="(s, si) in skill.statuses"
-                    :key="si"
-                    class="inline-flex items-center gap-1.5"
-                    :class="statusTextClass[s.variant]"
+        <aside class="hidden lg:block">
+          <div class="detail sticky top-24 overflow-hidden rounded-[1.75rem] p-9">
+            <Transition name="swap" mode="out-in">
+              <div :key="activeSkill">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full border border-white/15 text-[#d0b2ff]">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    :viewBox="ICONS[current.icon].viewBox"
+                    :fill="ICONS[current.icon].stroke ? 'none' : 'currentColor'"
+                    :stroke="ICONS[current.icon].stroke ? 'currentColor' : undefined"
+                    stroke-width="1.5"
+                    aria-hidden="true"
                   >
-                    <span class="h-1.5 w-1.5 rounded-full" :class="statusDotClass[s.variant]"></span>
-                    {{ s.label }}
+                    <path
+                      :stroke-linecap="ICONS[current.icon].stroke ? 'round' : undefined"
+                      :stroke-linejoin="ICONS[current.icon].stroke ? 'round' : undefined"
+                      :fill-rule="ICONS[current.icon].fillRule"
+                      :clip-rule="ICONS[current.icon].fillRule ? 'evenodd' : undefined"
+                      :d="ICONS[current.icon].d"
+                    />
+                  </svg>
+                </div>
+                <h3 class="mt-6 text-2xl font-semibold leading-snug text-white" style="text-wrap: balance">{{ current.title }}</h3>
+                <p class="mt-4 leading-relaxed text-white/70">{{ current.desc1 }}</p>
+                <p class="mt-3 leading-relaxed text-white/50">{{ current.desc2 }}</p>
+
+                <p class="mt-8 text-xs text-white/40">{{ t.status }}</p>
+                <div class="mt-2 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+                  <span v-for="(st, si) in current.statuses" :key="si" class="inline-flex items-center gap-2" :class="statusTextClass[st.variant]">
+                    <span class="h-1.5 w-1.5 rounded-full" :class="statusDotClass[st.variant]"></span>{{ st.label }}
                   </span>
                 </div>
 
-                <div class="mt-3 flex flex-wrap gap-2">
-                  <template v-for="(c, ci) in skill.customers" :key="ci">
-                    <a
-                      v-if="c.link"
-                      :href="c.link"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="rounded-full border border-base-300 px-3 py-1 text-xs text-base-content/60 transition hover:border-primary/60 hover:text-primary"
-                    >
-                      {{ c.name }}
-                    </a>
-                    <span
-                      v-else
-                      class="rounded-full border border-base-300 px-3 py-1 text-xs text-base-content/60"
-                    >
-                      {{ c.name }}
-                    </span>
-                  </template>
+                <p class="mt-6 text-xs text-white/40">{{ t.customer }}</p>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  <component
+                    :is="c.link && c.link !== '#' ? 'a' : 'span'"
+                    v-for="(c, ci) in current.customers"
+                    :key="ci"
+                    :href="c.link && c.link !== '#' ? c.link : undefined"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="client-chip"
+                  >{{ c.name }}</component>
                 </div>
               </div>
-            </div>
-          </article>
+            </Transition>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Stack: two drifting rows of tool logos -->
+    <div class="mt-24">
+      <h3 class="mx-auto max-w-6xl px-6 text-xl font-semibold text-white md:px-10">{{ t.primaryStack }}</h3>
+      <div class="tech-stack mt-8 grid gap-4">
+        <div v-for="(row, r) in techRows" :key="r" class="stack-row flex w-max gap-4" :class="r && 'is-rev'">
+          <template v-for="copy in 2" :key="copy">
+            <span
+              v-for="tech in row"
+              :key="tech.name + copy"
+              class="flex shrink-0 items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] py-2.5 pl-3 pr-5"
+              :aria-hidden="copy === 2"
+            >
+              <img :src="tech.icon" alt="" loading="lazy" class="h-6 w-6 object-contain" :class="DARK_LOGOS.has(tech.name) && 'invert'" />
+              <span class="whitespace-nowrap text-sm text-white/75">{{ tech.name }}</span>
+            </span>
+          </template>
         </div>
       </div>
+    </div>
 
-      <!-- Right Column -->
-      <div class="grid gap-6">
-        <div class="card-studio p-7">
-          <h4 class="text-lg font-semibold text-base-content">{{ t.primaryStack }}</h4>
-          <div class="mt-5 grid gap-6">
-            <div v-for="(category, index) in techCategories" :key="index">
-              <h5 class="mb-3 border-b border-base-300 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">
-                {{ category.name }}
-              </h5>
-              <div class="grid grid-cols-3 gap-4 text-center sm:grid-cols-4">
-                <div v-for="tech in category.items" :key="tech.name" class="group flex flex-col items-center gap-2">
-                  <img
-                    :src="tech.icon"
-                    :alt="tech.name"
-                    class="h-7 w-7 opacity-70 grayscale transition group-hover:opacity-100 group-hover:grayscale-0"
-                  />
-                  <span class="text-[11px] font-medium text-base-content/60 transition group-hover:text-primary">
-                    {{ tech.name }}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+    <!-- Experience, results, recognition, reviews and contact in one ruled grid -->
+    <div class="mx-auto mt-24 max-w-6xl px-6 md:px-10">
+      <div class="facts grid overflow-hidden rounded-[1.75rem] border border-white/10 md:grid-cols-2 lg:grid-cols-3">
+        <div v-reveal class="fact">
+          <h4 class="fact-h">{{ t.experience }}</h4>
+          <ul class="mt-4 space-y-2 text-sm leading-relaxed text-white/70">
+            <li>{{ t.experlemceDetail1.replace('-> ', '') }}</li>
+            <li>{{ t.experlemceDetail2.replace('-> ', '') }}</li>
+            <li>{{ t.experlemceDetail3.replace('-> ', '') }}</li>
+          </ul>
         </div>
 
-        <div class="grid grid-cols-2 gap-6 card-studio p-7">
-          <div>
-            <h4 class="text-base font-semibold text-white">{{ t.experience }}</h4>
-            <p class="mt-2 text-sm text-base-content/70">{{ t.experlemceDetail1 }}</p>
-            <p class="mt-1 text-sm text-base-content/70">{{ t.experlemceDetail2 }}</p>
-            <p class="mt-1 text-sm text-base-content/70">{{ t.experlemceDetail3 }}</p>
-          </div>
-          <div>
-            <h4 class="text-base font-semibold text-white">{{ t.provenUxImpact }}</h4>
-            <p class="mt-2 text-sm text-base-content/70">{{ t.provenDetail1 }}</p>
-            <p class="mt-1 text-sm text-base-content/70">{{ t.provenDetail2 }}</p>
-            <p class="mt-1 text-sm text-base-content/70">{{ t.provenDetail3 }}</p>
-          </div>
+        <div v-reveal="1" class="fact">
+          <h4 class="fact-h">{{ t.provenUxImpact }}</h4>
+          <ul class="mt-4 space-y-2 text-sm leading-relaxed text-white/70">
+            <li>{{ t.provenDetail1.replace('— ', '') }}</li>
+            <li>{{ t.provenDetail2.replace('— ', '') }}</li>
+            <li>{{ t.provenDetail3.replace('— ', '') }}</li>
+          </ul>
         </div>
 
-        <div id="contact" class="grid grid-cols-1 gap-8 card-studio p-7 sm:grid-cols-2">
-          <div>
-            <h4 class="text-base font-semibold text-white">{{ t.recognition }}</h4>
-            <ul class="mt-3 space-y-2 text-sm text-base-content/70">
-              <li>
-                <a href="https://www.borntodev.com/devlab/certificate" target="_blank" rel="noopener noreferrer" class="text-base-content/80 underline-offset-4 hover:text-primary hover:underline">Certificate</a>
-                in
-                <a href="https://www.borntodev.com/devlab/profile/18960" target="_blank" rel="noopener noreferrer" class="text-base-content/80 underline-offset-4 hover:text-primary hover:underline">DevLab</a>
-                by
-                <a href="https://www.borntodev.com/" target="_blank" rel="noopener noreferrer" class="text-base-content/80 underline-offset-4 hover:text-primary hover:underline">BornToDev</a>
-              </li>
-              <li>
-                <a href="https://cssbattle.dev/player/baronquibe" target="_blank" rel="noopener noreferrer" class="text-base-content/80 underline-offset-4 hover:text-primary hover:underline">Stats</a>
-                in
-                <a href="https://cssbattle.dev/" target="_blank" rel="noopener noreferrer" class="text-base-content/80 underline-offset-4 hover:text-primary hover:underline">CSSBattle</a>
-              </li>
-              <li>
-                <a href="https://drive.google.com/file/d/1uEVPXvL2djxsjJTTpgLq-QNLn_Mg7moN/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-base-content/80 underline-offset-4 hover:text-primary hover:underline">Certificate Cybersec</a>
-                by
-                <a href="https://www.facebook.com/RPCACyberClub" target="_blank" rel="noopener noreferrer" class="text-base-content/80 underline-offset-4 hover:text-primary hover:underline">RPCACyberClub</a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 class="text-base font-semibold text-white">{{ t.contact }}</h4>
-            <div class="mt-3 space-y-3 text-sm">
-              <div class="flex items-center gap-2 text-base-content/70">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 shrink-0 text-primary/70">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-                </svg>
-                <a href="mailto:Pj06052538@gmail.com" class="hover:text-primary">Pj06052538@gmail.com</a>
-              </div>
-              <div class="flex items-center gap-2 text-base-content/70">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 text-primary/70" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.271c-.966 0-1.75-.787-1.75-1.75s.784-1.75 1.75-1.75 1.75.787 1.75 1.75-.784 1.75-1.75 1.75zm13.5 10.271h-3v-4.5c0-1.074-.021-2.458-1.5-2.458s-1.731 1.174-1.731 2.382v4.576h-3v-9h2.881v1.233h.042c.401-.761 1.379-1.561 2.839-1.561 3.033 0 3.591 1.996 3.591 4.59v4.738z" />
-                </svg>
-                <a href="https://www.linkedin.com/in/%E0%B8%9B%E0%B8%9E%E0%B8%99%E0%B8%98%E0%B8%99%E0%B8%B1%E0%B8%A2-%E0%B9%83%E0%B8%88%E0%B8%A1%E0%B8%B2-aa57b2269/" target="_blank" rel="noopener noreferrer" class="hover:text-primary">linkedin.com/in/npjtech</a>
-              </div>
-              <div class="flex items-center gap-2 text-base-content/70">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 text-primary/70" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-                </svg>
-                <a href="https://www.facebook.com/Paphonthanai.name" target="_blank" rel="noopener noreferrer" class="hover:text-primary">Facebook — Paphonthanai.name</a>
-              </div>
-              <div class="flex items-start gap-2 text-base-content/70">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mt-0.5 h-5 w-5 shrink-0 text-primary/70" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
-                </svg>
-                <a href="https://m.me/Paphonthanai.name" target="_blank" rel="noopener noreferrer" class="hover:text-primary">{{ t.messengerLabel }}</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-studio p-7">
-          <div class="flex items-center justify-between">
-            <h4 class="text-base font-semibold text-white">{{ t.fastworkTitle }}</h4>
-            <span class="inline-flex items-center gap-1 text-sm text-base-content/70">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 text-primary">
-                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
-              </svg>
-              {{ fastwork.rating.toFixed(1) }}
-            </span>
-          </div>
-
-          <div class="mt-4 grid grid-cols-3 gap-3 text-center">
-            <div>
-              <p class="text-lg font-semibold text-base-content">{{ fastwork.orders }}</p>
-              <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.fastworkOrders }}</p>
-            </div>
-            <div>
-              <p class="text-lg font-semibold text-base-content">{{ fastwork.clients }}</p>
-              <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.fastworkClients }}</p>
-            </div>
-            <div>
-              <p class="text-lg font-semibold text-base-content">{{ fastwork.repeatHires }}</p>
-              <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.fastworkRepeat }}</p>
-            </div>
-          </div>
-
-          <a
-            :href="fastwork.profileUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-glow mt-5 w-full py-2.5 text-sm"
-          >
-            {{ t.fastworkViewProfile }}
-          </a>
-
-          <ul class="mt-5 space-y-4 border-t border-base-300 pt-4">
-            <li v-for="(review, ri) in fastwork.reviews" :key="ri">
-              <div class="flex items-center justify-between">
-                <span class="text-sm font-medium text-base-content/80">
-                  {{ review.anonymous ? t.fastworkAnonymousName : review.name }}
-                </span>
-                <span class="inline-flex items-center gap-1 text-xs text-base-content/60">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5 text-primary">
-                    <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
-                  </svg>
-                  {{ review.rating.toFixed(1) }}
-                </span>
-              </div>
-              <p class="text-[11px] text-base-content/40">{{ review.date }}</p>
-              <p v-if="review.text" class="mt-1 text-sm text-base-content/70">{{ review.text }}</p>
+        <div v-reveal="2" class="fact">
+          <h4 class="fact-h">{{ t.recognition }}</h4>
+          <ul class="mt-4 space-y-2.5 text-sm text-white/60">
+            <li>
+              <a href="https://www.borntodev.com/devlab/certificate" target="_blank" rel="noopener noreferrer" class="fact-a">Certificate</a>
+              in <a href="https://www.borntodev.com/devlab/profile/18960" target="_blank" rel="noopener noreferrer" class="fact-a">DevLab</a>
+              by <a href="https://www.borntodev.com/" target="_blank" rel="noopener noreferrer" class="fact-a">BornToDev</a>
+            </li>
+            <li>
+              <a href="https://cssbattle.dev/player/baronquibe" target="_blank" rel="noopener noreferrer" class="fact-a">Stats</a>
+              in <a href="https://cssbattle.dev/" target="_blank" rel="noopener noreferrer" class="fact-a">CSSBattle</a>
+            </li>
+            <li>
+              <a href="https://drive.google.com/file/d/1uEVPXvL2djxsjJTTpgLq-QNLn_Mg7moN/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="fact-a">Certificate Cybersec</a>
+              by <a href="https://www.facebook.com/RPCACyberClub" target="_blank" rel="noopener noreferrer" class="fact-a">RPCACyberClub</a>
             </li>
           </ul>
         </div>
 
-        <div class="grid grid-cols-2 gap-6 card-studio p-7">
-          <div>
-            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.projectStatus }}</p>
-            <p class="mt-1 text-lg font-semibold glow-text">In Progress</p>
+        <div v-reveal class="fact lg:col-span-2">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <h4 class="fact-h">{{ t.fastworkTitle }}</h4>
+            <a :href="fastwork.profileUrl" target="_blank" rel="noopener noreferrer" class="fact-a text-sm">{{ t.fastworkViewProfile }} →</a>
           </div>
-          <div>
-            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.trustScore }}</p>
-            <p class="mt-1 text-lg font-semibold glow-text">99.5%</p>
-          </div>
-          <div>
-            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.username }}</p>
-            <p class="mt-1 text-sm text-base-content/70">npj.tech</p>
-          </div>
-          <div>
-            <p class="text-[11px] uppercase tracking-widest text-base-content/40">{{ t.github }}</p>
-            <a target="_blank" rel="noopener noreferrer" href="https://github.com/paphonthanai" class="mt-1 block text-sm text-base-content/70 hover:text-primary">github.com/paphonthanai</a>
-          </div>
+          <p class="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-1 text-sm text-white/60">
+            <span class="inline-flex items-center gap-1.5 text-2xl font-semibold text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 text-[#e8400d]" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
+              </svg>
+              {{ fastwork.rating.toFixed(1) }}
+            </span>
+            <span><b class="font-semibold text-white">{{ fastwork.orders }}</b> {{ t.fastworkOrders }}</span>
+            <span><b class="font-semibold text-white">{{ fastwork.clients }}</b> {{ t.fastworkClients }}</span>
+            <span><b class="font-semibold text-white">{{ fastwork.repeatHires }}</b> {{ t.fastworkRepeat }}</span>
+          </p>
+          <ul class="mt-5 grid gap-4 sm:grid-cols-2">
+            <li v-for="(review, ri) in fastwork.reviews" :key="ri" class="border-t border-white/10 pt-4">
+              <p class="flex items-center justify-between text-sm">
+                <span class="font-medium text-white/80">{{ review.anonymous ? t.fastworkAnonymousName : review.name }}</span>
+                <span class="text-xs tabular-nums text-white/45">★ {{ review.rating.toFixed(1) }} · {{ review.date }}</span>
+              </p>
+              <p v-if="review.text" class="mt-2 text-sm leading-relaxed text-white/70">“{{ review.text }}”</p>
+            </li>
+          </ul>
+        </div>
+
+        <div id="contact" v-reveal="1" class="fact">
+          <h4 class="fact-h">{{ t.contact }}</h4>
+          <ul class="mt-4 space-y-3 text-sm text-white/70">
+            <li><a href="mailto:Pj06052538@gmail.com" class="fact-a">Pj06052538@gmail.com</a></li>
+            <li><a href="https://www.linkedin.com/in/%E0%B8%9B%E0%B8%9E%E0%B8%99%E0%B8%98%E0%B8%99%E0%B8%B1%E0%B8%A2-%E0%B9%83%E0%B8%88%E0%B8%A1%E0%B8%B2-aa57b2269/" target="_blank" rel="noopener noreferrer" class="fact-a">LinkedIn — npjtech</a></li>
+            <li><a href="https://www.facebook.com/Paphonthanai.name" target="_blank" rel="noopener noreferrer" class="fact-a">Facebook — Paphonthanai.name</a></li>
+            <li><a href="https://m.me/Paphonthanai.name" target="_blank" rel="noopener noreferrer" class="fact-a">{{ t.messengerLabel }}</a></li>
+            <li><a href="https://github.com/paphonthanai" target="_blank" rel="noopener noreferrer" class="fact-a">GitHub — paphonthanai</a></li>
+          </ul>
+          <p class="mt-6 text-xs text-white/40">{{ t.username }}: npj.tech · {{ t.trustScore }} 99.5%</p>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+.idx-row { transition: color 0.25s ease; }
+.idx-title { color: rgba(255, 255, 255, 0.55); transition: color 0.25s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+.idx-row:hover .idx-title,
+.idx-row.is-on .idx-title { color: #fff; }
+.idx-row.is-on .idx-title { transform: translateX(6px); }
+.idx-row:focus-visible { outline: 2px solid #d0b2ff; outline-offset: 2px; border-radius: 6px; }
+
+.detail {
+  border: 1px solid #262626;
+  background:
+    radial-gradient(120% 70% at 100% 0%, rgba(182, 0, 168, 0.22), transparent 60%),
+    radial-gradient(90% 60% at 0% 100%, rgba(232, 64, 13, 0.12), transparent 60%),
+    #141414;
+  box-shadow: 0 30px 80px -40px rgba(182, 0, 168, 0.55);
+}
+.swap-enter-active,
+.swap-leave-active { transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), filter 0.28s, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1); }
+.swap-enter-from { opacity: 0; filter: blur(6px); transform: translateY(8px); }
+.swap-leave-to { opacity: 0; filter: blur(6px); transform: translateY(-6px); }
+
+.client-chip {
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+a.client-chip:hover { border-color: #d0b2ff; color: #fff; }
+
+/* Logo rows: masked at the edges, paused on hover, still for reduced motion */
+.tech-stack {
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.stack-row { animation: drift 48s linear infinite; }
+.stack-row.is-rev { animation-direction: reverse; animation-duration: 56s; }
+.tech-stack:hover .stack-row { animation-play-state: paused; }
+@keyframes drift {
+  to { transform: translateX(calc(-50% - 0.5rem)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tech-stack { mask-image: none; }
+  .stack-row { animation: none; width: auto; flex-wrap: wrap; padding: 0 1.5rem; }
+  .stack-row span[aria-hidden='true'] { display: none; }
+}
+
+.facts { background: #101010; }
+.fact {
+  padding: 2rem;
+  border-color: rgba(255, 255, 255, 0.1);
+  border-style: solid;
+  border-width: 0 0 1px 0;
+}
+@media (min-width: 768px) {
+  .fact { border-right-width: 1px; }
+}
+.fact-h { font-size: 1.05rem; font-weight: 600; color: #fff; }
+.fact-a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: underline;
+  text-decoration-color: rgba(208, 178, 255, 0.35);
+  text-underline-offset: 4px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+.fact-a:hover { color: #fff; text-decoration-color: #d0b2ff; }
+</style>
