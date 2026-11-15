@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import UserLayout from '../../layout/UserLayout.vue'
 import SectionHeading from '../../components/SectionHeading.vue'
+import BlogScanner from '../../components/blog/BlogScanner.vue'
 import { db } from '../../firebase'
 import { collection, query, where, orderBy, getDocs } from 'firebase/firestore'
 
@@ -36,8 +37,9 @@ onMounted(async () => {
 
 <template>
   <UserLayout>
+    <BlogScanner />
     <div class="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20">
-      <SectionHeading as="h1" kicker="Blog" title="บทความ" accent="บทความ" intro="เรื่องเล่าจากงานจริง เทคนิค และสิ่งที่ได้เรียนรู้ระหว่างทาง" />
+      <SectionHeading kicker="Blog" title="บทความ" accent="บทความ" intro="เรื่องเล่าจากงานจริง เทคนิค และสิ่งที่ได้เรียนรู้ระหว่างทาง" />
 
       <div v-if="loading" class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-busy="true">
         <div v-for="n in 3" :key="n" class="aspect-[16/10] animate-pulse rounded-2xl bg-base-200"></div>

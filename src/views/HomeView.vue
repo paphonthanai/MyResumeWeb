@@ -9,6 +9,7 @@ import StudioMarquee from '../components/studio/StudioMarquee.vue'
 import StudioAbout from '../components/studio/StudioAbout.vue'
 import StudioServices from '../components/studio/StudioServices.vue'
 import StudioProjects from '../components/studio/StudioProjects.vue'
+import StudioLab from '../components/studio/StudioLab.vue'
 </script>
 
 <template>
@@ -19,6 +20,7 @@ import StudioProjects from '../components/studio/StudioProjects.vue'
       <StudioAbout />
       <StudioServices />
       <StudioProjects />
+      <StudioLab />
       <WorkGallery />
       <HomeSections part="process" />
       <HelloWorld />
