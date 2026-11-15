@@ -4,6 +4,8 @@ import { vReveal } from '../utils/reveal'
 import SectionHeading from './SectionHeading.vue'
 // เลือกภาษา
 const lang = inject('lang')
+// bare: the page already carries the title, so skip the heading
+const props = defineProps({ bare: { type: Boolean, default: false } })
 
 // เนื้อหาทั้งหมดแยกตามภาษา
 const content = {
@@ -524,10 +526,10 @@ const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
 <template>
   <section id="portfolio" class="overflow-hidden bg-base-100 py-24">
     <div class="mx-auto max-w-6xl px-6 md:px-10">
-      <SectionHeading :title="t.sectionTitle" accent="Achievements" />
+      <SectionHeading v-if="!props.bare" :title="t.sectionTitle" accent="Achievements" />
 
       <!-- Project index + detail panel -->
-      <div class="mt-12 grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-14">
+      <div :class="!props.bare && 'mt-12'" class="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-14">
         <ol class="border-t border-white/10">
           <li v-for="(skill, i) in skills" :key="i" class="border-b border-white/10">
             <button
@@ -574,7 +576,7 @@ const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
           <div class="detail sticky top-24 overflow-hidden rounded-[1.75rem] p-9">
             <Transition name="swap" mode="out-in">
               <div :key="activeSkill">
-                <div class="flex h-12 w-12 items-center justify-center rounded-full border border-white/15 text-[#d0b2ff]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full border border-white/15 text-[var(--accent-soft,#d0b2ff)]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="h-5 w-5"
@@ -732,15 +734,15 @@ const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
 .idx-row:hover .idx-title,
 .idx-row.is-on .idx-title { color: #fff; }
 .idx-row.is-on .idx-title { transform: translateX(6px); }
-.idx-row:focus-visible { outline: 2px solid #d0b2ff; outline-offset: 2px; border-radius: 6px; }
+.idx-row:focus-visible { outline: 2px solid var(--accent-soft, #d0b2ff); outline-offset: 2px; border-radius: 6px; }
 
 .detail {
   border: 1px solid #262626;
   background:
-    radial-gradient(120% 70% at 100% 0%, rgba(182, 0, 168, 0.22), transparent 60%),
-    radial-gradient(90% 60% at 0% 100%, rgba(232, 64, 13, 0.12), transparent 60%),
+    radial-gradient(120% 70% at 100% 0%, color-mix(in srgb, var(--accent, #b600a8) 22%, transparent), transparent 60%),
+    radial-gradient(90% 60% at 0% 100%, color-mix(in srgb, var(--accent-2, #e8400d) 12%, transparent), transparent 60%),
     #141414;
-  box-shadow: 0 30px 80px -40px rgba(182, 0, 168, 0.55);
+  box-shadow: 0 30px 80px -40px color-mix(in srgb, var(--accent, #b600a8) 55%, transparent);
 }
 .swap-enter-active,
 .swap-leave-active { transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), filter 0.28s, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -755,7 +757,7 @@ const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
   color: rgba(255, 255, 255, 0.7);
   transition: border-color 0.2s ease, color 0.2s ease;
 }
-a.client-chip:hover { border-color: #d0b2ff; color: #fff; }
+a.client-chip:hover { border-color: var(--accent-soft, #d0b2ff); color: #fff; }
 
 /* Logo rows: masked at the edges, paused on hover, still for reduced motion */
 .tech-stack {
@@ -787,9 +789,9 @@ a.client-chip:hover { border-color: #d0b2ff; color: #fff; }
 .fact-a {
   color: rgba(255, 255, 255, 0.8);
   text-decoration: underline;
-  text-decoration-color: rgba(208, 178, 255, 0.35);
+  text-decoration-color: color-mix(in srgb, var(--accent-soft, #d0b2ff) 40%, transparent);
   text-underline-offset: 4px;
   transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
-.fact-a:hover { color: #fff; text-decoration-color: #d0b2ff; }
+.fact-a:hover { color: #fff; text-decoration-color: var(--accent-soft, #d0b2ff); }
 </style>

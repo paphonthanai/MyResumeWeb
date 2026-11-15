@@ -21,15 +21,21 @@ watch(() => route.fullPath, () => { menuOpen.value = false })
 
 const en = computed(() => lang.value === 'en')
 const home = computed(() => (en.value ? '/en' : '/'))
+// Every page, for the footer and the phone menu; `top` ones also sit in the desktop header.
 const nav = computed(() => [
-  { label: en.value ? 'Home' : 'หน้าแรก', to: home.value },
-  { label: en.value ? 'Projects' : 'ผลงาน', to: `${home.value}#projects` },
-  { label: en.value ? 'Gallery' : 'แกลเลอรี', to: `${home.value}#gallery` },
-  { label: 'IoT', to: '/iot' },
-  { label: en.value ? 'Website Builder' : 'สร้างเว็บไซต์', to: en.value ? '/en/website-builder' : '/website-builder' },
+  { label: en.value ? 'Home' : 'หน้าแรก', to: home.value, top: true },
+  { label: en.value ? 'Projects' : 'ผลงาน', to: '/projects', top: true },
+  { label: 'Lab', to: '/lab' },
+  { label: en.value ? 'Gallery' : 'แกลเลอรี', to: '/gallery', top: true },
+  { label: en.value ? 'Skills' : 'ทักษะ', to: '/skills', top: true },
+  { label: en.value ? 'Process' : 'ขั้นตอนการทำงาน', to: '/process' },
+  { label: en.value ? 'Pricing' : 'ราคา', to: '/pricing', top: true },
+  { label: 'IoT', to: '/iot', top: true },
+  { label: en.value ? 'Website Builder' : 'สร้างเว็บไซต์', to: en.value ? '/en/website-builder' : '/website-builder', top: true },
   { label: en.value ? 'About' : 'เกี่ยวกับ', to: '/about' },
-  { label: en.value ? 'Blog' : 'บทความ', to: '/blog' },
+  { label: en.value ? 'Blog' : 'บทความ', to: '/blog', top: true },
 ])
+const topNav = computed(() => nav.value.filter((i) => i.top))
 // The Website Builder page has its own inquiry form; elsewhere go to the homepage's.
 const contactTo = computed(() => (route.path.includes('website-builder') ? '#inquiry' : `${home.value}#inquiry`))
 const isActive = (to) => !to.includes('#') && route.path === to
@@ -44,9 +50,9 @@ const isActive = (to) => !to.includes('#') && route.path === to
           <span class="text-lg font-semibold tracking-tight text-white">PNJ<span class="font-light text-base-content/60"> tech</span></span>
         </RouterLink>
 
-        <nav class="ml-4 hidden lg:block" aria-label="Main">
+        <nav class="ml-4 hidden xl:block" aria-label="Main">
           <ul class="flex items-center gap-1 text-sm">
-            <li v-for="item in nav" :key="item.to">
+            <li v-for="item in topNav" :key="item.to">
               <RouterLink
                 :to="item.to"
                 class="rounded-full px-3.5 py-2 transition"
@@ -81,7 +87,7 @@ const isActive = (to) => !to.includes('#') && route.path === to
           </RouterLink>
           <button
             type="button"
-            class="flex h-9 w-9 items-center justify-center rounded-full bg-[#2a2a2a] text-white lg:hidden"
+            class="flex h-9 w-9 items-center justify-center rounded-full bg-[#2a2a2a] text-white xl:hidden"
             :aria-expanded="menuOpen"
             aria-controls="site-menu"
             :aria-label="en ? 'Menu' : 'เมนู'"
@@ -95,8 +101,8 @@ const isActive = (to) => !to.includes('#') && route.path === to
         </div>
       </div>
 
-      <nav v-show="menuOpen" id="site-menu" class="border-t border-white/5 px-4 pb-5 pt-3 lg:hidden" aria-label="Main">
-        <ul class="grid gap-1">
+      <nav v-show="menuOpen" id="site-menu" class="border-t border-white/5 px-4 pb-5 pt-3 xl:hidden" aria-label="Main">
+        <ul class="grid gap-1 sm:grid-cols-2">
           <li v-for="item in nav" :key="item.to">
             <RouterLink :to="item.to" class="block rounded-2xl px-4 py-3 text-base text-base-content/80 hover:bg-white/5 hover:text-white">{{ item.label }}</RouterLink>
           </li>

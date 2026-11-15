@@ -5,7 +5,8 @@ import { clamp01, onScrollFrame } from '../utils/fade'
 import SectionHeading from './SectionHeading.vue'
 import { selectedPackage } from '../utils/inquiryState'
 
-const props = defineProps({ part: { type: String, default: 'process' } }) // 'process' or 'packages'
+// part: 'process' or 'packages'. bare: the page already carries the title, so skip the heading.
+const props = defineProps({ part: { type: String, default: 'process' }, bare: { type: Boolean, default: false } })
 const lang = inject('lang')
 
 // Copy is derived from the real work shown in the Skills section and the
@@ -100,7 +101,8 @@ onBeforeUnmount(() => stop?.())
   <section v-if="props.part === 'process'" id="process" ref="sectionEl" class="process bg-base-100">
     <div class="process-pin mx-auto grid max-w-6xl gap-12 px-6 py-24 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20 lg:py-0">
       <div>
-        <SectionHeading :title="t.processTitle" :accent="t.processAccent" :intro="t.processIntro" />
+        <SectionHeading v-if="!props.bare" :title="t.processTitle" :accent="t.processAccent" :intro="t.processIntro" />
+        <p v-else class="max-w-md text-lg leading-relaxed text-white/60">{{ t.processIntro }}</p>
 
         <div class="mt-14 hidden lg:block" aria-hidden="true">
           <p class="font-mono text-sm tabular-nums text-white/40">
@@ -140,9 +142,9 @@ onBeforeUnmount(() => stop?.())
   <!-- Packages: one row per package, read side by side like a price list -->
   <section v-if="props.part === 'packages'" id="packages" class="bg-base-100 px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
-      <SectionHeading :title="t.packagesTitle" :accent="t.packagesAccent" :intro="t.packagesIntro" />
+      <SectionHeading v-if="!props.bare" :title="t.packagesTitle" :accent="t.packagesAccent" :intro="t.packagesIntro" />
 
-      <div class="mt-14">
+      <div :class="props.bare ? '' : 'mt-14'">
         <article
           v-for="(p, i) in t.packages"
           :key="p.id"
@@ -209,7 +211,7 @@ onBeforeUnmount(() => stop?.())
   inset: 0;
   transform-origin: top;
   transform: scaleY(var(--p, 0));
-  background: linear-gradient(180deg, #d0b2ff, #b600a8 55%, #e8400d);
+  background: linear-gradient(180deg, var(--accent-soft, #d0b2ff), var(--accent, #b600a8) 55%, var(--accent-2, #e8400d));
 }
 .rail-node {
   position: absolute;
@@ -228,11 +230,11 @@ onBeforeUnmount(() => stop?.())
 }
 .rail-step:not(.is-past) h3 { opacity: 0.4; }
 .rail-step.is-past .rail-node {
-  border-color: #d0b2ff;
-  background: #b600a8;
+  border-color: var(--accent-soft, #d0b2ff);
+  background: var(--accent, #b600a8);
 }
 .rail-step.is-on .rail-node {
-  box-shadow: 0 4px 18px 2px rgba(182, 0, 168, 0.55);
+  box-shadow: 0 4px 18px 2px color-mix(in srgb, var(--accent, #b600a8) 55%, transparent);
 }
 @media (min-width: 1024px) {
   .rail-step:not(.is-on) h3 { opacity: 0.35; }
@@ -259,8 +261,8 @@ onBeforeUnmount(() => stop?.())
   border: 1px solid transparent;
   background:
     linear-gradient(#141414, #141414) padding-box,
-    linear-gradient(120deg, #d0b2ff, #b600a8 45%, #e8400d) border-box;
-  box-shadow: 0 30px 80px -40px rgba(182, 0, 168, 0.75);
+    linear-gradient(120deg, var(--accent-soft, #d0b2ff), var(--accent, #b600a8) 45%, var(--accent-2, #e8400d)) border-box;
+  box-shadow: 0 30px 80px -40px color-mix(in srgb, var(--accent, #b600a8) 75%, transparent);
 }
 .pkg-featured + .pkg { border-top: 0; }
 .pkg-cta {

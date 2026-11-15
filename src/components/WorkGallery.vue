@@ -6,6 +6,8 @@ import { categories, items } from '../content/workGallery'
 import { galleryFilter as active } from '../utils/galleryState'
 
 const lang = inject('lang')
+// bare: the page already carries the title, so skip the heading
+const props = defineProps({ bare: { type: Boolean, default: false } })
 
 // `<id>-t.webp` is the grid thumbnail, `<id>.webp` the full image.
 const files = import.meta.glob('./image/work/*.webp', { eager: true, import: 'default' })
@@ -132,11 +134,11 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section id="gallery" class="overflow-hidden bg-base-100 py-24">
+  <section id="gallery" class="overflow-hidden bg-base-100" :class="props.bare ? 'pb-24' : 'py-24'">
     <div class="mx-auto max-w-6xl px-6 md:px-10">
-      <SectionHeading :title="t.title" :accent="t.accent" :intro="t.intro" />
+      <SectionHeading v-if="!props.bare" :title="t.title" :accent="t.accent" :intro="t.intro" />
 
-      <div class="mt-10 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex flex-wrap items-center justify-between gap-4" :class="!props.bare && 'mt-10'">
         <div class="pill-group w-fit" role="tablist">
           <button
             v-for="c in categories"
@@ -193,7 +195,7 @@ onBeforeUnmount(() => {
 
     <div class="mx-auto mt-6 flex max-w-6xl items-center gap-4 px-6 md:px-10" aria-hidden="true">
       <span class="relative h-px flex-1 bg-white/10">
-        <span class="absolute inset-y-0 left-0 w-full origin-left bg-white/70" :style="{ transform: `scaleX(${Math.max(0.04, stripProgress)})` }"></span>
+        <span class="absolute inset-y-0 left-0 w-full origin-left bg-[var(--accent,#fff)]" :style="{ transform: `scaleX(${Math.max(0.04, stripProgress)})` }"></span>
       </span>
       <span class="font-mono text-xs tabular-nums text-white/45">{{ filtered.length }}</span>
     </div>

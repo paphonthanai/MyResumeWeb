@@ -17,8 +17,8 @@ const t = computed(() =>
     ? {
         nav: [
           { label: 'Home', to: home.value },
-          { label: 'Projects', to: `${home.value}#projects` },
-          { label: 'Lab', to: `${home.value}#lab` },
+          { label: 'Projects', to: '/projects' },
+          { label: 'Lab', to: '/lab' },
           { label: 'Contact', to: '#inquiry' },
         ],
         badge: 'A robot hand from our R&D bench',
@@ -29,8 +29,8 @@ const t = computed(() =>
     : {
         nav: [
           { label: 'หน้าแรก', to: home.value },
-          { label: 'ผลงาน', to: `${home.value}#projects` },
-          { label: 'Lab', to: `${home.value}#lab` },
+          { label: 'ผลงาน', to: '/projects' },
+          { label: 'Lab', to: '/lab' },
           { label: 'ติดต่อ', to: '#inquiry' },
         ],
         badge: 'มือหุ่นยนต์ต้นแบบจากห้อง R&D',

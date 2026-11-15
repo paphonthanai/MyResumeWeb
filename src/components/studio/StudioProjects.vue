@@ -1,6 +1,6 @@
 <script setup>
 import { computed, inject, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { clamp01, onScrollFrame } from '../../utils/fade'
 import { galleryFilter } from '../../utils/galleryState'
 import websiteImage from '../image/Project/web-vue/01.png'
@@ -20,6 +20,7 @@ import hardwarePoster from '../image/video/case-hardware.webp'
 // "Laptop Portfolio" design on motionsites.ai, built with our own media.
 
 const lang = inject('lang')
+const router = useRouter()
 const en = computed(() => lang.value === 'en')
 
 const work = import.meta.glob('../image/work/*.webp', { eager: true, import: 'default' })
@@ -161,7 +162,7 @@ function go(i) {
 
 function openGallery(cat) {
   galleryFilter.value = cat
-  document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })
+  router.push('/gallery')
 }
 
 onMounted(() => {

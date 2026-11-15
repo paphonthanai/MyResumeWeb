@@ -84,7 +84,7 @@ const CARDS = [
   },
   {
     id: 'gallery',
-    url: 'pnj.tech/#gallery',
+    url: 'pnj.tech/gallery',
     html: `<h1>ผลงานจริงจากหน้างาน</h1>
 <figure>
   <img src="robot-arm-red.webp" alt="แขนกลสีแดง">
