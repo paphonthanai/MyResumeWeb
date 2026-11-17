@@ -2,6 +2,7 @@
 import { computed, defineAsyncComponent, inject, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import SectionHeading from '../SectionHeading.vue'
+import TechStack from './TechStack.vue'
 import { pages } from '../../content/pages'
 import { vReveal } from '../../utils/reveal'
 
@@ -25,17 +26,27 @@ const photo = (id) => work[`../image/work/${id}-t.webp`]
 // Client logos sit on light plates so dark and coloured marks stay legible.
 // `invert` flips a white-on-transparent logo to dark for the light plate.
 // Clients without a logo file show their name on the plate instead.
+// `href` links to the client's own site or page.
 const logos = import.meta.glob('../image/clients/*.webp', { eager: true, import: 'default' })
 const logo = (id) => logos[`../image/clients/${id}.webp`]
 const CLIENTS = [
-  { id: 'first-telecom', th: 'เฟิร์สท เทเลคอม ซีสเต็ม', en: 'First Telecom System' },
-  { id: 'kyoei', th: 'เคียวเออิ (ประเทศไทย)', en: 'Kyoei (Thailand)' },
-  { id: 'hodaka', th: 'โฮดากะ อีเอส (ประเทศไทย)', en: 'Hodaka ES (Thailand)', wide: true },
-  { id: 'mitkarn', th: 'มิตรกาญ', en: 'Mitkarn' },
-  { id: 'monoqlo', th: 'Monoqlo', en: 'Monoqlo', invert: true },
-  { id: 'home-dd', th: 'โฮม ดี ดี', en: 'Home DD' },
-  { id: 'bpp24', th: 'สหกรณ์ออมทรัพย์ ตชด. 24', en: 'BPP24 Savings Cooperative' },
+  { id: 'first-telecom', th: 'เฟิร์สท เทเลคอม ซีสเต็ม', en: 'First Telecom System', href: 'https://www.firsttelecom.co.th/' },
+  { id: 'kyoei', th: 'เคียวเออิ (ประเทศไทย)', en: 'Kyoei (Thailand)', href: 'https://www.kyoei-thai.co.th/th/' },
+  { id: 'hodaka', th: 'โฮดากะ อีเอส (ประเทศไทย)', en: 'Hodaka ES (Thailand)', wide: true, href: 'https://hodaka.co.th/th/' },
+  { id: 'mitkarn', th: 'มิตรกาญ', en: 'Mitkarn', href: 'https://www.facebook.com/Mittrakarn/' },
+  { id: 'monoqlo', th: 'Monoqlo', en: 'Monoqlo', invert: true, href: 'https://en.monoqlo-th.com/' },
+  { id: 'home-dd', th: 'โฮม ดี ดี', en: 'Home DD', href: 'http://www.homedd.co.th/' },
+  { id: 'bpp24', th: 'สหกรณ์ออมทรัพย์ ตชด. 24', en: 'BPP24 Savings Cooperative', href: 'https://bpp24-coop.com/' },
+  { id: 'fire-first', th: 'ไฟร์ เฟิร์ส เซฟตี้ แอนด์ ทรัค', en: 'Fire First Safety and Truck', href: 'https://firefirstsafetyandtruck.com/' },
+  { id: 'bpp24-unit', th: 'กก.ตชด.24', en: 'BPP Sub-Division 24', href: 'http://164.115.20.79/bpp.go.th/bpp24/home/indexbpp24.html' },
 ]
+
+// Fastwork profiles where the same work can be hired, with Fastwork's mark.
+const FASTWORK = [
+  { href: 'https://fastwork.com/user/0xname', label: 'fastwork.com' },
+  { href: 'https://fastwork.co/user/0xname?source=web_marketplace_profile-menu_profile', label: 'fastwork.co' },
+]
+const FASTWORK_MARK = 'M69.2074 46.9341L54.3403 35.4828L54.6359 37.6972C54.7778 38.5982 54.8489 39.5089 54.8488 40.4209C54.8471 41.2128 54.7957 42.0039 54.6951 42.7893L65.6946 51.2683C66.7159 51.9933 67.4303 53.0739 67.6978 54.2985C67.9652 55.5231 67.7667 56.8036 67.1409 57.8894C66.5151 58.9751 65.5071 59.7879 64.3143 60.1688C63.1215 60.5496 61.8296 60.4711 60.6916 59.9485L44.1331 53.0919C46.3757 51.8277 48.2422 49.989 49.5412 47.7645C50.8402 45.54 51.525 43.0096 51.5253 40.4328C51.5225 39.507 51.4354 38.5835 51.2651 37.6736L47.4921 9.25262C47.1605 6.70642 45.9148 4.36803 43.9877 2.67382C42.0605 0.979611 39.5835 0.0453491 37.0189 0.0453491C34.4543 0.0453491 31.9773 0.979611 30.0502 2.67382C28.123 4.36803 26.8774 6.70642 26.5457 9.25262L24.0737 27.8683L25.836 26.5065C26.5473 25.9344 27.3026 25.4196 28.0951 24.967C28.7683 24.5797 29.4633 24.2318 30.1767 23.9249L32.01 10.1526C32.131 8.90814 32.7104 7.7533 33.6352 6.91308C34.5601 6.07286 35.7642 5.60741 37.013 5.60741C38.2618 5.60741 39.466 6.07286 40.3908 6.91308C41.3157 7.7533 41.895 8.90814 42.016 10.1526L44.3815 27.9157C41.7386 26.3625 38.6731 25.6853 35.6228 25.9809C32.5725 26.2766 29.6936 27.5298 27.3973 29.5617L4.79499 46.9696C2.75241 48.5287 1.34722 50.7795 0.842399 53.3009C0.337575 55.8224 0.767697 58.4416 2.05229 60.6685C3.33688 62.8953 5.38791 64.5772 7.82154 65.3994C10.2552 66.2216 12.9046 66.1277 15.2741 65.1353L32.6014 57.9709L30.5434 57.1183C29.6996 56.7836 28.8814 56.3879 28.0951 55.934C27.4191 55.5454 26.771 55.1101 26.1554 54.6314L13.3108 59.9485C12.1727 60.4711 10.8809 60.5496 9.68804 60.1688C8.49521 59.7879 7.48726 58.9751 6.86148 57.8894C6.23569 56.8036 6.03711 55.5231 6.30461 54.2985C6.5721 53.0739 7.28642 51.9933 8.30775 51.2683L22.5007 40.3262C22.5007 40.3262 22.5007 40.3972 22.5007 40.4328C22.5031 43.3978 23.4107 46.2913 25.1019 48.7254C26.7931 51.1594 29.187 53.0177 31.9627 54.0511L58.7519 65.0998C61.1204 66.0843 63.7657 66.1724 66.1943 65.3477C68.6228 64.5229 70.6687 62.8417 71.9503 60.6176C73.2318 58.3936 73.6614 55.7787 73.1588 53.2608C72.6563 50.743 71.256 48.4942 69.2192 46.9341H69.2074ZM28.0005 40.3972C28.0028 38.6224 28.5306 36.8881 29.5171 35.4135C30.5037 33.9389 31.9047 32.7903 33.543 32.1127C35.1814 31.4351 36.9837 31.259 38.722 31.6067C40.4603 31.9544 42.0566 32.8103 43.3092 34.0661C44.5619 35.3219 45.4145 36.9214 45.7595 38.6623C46.1045 40.4032 45.9263 42.2074 45.2473 43.8469C44.5684 45.4864 43.4193 46.8876 41.9453 47.8734C40.4712 48.8592 38.7383 49.3854 36.9657 49.3854C35.7874 49.3854 34.6206 49.1528 33.5321 48.7009C32.4436 48.2491 31.4548 47.5869 30.6222 46.7521C29.7895 45.9173 29.1294 44.9264 28.6795 43.8359C28.2297 42.7455 27.9989 41.577 28.0005 40.3972Z'
 
 const CAPS = [
   {
@@ -57,6 +68,11 @@ const CAPS = [
     to: '/iot',
     th: ['IoT แขนกล และหุ่นยนต์', 'งานวิจัยและพัฒนาที่ลงมือทำจริง ตั้งแต่เซนเซอร์ตัวเดียวไปจนถึงแขนกลทั้งชุด', ['Arduino', '3D Printing', 'Sensors', 'R&D']],
     en: ['IoT, robot arms & robots', 'Hands-on R&D, from a single sensor to a complete robot arm.', ['Arduino', '3D Printing', 'Sensors', 'R&D']],
+  },
+  {
+    to: '/pricing#inquiry',
+    th: ['กฎหมาย อบรม และคอร์สสอน', 'ให้ความรู้ด้านกฎหมาย จัดอบรม เปิดคอร์สสอน และแนะนำการใช้งานระบบและเครื่องมือต่างๆ ให้ทีมใช้งานได้เองอย่างมั่นใจ', ['กฎหมาย', 'อบรม', 'คอร์สสอน', 'แนะนำการใช้งาน']],
+    en: ['Law, training & courses', 'Legal know-how, training sessions, courses, and guidance on using systems and tools, so your team can run them with confidence.', ['Law', 'Training', 'Courses', 'How-to guidance']],
   },
 ]
 
@@ -119,6 +135,7 @@ const t = computed(() =>
         endTitle: 'Got a project in mind?',
         endAccent: 'project',
         endBody: 'Tell me what you need, from a one-page website to a company system or a complete robot arm. Pricing depends on the real scope; the quotation is free.',
+        fastwork: 'Or hire me on Fastwork',
       }
     : {
         eyebrow: 'Freelance · 5+ ปี',
@@ -148,6 +165,7 @@ const t = computed(() =>
         endTitle: 'มีโปรเจกต์ในใจ?',
         endAccent: 'โปรเจกต์',
         endBody: 'เล่าโจทย์มาได้เลย ตั้งแต่เว็บไซต์หน้าเดียวไปจนถึงระบบองค์กรหรือแขนกลทั้งชุด ราคาขึ้นกับขอบเขตงานจริง ประเมินและส่งใบเสนอราคาให้ฟรี',
+        fastwork: 'หรือจ้างงานผ่าน Fastwork',
       },
 )
 
@@ -199,8 +217,9 @@ const pageCards = computed(() => [
 
     <div class="relative mx-auto max-w-6xl px-6 pb-16 md:px-10">
       <p class="text-xs uppercase tracking-[0.14em] text-base-content/45">{{ t.clients }}</p>
-      <ul class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
-        <li v-for="c in CLIENTS" :key="c.id" class="flex flex-col">
+      <ul class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <li v-for="c in CLIENTS" :key="c.id">
+          <a :href="c.href" target="_blank" rel="noopener" class="group flex flex-col">
           <span class="client-plate">
             <img
               v-if="logo(c.id)"
@@ -213,10 +232,13 @@ const pageCards = computed(() => [
             />
             <span v-else class="px-2 text-center text-sm font-semibold leading-tight text-neutral-700">{{ c[L] }}</span>
           </span>
-          <span v-if="logo(c.id)" class="mt-2 line-clamp-1 text-center text-[11px] text-base-content/45">{{ c[L] }}</span>
+          <span v-if="logo(c.id)" class="mt-2 line-clamp-1 text-center text-[11px] text-base-content/45 transition group-hover:text-white">{{ c[L] }} ↗</span>
+          </a>
         </li>
       </ul>
     </div>
+
+    <TechStack class="relative pb-16 md:pb-20" />
   </section>
 
   <!-- Identities: Cyber Sage (personal) and PNJ Tech (business) -->
@@ -251,7 +273,7 @@ const pageCards = computed(() => [
     <div class="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-24">
       <SectionHeading :kicker="t.servicesKicker" :title="t.servicesTitle" :accent="t.servicesAccent" />
       <ul class="mt-12 grid gap-4 sm:grid-cols-2">
-        <li v-for="(c, i) in caps" :key="c.to" v-reveal="i">
+        <li v-for="(c, i) in caps" :key="c.to" v-reveal="i" :class="caps.length % 2 && i === caps.length - 1 && 'sm:col-span-2'">
           <RouterLink :to="c.to" class="card-studio group flex h-full flex-col p-7 hover:-translate-y-0.5">
             <span class="text-xs text-base-content/40">0{{ i + 1 }}</span>
             <h3 class="mt-3 text-xl font-semibold leading-snug text-white transition group-hover:text-primary">{{ c.title }}</h3>
@@ -322,6 +344,20 @@ const pageCards = computed(() => [
         <div class="relative">
           <SectionHeading :title="t.endTitle" :accent="t.endAccent" :intro="t.endBody" center />
           <RouterLink to="/pricing#inquiry" class="btn btn-shimmer mt-8 rounded-full border-0 px-8">{{ t.cta }} →</RouterLink>
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-base-content/60">
+            <span>{{ t.fastwork }}</span>
+            <a
+              v-for="f in FASTWORK"
+              :key="f.href"
+              :href="f.href"
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-white/80 transition hover:border-white/30 hover:text-white"
+            >
+              <svg viewBox="0 0 74 66" width="18" height="16" class="fill-current" aria-hidden="true"><path :d="FASTWORK_MARK" /></svg>
+              {{ f.label }} ↗
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -364,6 +400,7 @@ const pageCards = computed(() => [
 
 /* Light plate for a client logo */
 .client-plate {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   height: 4.5rem;
   align-items: center;
@@ -372,6 +409,10 @@ const pageCards = computed(() => [
   background: #f4f2ee;
   padding: 0.75rem;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+.group:hover .client-plate {
+  transform: translateY(-2px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 .cover-fallback {
   background:

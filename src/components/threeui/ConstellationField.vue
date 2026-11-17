@@ -12,8 +12,15 @@ import {
 
 // Vue port of ThreeUI's ConstellationField (src/shaders/constellation-field/
 // ConstellationField.tsx, SHA-256 5bbf6f84…) and the NeuformBatchEffect
-// renderer it uses. Only the default "constellation-field" variant is wired up.
+// renderer it uses. The "constellation-field" and "particle-drift" variants
+// are wired up.
+const VARIANTS = {
+  'constellation-field': EFFECTS.constellationField,
+  'particle-drift': EFFECTS.particleDrift,
+}
+
 const props = defineProps({
+  variant: { type: String, default: 'constellation-field' },
   mode: { type: String, default: undefined },
   speed: { type: Number, default: NEUFORM_BATCH_DEFAULTS.speed },
   size: { type: Number, default: NEUFORM_BATCH_DEFAULTS.size },
@@ -37,11 +44,12 @@ window.addEventListener('message', function (event) {
   var data = event.data;
   if (!data || data.type !== 'site-pointer') return;
   if (data.leave) { document.dispatchEvent(new MouseEvent('mouseleave')); return; }
-  document.dispatchEvent(new MouseEvent('mousemove', { clientX: data.x, clientY: data.y }));
+  // Bubbles so it reaches listeners on window (Particle Drift) as well as document (Constellation Field).
+  document.dispatchEvent(new MouseEvent('mousemove', { clientX: data.x, clientY: data.y, bubbles: true }));
 });
 </` + `script>`
 
-const definition = EFFECTS.constellationField
+const definition = VARIANTS[props.variant] ?? EFFECTS.constellationField
 const iframeRef = ref(null)
 
 // useAutomaticMode
