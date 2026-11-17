@@ -182,6 +182,7 @@ const pageCards = computed(() => [
             :hue="0"
             :saturation="1.00"
             :brightness="1.00"
+            transparent
           />
         </div>
       </div>
@@ -337,8 +338,8 @@ const pageCards = computed(() => [
     radial-gradient(50% 60% at 15% 0%, rgba(208, 178, 255, 0.14), transparent 70%),
     radial-gradient(45% 55% at 90% 100%, rgba(232, 64, 13, 0.12), transparent 70%);
 }
-/* Square slot for the globe. The study paints on its own near-black
-   ground, so a radial mask fades the square's edges into the page. */
+/* Square slot for the globe. Its ground is transparent, so the page's
+   constellation background shows around it. */
 .globe-slot {
   position: relative;
   width: min(100%, 520px);
@@ -348,8 +349,6 @@ const pageCards = computed(() => [
 .globe-frame {
   position: absolute;
   inset: 0;
-  -webkit-mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
-  mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
   animation: globe-in 0.9s ease both;
 }
 @keyframes globe-in {

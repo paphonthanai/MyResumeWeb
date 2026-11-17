@@ -118,7 +118,12 @@ function queuePointer(message) {
   pending = message
   if (!frameRequest) frameRequest = requestAnimationFrame(sendPointer)
 }
-const onPointerMove = (event) => queuePointer({ x: event.clientX, y: event.clientY })
+// Touch is left out: a finger dragging to scroll would pull the stars along
+// with it, and the source only reacts to a hovering mouse anyway.
+const onPointerMove = (event) => {
+  if (event.pointerType === 'touch') return
+  queuePointer({ x: event.clientX, y: event.clientY })
+}
 const onPointerLeave = () => queuePointer({ leave: true })
 onMounted(() => {
   if (!props.followPointer) return

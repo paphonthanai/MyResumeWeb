@@ -15,7 +15,15 @@ const props = defineProps({
   saturation: { type: Number, default: 1 },
   brightness: { type: Number, default: 1 },
   className: { type: String, default: undefined },
+  // Site addition (not in ThreeUI): drop the study's own ground so the page
+  // background shows through. The globe canvas itself clears to transparent.
+  transparent: { type: Boolean, default: false },
 })
+
+const TRANSPARENT_STYLES = `<style id="site-transparent-ground">
+    html, body, .frame { background: transparent !important; }
+    .plate { background: none !important; }
+  </style>`
 
 const STUDIES = {
   globe: { source: secondStudiesSource, index: 1, title: 'Globe', layout: 'figures' },
@@ -106,7 +114,10 @@ function focusedDocument(definition, mode) {
 }
 
 const safeMode = computed(() => (props.mode === 'light' ? 'light' : 'dark'))
-const doc = computed(() => focusedDocument(definition, safeMode.value))
+const doc = computed(() => {
+  const focused = focusedDocument(definition, safeMode.value)
+  return props.transparent ? focused.replace('</head>', `${TRANSPARENT_STYLES}\n</head>`) : focused
+})
 const boundedScale = computed(() => clamp(props.scale, 0.65, 1.5))
 const boundedOpacity = computed(() => clamp(props.opacity, 0.1, 1))
 const filter = computed(() => {
@@ -121,7 +132,7 @@ const filter = computed(() => {
   <div
     :class="['text-path-study', `text-path-study--${safeMode}`, props.className]"
     :data-mode="safeMode"
-    :style="{ opacity: boundedOpacity, filter }"
+    :style="{ opacity: boundedOpacity, filter, background: props.transparent ? 'transparent' : undefined }"
   >
     <iframe
       class="text-path-study-frame"
@@ -129,7 +140,11 @@ const filter = computed(() => {
       :title="`${definition.title} interactive canvas study`"
       sandbox="allow-scripts"
       :srcdoc="doc"
-      :style="{ transform: boundedScale === 1 ? undefined : `scale(${boundedScale})` }"
+      :style="{
+        transform: boundedScale === 1 ? undefined : `scale(${boundedScale})`,
+        // An iframe whose color-scheme differs from its element's gets an opaque canvas.
+        colorScheme: props.transparent ? safeMode : undefined,
+      }"
     ></iframe>
   </div>
 </template>
