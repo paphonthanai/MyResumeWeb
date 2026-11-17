@@ -54,7 +54,6 @@ const photo = (id) => work[`../image/work/${id}-t.webp`]
 const logos = import.meta.glob('../image/clients/*.webp', { eager: true, import: 'default' })
 const logo = (id) => logos[`../image/clients/${id}.webp`]
 const CLIENTS = [
-  { id: 'first-telecom', th: 'เฟิร์สท เทเลคอม ซีสเต็ม', en: 'First Telecom System', href: 'https://www.firsttelecom.co.th/' },
   { id: 'kyoei', th: 'เคียวเออิ (ประเทศไทย)', en: 'Kyoei (Thailand)', href: 'https://www.kyoei-thai.co.th/th/' },
   { id: 'hodaka', th: 'โฮดากะ อีเอส (ประเทศไทย)', en: 'Hodaka ES (Thailand)', wide: true, href: 'https://hodaka.co.th/th/' },
   { id: 'mitkarn', th: 'มิตรกาญ', en: 'Mitkarn', href: 'https://www.facebook.com/Mittrakarn/' },
