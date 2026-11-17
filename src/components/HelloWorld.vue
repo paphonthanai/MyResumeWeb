@@ -11,7 +11,6 @@ const props = defineProps({ bare: { type: Boolean, default: false } })
 const content = {
   th: {
     sectionTitle: 'Skills & Achievements',
-    primaryStack: 'เทคโนโลยีหลักที่ใช้',
     fullstackCliDev: 'พัฒนาแบบไม่ใช้ GUI',
     experience: 'ประสบการณ์',
     experlemceDetail1: '-> ประสบการณ์ทำงานอิสระ 5 ปี',
@@ -32,12 +31,6 @@ const content = {
     github: 'GitHub',
     status: 'สถานะ',
     customer: 'ลูกค้า',
-    fastworkTitle: 'รีวิวจาก FastWork',
-    fastworkOrders: 'ออเดอร์',
-    fastworkClients: 'ลูกค้า',
-    fastworkRepeat: 'จ้างซ้ำ',
-    fastworkViewProfile: 'ดูโปรไฟล์',
-    fastworkAnonymousName: '***** (บัญชีไม่ระบุชื่อ)',
 
     // Skills (ซ้าย)
     flutter: 'พัฒนาแอพมือถือด้วย Flutter + Dart',
@@ -145,7 +138,6 @@ const content = {
 
   en: {
     sectionTitle: 'Skills & Achievements',
-    primaryStack: 'Primary Stack',
     fullstackCliDev: 'Fullstack CLI Dev',
     experience: 'Experience',
     experlemceDetail1: '-> Over 5 years of freelance work experience',
@@ -166,12 +158,6 @@ const content = {
     github: 'GitHub',
     status: 'Status',
     customer: 'Customer',
-    fastworkTitle: 'Reviews from FastWork',
-    fastworkOrders: 'Orders',
-    fastworkClients: 'Clients',
-    fastworkRepeat: 'Repeat hires',
-    fastworkViewProfile: 'View Profile',
-    fastworkAnonymousName: '***** (anonymous account)',
 
     // Skills (left block)
     flutter: 'Mobile App Development with Flutter + Dart',
@@ -277,79 +263,6 @@ const content = {
     systemThinking_customer4: 'Your Company Here  ⏳',
   }
 };
-
-const techCategories = [
-  {
-    name: 'Programming Languages',
-    items: [
-      { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
-      { name: 'PHP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg' },
-      { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-      { name: 'Dart', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg' },
-      { name: 'C#', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg' },
-      { name: 'VB.NET', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg' },
-    ],
-  },
-  {
-    name: 'Frameworks & Libraries',
-    items: [
-      { name: 'Vue', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
-      { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
-      { name: 'Flutter', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' },
-      { name: 'Express', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg' },
-      { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-      { name: 'Next.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
-    ],
-  },
-  {
-    name: 'UI & Frontend',
-    items: [
-      { name: 'HTML', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
-      { name: 'CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
-      { name: 'Tailwind', icon: 'https://www.svgrepo.com/show/374118/tailwind.svg' },
-      { name: 'daisyUI', icon: 'https://img.daisyui.com/images/daisyui/mark-rotating.svg' },
-      { name: 'Bootstrap', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg' },
-    ],
-  },
-  {
-    name: 'Backend & Database',
-    items: [
-      { name: 'Firebase', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg' },
-      { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
-      { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
-      { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
-    ],
-  },
-  {
-    name: 'Tools & IDE',
-    items: [
-      { name: 'VS Code', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg' },
-      { name: 'GitHub', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg' },
-      { name: 'Visual Basic', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg' },
-      { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
-      { name: 'Figma', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg' },
-      { name: 'XAMPP', icon: 'https://www.apachefriends.org/images/xampp-logo-ac950edf.svg' },
-    ],
-  },
-  {
-    name: 'Design_Editing',
-    items: [
-      { name: 'PremierePro', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Adobe_Premiere_Pro_CC_icon.svg/768px-Adobe_Premiere_Pro_CC_icon.svg.png?20210729021549' },
-      { name: 'Photoshop', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/768px-Adobe_Photoshop_CC_icon.svg.png?20200616073617' },
-      { name: 'Illustrator', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Adobe_Illustrator_CC_icon.svg/768px-Adobe_Illustrator_CC_icon.svg.png?20251029195730' },
-    ],
-  },
-  {
-    name: 'Security_CTF',
-    items: [
-      { name: 'BurpSuite', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/BurpSuite_Comunity_Edition.svg/825px-BurpSuite_Comunity_Edition.svg.png' },
-      { name: 'CyberChef', icon: 'https://cdn-1.webcatalog.io/catalog/cyberchef/cyberchef-icon-filled-256.webp?v=1714774077431' },
-      { name: 'Ghidra', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Ghidra_logo.svg/768px-Ghidra_logo.svg.png?20220727174502' },
-      { name: 'IDA', icon: 'https://static.wikitide.net/zenithwiki/0/0d/IDAIcon.png' },
-      { name: 'KaliLinux', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Kali-dragon-icon.svg/768px-Kali-dragon-icon.svg.png?20211125065834' },
-    ],
-  },
-];
 
 // ไอคอนที่ใช้ร่วมกันระหว่าง skill card (path เดิมจากดีไซน์ก่อนหน้า)
 const ICONS = {
@@ -497,30 +410,10 @@ const statusTextClass = {
 
 
 
-// ข้อมูลจริงจากโปรไฟล์ FastWork (ไม่แปลข้อความรีวิวจริงของลูกค้าข้ามภาษา
-// เพื่อคงคำพูดต้นฉบับไว้ตามที่ลูกค้าเขียนจริง)
-const fastwork = {
-  profileUrl: 'https://fastwork.co/user/0xname?source=web_marketplace_profile-menu_profile',
-  rating: 4.8,
-  orders: 5,
-  clients: 3,
-  repeatHires: 0,
-  reviews: [
-    { name: 'wlvczpgx', date: '25/01/2026', rating: 5.0, text: '', anonymous: false },
-    { name: '', date: '18/12/2025', rating: 4.8, text: 'ทำงานรวดเร็วมาก เข้าใจในเนื้องานดีมากครับ แนะนำน้องคนนี้เลยย', anonymous: true },
-  ],
-}
-
 // Project index: one row is open at a time; desktop shows it in the side panel.
 const activeSkill = ref(0)
 const current = computed(() => skills.value[activeSkill.value])
 
-// Stack marquee: every tool in two rows that drift in opposite directions.
-const allTech = techCategories.flatMap((c) => c.items)
-const half = Math.ceil(allTech.length / 2)
-const techRows = [allTech.slice(0, half), allTech.slice(half)]
-// Black logos that would vanish on the dark page
-const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
 </script>
 
 <template>
@@ -625,26 +518,6 @@ const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
       </div>
     </div>
 
-    <!-- Stack: two drifting rows of tool logos -->
-    <div class="mt-24">
-      <h3 class="mx-auto max-w-6xl px-6 text-xl font-semibold text-white md:px-10">{{ t.primaryStack }}</h3>
-      <div class="tech-stack mt-8 grid gap-4">
-        <div v-for="(row, r) in techRows" :key="r" class="stack-row flex w-max gap-4" :class="r && 'is-rev'">
-          <template v-for="copy in 2" :key="copy">
-            <span
-              v-for="tech in row"
-              :key="tech.name + copy"
-              class="flex shrink-0 items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] py-2.5 pl-3 pr-5"
-              :aria-hidden="copy === 2"
-            >
-              <img :src="tech.icon" alt="" loading="lazy" class="h-6 w-6 object-contain" :class="DARK_LOGOS.has(tech.name) && 'invert'" />
-              <span class="whitespace-nowrap text-sm text-white/75">{{ tech.name }}</span>
-            </span>
-          </template>
-        </div>
-      </div>
-    </div>
-
     <!-- Experience, results, recognition, reviews and contact in one ruled grid -->
     <div class="mx-auto mt-24 max-w-6xl px-6 md:px-10">
       <div class="facts grid overflow-hidden rounded-[1.75rem] border border-white/10 md:grid-cols-2 lg:grid-cols-3">
@@ -685,34 +558,7 @@ const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
           </ul>
         </div>
 
-        <div v-reveal class="fact lg:col-span-2">
-          <div class="flex flex-wrap items-center justify-between gap-4">
-            <h4 class="fact-h">{{ t.fastworkTitle }}</h4>
-            <a :href="fastwork.profileUrl" target="_blank" rel="noopener noreferrer" class="fact-a text-sm">{{ t.fastworkViewProfile }} →</a>
-          </div>
-          <p class="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-1 text-sm text-white/60">
-            <span class="inline-flex items-center gap-1.5 text-2xl font-semibold text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 text-[#e8400d]" aria-hidden="true">
-                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
-              </svg>
-              {{ fastwork.rating.toFixed(1) }}
-            </span>
-            <span><b class="font-semibold text-white">{{ fastwork.orders }}</b> {{ t.fastworkOrders }}</span>
-            <span><b class="font-semibold text-white">{{ fastwork.clients }}</b> {{ t.fastworkClients }}</span>
-            <span><b class="font-semibold text-white">{{ fastwork.repeatHires }}</b> {{ t.fastworkRepeat }}</span>
-          </p>
-          <ul class="mt-5 grid gap-4 sm:grid-cols-2">
-            <li v-for="(review, ri) in fastwork.reviews" :key="ri" class="border-t border-white/10 pt-4">
-              <p class="flex items-center justify-between text-sm">
-                <span class="font-medium text-white/80">{{ review.anonymous ? t.fastworkAnonymousName : review.name }}</span>
-                <span class="text-xs tabular-nums text-white/45">★ {{ review.rating.toFixed(1) }} · {{ review.date }}</span>
-              </p>
-              <p v-if="review.text" class="mt-2 text-sm leading-relaxed text-white/70">“{{ review.text }}”</p>
-            </li>
-          </ul>
-        </div>
-
-        <div id="contact" v-reveal="1" class="fact">
+        <div id="contact" v-reveal class="fact lg:col-span-3">
           <h4 class="fact-h">{{ t.contact }}</h4>
           <ul class="mt-4 space-y-3 text-sm text-white/70">
             <li><a href="mailto:Pj06052538@gmail.com" class="fact-a">Pj06052538@gmail.com</a></li>
@@ -758,22 +604,6 @@ const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 a.client-chip:hover { border-color: var(--accent-soft, #d0b2ff); color: #fff; }
-
-/* Logo rows: masked at the edges, paused on hover, still for reduced motion */
-.tech-stack {
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
-.stack-row { animation: drift 48s linear infinite; }
-.stack-row.is-rev { animation-direction: reverse; animation-duration: 56s; }
-.tech-stack:hover .stack-row { animation-play-state: paused; }
-@keyframes drift {
-  to { transform: translateX(calc(-50% - 0.5rem)); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .tech-stack { mask-image: none; }
-  .stack-row { animation: none; width: auto; flex-wrap: wrap; padding: 0 1.5rem; }
-  .stack-row span[aria-hidden='true'] { display: none; }
-}
 
 .facts { background: #101010; }
 .fact {

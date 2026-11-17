@@ -103,10 +103,10 @@ useHead({
   <div class="site-bg" :class="publicPage && 'is-on'" aria-hidden="true">
     <ConstellationField
       v-if="showBackground && publicPage"
+      variant="particle-drift"
       mode="dark"
       :speed="1.00"
       :size="1.00"
-      :stroke-width="1.00"
       :length="1.00"
       :density="1.00"
       :opacity="1.00"
@@ -126,7 +126,7 @@ useHead({
 /* Fixed layer behind every page; the frame inside never takes pointer input.
    It is sized to the largest viewport (lvh) rather than inset:0, so a mobile
    address bar showing or hiding while scrolling does not resize the frame.
-   Every resize makes the source scatter all its stars again. */
+   Every resize makes the source scatter all its particles again. */
 .site-bg {
   position: fixed;
   top: 0;
@@ -138,7 +138,7 @@ useHead({
   pointer-events: none;
 }
 .site-bg.is-on {
-  background: #070914;
+  background: #030509;
 }
 .site-bg iframe {
   pointer-events: none;

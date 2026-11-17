@@ -1,8 +1,9 @@
 // Port of ThreeUI src/shaders/neuform-isolated/NeuformBatchEffects.tsx
-// (SHA-256 dc68c51b…), limited to the Constellation Field effect.
-// buildFocusedDocument and the constellationField patch are carried over
-// line for line; the other effects in that file are not used here.
+// (SHA-256 dc68c51b…), limited to the Constellation Field and Particle Drift
+// effects. buildFocusedDocument and both patches are carried over line for
+// line; the other effects in that file are not used here.
 import constellationFieldSource from './sources/constellation-field.html?raw'
+import particleDriftSource from './sources/particle-drift.html?raw'
 
 export const NEUFORM_BATCH_DEFAULTS = {
   mode: 'dark',
@@ -72,6 +73,33 @@ export const EFFECTS = {
         next = next
           .replace("ctx.strokeStyle = '#E6C879';", "ctx.strokeStyle = '#8B6914';")
           .replace("ctx.fillStyle = '#E6C879';", "ctx.fillStyle = '#8B6914';")
+      }
+      return next
+    },
+  },
+  particleDrift: {
+    title: 'Particle Drift',
+    source: particleDriftSource,
+    supportsMode: true,
+    background: (mode) => (mode === 'light' ? LIGHT_PAPER : '#030509'),
+    targets: [{ selector: '#particle-canvas', role: 'background' }],
+    patch(source, { size, length, density, mode }) {
+      const link = Math.round(120 * length)
+      const proximityAlpha = mode === 'light' ? 0.22 : 0.15
+      let next = source
+        .replace('Array.from({ length: 90 })', `Array.from({ length: ${scaleCount(90, density, 12)} })`)
+        .replace('Array.from({ length: 25 })', `Array.from({ length: ${scaleCount(25, density, 4)} })`)
+        .replace('length: Math.random() * 100 + 50,', `length: (Math.random() * 100 + 50) * ${length},`)
+        .replace('n.y += n.vy; // Slow drift', 'n.y += n.vy * ((window.__SF_CONTROLS&&window.__SF_CONTROLS.speed)||1); // Slow drift')
+        .replace('b.y -= b.speed;', 'b.y -= b.speed * ((window.__SF_CONTROLS&&window.__SF_CONTROLS.speed)||1);')
+        .replace('if(d < 120) {', `if(d < ${link}) {`)
+        .replace('0.15 * (1 - d/120)', `${proximityAlpha} * (1 - d/${link})`)
+        .replace('ctx.lineWidth = 1.5;', `ctx.lineWidth = ${Number((1.5 * size).toFixed(2))};`)
+      if (mode === 'light') {
+        next = next
+          .replaceAll('rgba(96, 165, 250,', 'rgba(37, 99, 235,')
+          .replaceAll('rgba(156, 163, 175,', 'rgba(36, 48, 68,')
+          .replace("ctx.fillStyle = dist < 180 ? '#60A5FA' : 'rgba(36, 48, 68, 0.4)';", "ctx.fillStyle = dist < 180 ? '#2563EB' : 'rgba(36, 48, 68, 0.55)';")
       }
       return next
     },

@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import secondStudiesSource from './sources/text-on-a-path-ii.html?raw'
 import './threeui.css'
 
@@ -18,7 +18,81 @@ const props = defineProps({
   // Site addition (not in ThreeUI): drop the study's own ground so the page
   // background shows through. The globe canvas itself clears to transparent.
   transparent: { type: Boolean, default: false },
+  // Site addition (not in ThreeUI): let the canvas fill a wide frame instead
+  // of a centred square (the study centres the globe on its canvas either
+  // way). A wide frame covers much of the page, so the page must still
+  // scroll through it: the wheel, and on touch a vertical swipe, zoom the
+  // globe as authored until the zoom reaches its limit in that direction,
+  // then scroll the page. Dragging to turn and clicking to pin are unchanged.
+  fillFrame: { type: Boolean, default: false },
 })
+
+// The source zooms with `zoomT = clamp(0.85, 2.6, zoomT * exp(-deltaY * 0.0016))`
+// in its wheel handler, the only place zoomT changes. This script keeps the
+// same value so it knows when a wheel step would no longer change the zoom.
+const FILL_FRAME = `<style id="site-fill-frame">
+    .plate { width: 100% !important; height: 100% !important; }
+  </style>
+  <script id="site-fill-frame-scroll">
+  (function () {
+    var MIN = 0.85, MAX = 2.6, RATE = 0.0016, SWIPE = 2.5;
+    var zoom = 1, forwarding = false;
+    function next(deltaY) { return Math.max(MIN, Math.min(MAX, zoom * Math.exp(-deltaY * RATE))); }
+    function scrollPage(deltaY) { parent.postMessage({ type: 'site-scroll', deltaY: deltaY }, '*'); }
+
+    // Mouse wheel: let the globe have it while the zoom can still move that
+    // way; at the limit, keep it from the globe so the page scrolls instead.
+    window.addEventListener('wheel', function (event) {
+      if (forwarding) return;
+      var z = next(event.deltaY);
+      if (z === zoom) { event.stopPropagation(); return; }
+      zoom = z;
+    }, { capture: true });
+
+    // Touch: a mostly vertical swipe zooms (finger up = zoom out, like
+    // scrolling down), then scrolls the page once the zoom is at its limit.
+    // A mostly horizontal drag, or a tap, goes to the globe as authored.
+    var touch = null;
+    window.addEventListener('pointerdown', function (event) {
+      if (event.pointerType === 'touch') touch = { id: event.pointerId, x: event.clientX, y: event.clientY, mode: null };
+    }, { capture: true });
+    window.addEventListener('pointermove', function (event) {
+      if (!touch || event.pointerId !== touch.id) return;
+      var dx = event.clientX - touch.x, dy = event.clientY - touch.y;
+      if (!touch.mode) {
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+        touch.mode = Math.abs(dy) > Math.abs(dx) ? 'zoom' : 'drag';
+      }
+      if (touch.mode !== 'zoom') return;
+      event.stopPropagation();
+      touch.x = event.clientX; touch.y = event.clientY;
+      var deltaY = -dy * SWIPE;
+      var z = next(deltaY);
+      if (z === zoom) { scrollPage(-dy); return; }
+      zoom = z;
+      var globe = document.getElementById('globe');
+      if (globe) {
+        forwarding = true;
+        globe.dispatchEvent(new WheelEvent('wheel', { deltaY: deltaY, cancelable: true }));
+        forwarding = false;
+      }
+    }, { capture: true });
+    function end(event) {
+      if (!touch || event.pointerId !== touch.id) return;
+      var zoomed = touch.mode === 'zoom';
+      touch = null;
+      if (!zoomed) return;
+      // A swipe is not a tap: clear the globe's drag without dropping a pin.
+      event.stopPropagation();
+      var globe = document.getElementById('globe');
+      if (globe) globe.dispatchEvent(new PointerEvent('pointercancel', { pointerId: event.pointerId }));
+    }
+    window.addEventListener('pointerup', end, { capture: true });
+    window.addEventListener('pointercancel', function (event) {
+      if (touch && event.pointerId === touch.id) touch = null;
+    }, { capture: true });
+  })();
+  </` + `script>`
 
 const TRANSPARENT_STYLES = `<style id="site-transparent-ground">
     html, body, .frame { background: transparent !important; }
@@ -113,10 +187,24 @@ function focusedDocument(definition, mode) {
     .replace('</head>', `${focusStyles(definition, mode)}\n</head>`)
 }
 
+// fill-frame: the frame asks the page to scroll once the globe's zoom is
+// at its limit during a touch swipe (see FILL_FRAME).
+const frameRef = ref(null)
+function onFrameMessage(event) {
+  if (!props.fillFrame || event.source !== frameRef.value?.contentWindow) return
+  if (event.data?.type === 'site-scroll' && Number.isFinite(event.data.deltaY)) {
+    window.scrollBy(0, event.data.deltaY)
+  }
+}
+onMounted(() => window.addEventListener('message', onFrameMessage))
+onBeforeUnmount(() => window.removeEventListener('message', onFrameMessage))
+
 const safeMode = computed(() => (props.mode === 'light' ? 'light' : 'dark'))
 const doc = computed(() => {
-  const focused = focusedDocument(definition, safeMode.value)
-  return props.transparent ? focused.replace('</head>', `${TRANSPARENT_STYLES}\n</head>`) : focused
+  let focused = focusedDocument(definition, safeMode.value)
+  if (props.transparent) focused = focused.replace('</head>', `${TRANSPARENT_STYLES}\n</head>`)
+  if (props.fillFrame) focused = focused.replace('</head>', `${FILL_FRAME}\n</head>`)
+  return focused
 })
 const boundedScale = computed(() => clamp(props.scale, 0.65, 1.5))
 const boundedOpacity = computed(() => clamp(props.opacity, 0.1, 1))
@@ -135,6 +223,7 @@ const filter = computed(() => {
     :style="{ opacity: boundedOpacity, filter, background: props.transparent ? 'transparent' : undefined }"
   >
     <iframe
+      ref="frameRef"
       class="text-path-study-frame"
       :data-mode="safeMode"
       :title="`${definition.title} interactive canvas study`"
