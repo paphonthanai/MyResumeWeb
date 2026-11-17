@@ -3,6 +3,7 @@ import { computed, defineAsyncComponent, inject, onBeforeUnmount, onMounted, ref
 import { RouterLink } from 'vue-router'
 import SectionHeading from '../SectionHeading.vue'
 import TechStack from './TechStack.vue'
+import FastworkReviews from './FastworkReviews.vue'
 import { pages } from '../../content/pages'
 import { vReveal } from '../../utils/reveal'
 
@@ -240,7 +241,22 @@ const pageCards = computed(() => [
     </div>
 
     <div class="relative mx-auto max-w-6xl px-6 pb-16 md:px-10">
-      <p class="text-xs uppercase tracking-[0.14em] text-base-content/45">{{ t.clients }}</p>
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <p class="text-xs uppercase tracking-[0.14em] text-base-content/45">{{ t.clients }}</p>
+        <div class="flex flex-wrap gap-2">
+          <a
+            v-for="f in FASTWORK"
+            :key="f.href"
+            :href="f.href"
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 px-3.5 py-1.5 text-xs text-white/80 transition hover:border-white/30 hover:text-white"
+          >
+            <svg viewBox="0 0 74 66" width="15" height="13" class="fill-current" aria-hidden="true"><path :d="FASTWORK_MARK" /></svg>
+            {{ f.label }} ↗
+          </a>
+        </div>
+      </div>
       <ul class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <li v-for="c in CLIENTS" :key="c.id">
           <a :href="c.href" target="_blank" rel="noopener" class="group flex flex-col">
@@ -264,6 +280,9 @@ const pageCards = computed(() => [
 
     <TechStack class="relative pb-16 md:pb-20" />
   </section>
+
+  <!-- Reviews from FastWork -->
+  <FastworkReviews />
 
   <!-- Identities: Cyber Sage (personal) and PNJ Tech (business) -->
   <section class="border-t border-white/5">

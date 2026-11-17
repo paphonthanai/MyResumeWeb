@@ -31,12 +31,6 @@ const content = {
     github: 'GitHub',
     status: 'สถานะ',
     customer: 'ลูกค้า',
-    fastworkTitle: 'รีวิวจาก FastWork',
-    fastworkOrders: 'ออเดอร์',
-    fastworkClients: 'ลูกค้า',
-    fastworkRepeat: 'จ้างซ้ำ',
-    fastworkViewProfile: 'ดูโปรไฟล์',
-    fastworkAnonymousName: '***** (บัญชีไม่ระบุชื่อ)',
 
     // Skills (ซ้าย)
     flutter: 'พัฒนาแอพมือถือด้วย Flutter + Dart',
@@ -164,12 +158,6 @@ const content = {
     github: 'GitHub',
     status: 'Status',
     customer: 'Customer',
-    fastworkTitle: 'Reviews from FastWork',
-    fastworkOrders: 'Orders',
-    fastworkClients: 'Clients',
-    fastworkRepeat: 'Repeat hires',
-    fastworkViewProfile: 'View Profile',
-    fastworkAnonymousName: '***** (anonymous account)',
 
     // Skills (left block)
     flutter: 'Mobile App Development with Flutter + Dart',
@@ -422,20 +410,6 @@ const statusTextClass = {
 
 
 
-// ข้อมูลจริงจากโปรไฟล์ FastWork (ไม่แปลข้อความรีวิวจริงของลูกค้าข้ามภาษา
-// เพื่อคงคำพูดต้นฉบับไว้ตามที่ลูกค้าเขียนจริง)
-const fastwork = {
-  profileUrl: 'https://fastwork.co/user/0xname?source=web_marketplace_profile-menu_profile',
-  rating: 4.8,
-  orders: 5,
-  clients: 3,
-  repeatHires: 0,
-  reviews: [
-    { name: 'wlvczpgx', date: '25/01/2026', rating: 5.0, text: '', anonymous: false },
-    { name: '', date: '18/12/2025', rating: 4.8, text: 'ทำงานรวดเร็วมาก เข้าใจในเนื้องานดีมากครับ แนะนำน้องคนนี้เลยย', anonymous: true },
-  ],
-}
-
 // Project index: one row is open at a time; desktop shows it in the side panel.
 const activeSkill = ref(0)
 const current = computed(() => skills.value[activeSkill.value])
@@ -584,34 +558,7 @@ const current = computed(() => skills.value[activeSkill.value])
           </ul>
         </div>
 
-        <div v-reveal class="fact lg:col-span-2">
-          <div class="flex flex-wrap items-center justify-between gap-4">
-            <h4 class="fact-h">{{ t.fastworkTitle }}</h4>
-            <a :href="fastwork.profileUrl" target="_blank" rel="noopener noreferrer" class="fact-a text-sm">{{ t.fastworkViewProfile }} →</a>
-          </div>
-          <p class="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-1 text-sm text-white/60">
-            <span class="inline-flex items-center gap-1.5 text-2xl font-semibold text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 text-[#e8400d]" aria-hidden="true">
-                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
-              </svg>
-              {{ fastwork.rating.toFixed(1) }}
-            </span>
-            <span><b class="font-semibold text-white">{{ fastwork.orders }}</b> {{ t.fastworkOrders }}</span>
-            <span><b class="font-semibold text-white">{{ fastwork.clients }}</b> {{ t.fastworkClients }}</span>
-            <span><b class="font-semibold text-white">{{ fastwork.repeatHires }}</b> {{ t.fastworkRepeat }}</span>
-          </p>
-          <ul class="mt-5 grid gap-4 sm:grid-cols-2">
-            <li v-for="(review, ri) in fastwork.reviews" :key="ri" class="border-t border-white/10 pt-4">
-              <p class="flex items-center justify-between text-sm">
-                <span class="font-medium text-white/80">{{ review.anonymous ? t.fastworkAnonymousName : review.name }}</span>
-                <span class="text-xs tabular-nums text-white/45">★ {{ review.rating.toFixed(1) }} · {{ review.date }}</span>
-              </p>
-              <p v-if="review.text" class="mt-2 text-sm leading-relaxed text-white/70">“{{ review.text }}”</p>
-            </li>
-          </ul>
-        </div>
-
-        <div id="contact" v-reveal="1" class="fact">
+        <div id="contact" v-reveal class="fact lg:col-span-3">
           <h4 class="fact-h">{{ t.contact }}</h4>
           <ul class="mt-4 space-y-3 text-sm text-white/70">
             <li><a href="mailto:Pj06052538@gmail.com" class="fact-a">Pj06052538@gmail.com</a></li>
