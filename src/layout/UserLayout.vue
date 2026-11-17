@@ -1,7 +1,8 @@
 <script setup>
-import { RouterLink, useRoute } from 'vue-router'
-import { computed, ref, provide, watch } from 'vue'
-import logo from '@/components/image/NewLogo_Gold.png'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { computed, ref, provide, watch, onMounted } from 'vue'
+import { useHead } from '@unhead/vue'
+import logo from '@/components/image/logo-pnj.webp'
 
 // theme: a daisyUI theme for this page only (the site default, set on <html>, is "studio").
 // bare: the page draws its own navigation, so the shared header is left out.
@@ -11,10 +12,44 @@ const props = defineProps({
 })
 
 const route = useRoute()
-// Initial language follows the route (e.g. "/en" prerenders in English for
-// crawlers); the toggle button below still flips it client-side after that.
+const router = useRouter()
+// Language. The prerendered page uses the route's language (e.g. "/en" is
+// English for crawlers). In the browser the visitor's last choice is kept
+// across pages: pages with a Thai and an English URL (meta.alternates) are
+// switched by URL, every other page switches in place after hydration.
+const LANG_KEY = 'pnj-lang'
 const lang = ref(route.meta.lang === 'en' ? 'en' : 'th')
 provide('lang', lang)
+
+function savedLang() {
+  try { const v = localStorage.getItem(LANG_KEY); return v === 'en' || v === 'th' ? v : null } catch { return null }
+}
+function setLang(next) {
+  try { localStorage.setItem(LANG_KEY, next) } catch { /* private mode: still switch this page */ }
+  const alt = route.meta.alternates?.[next]
+  if (alt && alt !== route.path) router.push({ path: alt, hash: route.hash })
+  else lang.value = next
+}
+onMounted(() => {
+  if (route.meta.alternates) {
+    // The URL decides; remember it so the next page follows suit.
+    try { localStorage.setItem(LANG_KEY, lang.value) } catch { /* ignore */ }
+    return
+  }
+  const saved = savedLang()
+  if (saved && saved !== lang.value) lang.value = saved
+})
+// Any switch (this header's button, or a page's own toggle such as the IoT
+// hero's) is remembered and sets <html lang>.
+watch(lang, (v) => {
+  try { localStorage.setItem(LANG_KEY, v) } catch { /* ignore */ }
+})
+useHead({ htmlAttrs: { lang } })
+// "/" and "/en" share one component, so following the link between them
+// keeps this layout mounted: take the language from the new URL.
+watch(() => route.path, () => {
+  if (route.meta.alternates) lang.value = route.meta.lang === 'en' ? 'en' : 'th'
+})
 
 const menuOpen = ref(false)
 watch(() => route.fullPath, () => { menuOpen.value = false })
@@ -66,7 +101,7 @@ const isActive = (to) => !to.includes('#') && route.path === to
           <button
             type="button"
             class="h-9 rounded-full border border-white/10 px-3.5 text-xs font-medium uppercase tracking-widest text-base-content/80 transition hover:border-white/30 hover:text-white"
-            @click="lang = en ? 'th' : 'en'"
+            @click="setLang(en ? 'th' : 'en')"
           >
             {{ en ? 'TH' : 'EN' }}
           </button>

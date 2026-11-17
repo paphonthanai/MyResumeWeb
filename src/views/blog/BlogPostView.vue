@@ -1,42 +1,42 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onServerPrefetch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import UserLayout from '../../layout/UserLayout.vue'
-import { db } from '../../firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { useBlogStore } from '../../stores/blog'
 import { renderMarkdown } from '../../utils/markdown'
 
 const route = useRoute()
-const post = ref(null)
-const loading = ref(true)
-const notFound = ref(false)
+const blog = useBlogStore()
+const slug = computed(() => route.params.slug)
+const cached = () => blog.bySlug[slug.value]
+const post = computed(() => cached() || null)
+const loading = ref(cached() === undefined)
+const notFound = computed(() => cached() === false)
 
 const siteUrl = 'https://myresume-ae906.web.app'
 
 function formatDate(value) {
   if (!value) return ''
-  const date = value.toDate ? value.toDate() : new Date(value)
-  return date.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' })
+  return new Date(value).toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
 const contentHtml = computed(() => renderMarkdown(post.value?.content))
 
-onMounted(async () => {
+async function load() {
   try {
-    const snap = await getDoc(doc(db, 'posts', route.params.slug))
-    if (!snap.exists() || snap.data().published !== true) {
-      notFound.value = true
-    } else {
-      post.value = { id: snap.id, ...snap.data() }
-    }
+    await blog.loadPost(slug.value)
   } catch (err) {
     console.error('Failed to load post', err)
-    notFound.value = true
+    blog.bySlug[slug.value] = false
   } finally {
     loading.value = false
   }
-})
+}
+
+// Prerendered with the post in place; the browser reuses it on hydration.
+onServerPrefetch(load)
+onMounted(() => { if (cached() === undefined) load() })
 
 useHead({
   title: computed(() => (post.value ? `${post.value.title} | Blog | PNJ Tech` : 'Blog | PNJ Tech')),
@@ -44,6 +44,9 @@ useHead({
     { name: 'description', content: computed(() => post.value?.excerpt || '') },
     { property: 'og:title', content: computed(() => post.value?.title || '') },
     { property: 'og:description', content: computed(() => post.value?.excerpt || '') },
+    { property: 'og:type', content: 'article' },
+    { property: 'og:url', content: computed(() => `${siteUrl}/blog/${slug.value}`) },
+    { name: 'robots', content: computed(() => (notFound.value ? 'noindex' : 'index, follow')) },
   ],
   link: [
     { rel: 'canonical', href: computed(() => `${siteUrl}/blog/${route.params.slug}`) },
