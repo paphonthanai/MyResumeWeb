@@ -8,7 +8,7 @@ const route = useRoute()
 const siteUrl = 'https://myresume-ae906.web.app'
 const defaultTitle = 'ปพนธนัย ใจมา (PNJ Tech) | Fullstack Developer Portfolio'
 const defaultDescription = 'พอร์ตโฟลิโอและเรซูเม่ของปพนธนัย ใจมา (PNJ Tech) นักพัฒนาซอฟต์แวร์ฟรีแลนซ์ ประสบการณ์กว่า 5 ปี พัฒนาเว็บและแอปด้วย Vue.js, Flutter, Firebase, PHP รวมผลงานจริงและทักษะด้าน Security/CTF'
-const ogImage = `${siteUrl}/favicon.ico`
+const ogImage = `${siteUrl}/favicon.png`
 
 const title = computed(() => route.meta.title || defaultTitle)
 const description = computed(() => route.meta.description || defaultDescription)
