@@ -112,6 +112,7 @@ useHead({
       :hue="0"
       :saturation="1.00"
       :brightness="1.00"
+      follow-pointer
       tabindex="-1"
     />
   </div>
