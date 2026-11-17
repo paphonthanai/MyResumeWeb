@@ -18,7 +18,20 @@ const props = defineProps({
   // Site addition (not in ThreeUI): drop the study's own ground so the page
   // background shows through. The globe canvas itself clears to transparent.
   transparent: { type: Boolean, default: false },
+  // Site addition (not in ThreeUI): let the canvas fill a wide frame instead
+  // of a centred square (the study centres the globe on its canvas either
+  // way). Because a wide frame covers much of the page, the wheel and
+  // vertical touch swipes scroll the page rather than zoom the globe;
+  // dragging to turn and clicking to pin stay as authored.
+  fillFrame: { type: Boolean, default: false },
 })
+
+const FILL_FRAME = `<style id="site-fill-frame">
+    .plate { width: 100% !important; height: 100% !important; touch-action: pan-y !important; }
+  </style>
+  <script id="site-fill-frame-wheel">
+    window.addEventListener('wheel', function (event) { event.stopPropagation(); }, { capture: true });
+  </` + `script>`
 
 const TRANSPARENT_STYLES = `<style id="site-transparent-ground">
     html, body, .frame { background: transparent !important; }
@@ -115,8 +128,10 @@ function focusedDocument(definition, mode) {
 
 const safeMode = computed(() => (props.mode === 'light' ? 'light' : 'dark'))
 const doc = computed(() => {
-  const focused = focusedDocument(definition, safeMode.value)
-  return props.transparent ? focused.replace('</head>', `${TRANSPARENT_STYLES}\n</head>`) : focused
+  let focused = focusedDocument(definition, safeMode.value)
+  if (props.transparent) focused = focused.replace('</head>', `${TRANSPARENT_STYLES}\n</head>`)
+  if (props.fillFrame) focused = focused.replace('</head>', `${FILL_FRAME}\n</head>`)
+  return focused
 })
 const boundedScale = computed(() => clamp(props.scale, 0.65, 1.5))
 const boundedOpacity = computed(() => clamp(props.opacity, 0.1, 1))

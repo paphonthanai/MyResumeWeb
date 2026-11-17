@@ -1,5 +1,5 @@
 <script setup>
-import { computed, defineAsyncComponent, inject, onMounted, ref } from 'vue'
+import { computed, defineAsyncComponent, inject, onBeforeUnmount, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import SectionHeading from '../SectionHeading.vue'
 import TechStack from './TechStack.vue'
@@ -12,11 +12,34 @@ import { vReveal } from '../../utils/reveal'
 // loads after the page is up, into a box that already holds its space.
 const TextPathStudies = defineAsyncComponent(() => import('../threeui/TextPathStudies.vue'))
 const globeReady = ref(false)
+// The globe's frame is a band as wide as the hero, centred on the globe slot
+// (the study draws the globe at its canvas centre), so the globe keeps its
+// place on the right while its frame spans the screen. The overflow past the
+// right edge is clipped by the hero.
+const heroRef = ref(null)
+const slotRef = ref(null)
+const band = ref({ left: '0px', width: '100%' })
+function measureBand() {
+  const hero = heroRef.value
+  const slot = slotRef.value
+  if (!hero || !slot) return
+  // Layout offsets, not getBoundingClientRect: the slot's entrance animation
+  // moves it with a transform while this first runs.
+  let left = 0
+  for (let el = slot; el && el !== hero; el = el.offsetParent) left += el.offsetLeft
+  const centre = left + slot.offsetWidth / 2
+  band.value = { left: `${-left}px`, width: `${centre * 2}px` }
+}
+let bandObserver = null
 onMounted(() => {
   const start = () => { globeReady.value = true }
   if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 1500 })
   else setTimeout(start, 600)
+  measureBand()
+  bandObserver = new ResizeObserver(measureBand)
+  bandObserver.observe(heroRef.value)
 })
+onBeforeUnmount(() => bandObserver?.disconnect())
 
 const lang = inject('lang')
 const en = computed(() => lang.value === 'en')
@@ -181,18 +204,19 @@ const pageCards = computed(() => [
 
 <template>
   <!-- Hero: heading beside the globe, the introduction underneath -->
-  <section class="relative overflow-hidden">
+  <section ref="heroRef" class="relative overflow-hidden">
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="relative mx-auto grid max-w-6xl items-center gap-6 px-6 pt-12 md:px-10 md:pt-16 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
-      <div>
+      <!-- The heading sits on the top layer, over the globe's wide frame -->
+      <div class="relative z-20">
         <span class="eyebrow studio-enter">{{ t.eyebrow }}</span>
         <h1 class="studio-enter mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[3.1rem] xl:text-[3.6rem]" style="--delay: 0.08s; text-wrap: balance">
           <span class="lg:whitespace-nowrap">{{ t.l1 }}</span><br /><span class="glow-text lg:whitespace-nowrap"><template v-for="(w, i) in t.l2.split(' ')" :key="i">{{ i ? ' ' : '' }}<span class="whitespace-nowrap">{{ w }}</span></template></span>
         </h1>
       </div>
-      <!-- ThreeUI Globe Type Study: drag to turn, scroll to zoom, click to pin -->
-      <div class="globe-slot studio-enter" style="--delay: 0.16s">
-        <div v-if="globeReady" class="globe-frame">
+      <!-- ThreeUI Globe Type Study: drag to turn, click to pin -->
+      <div ref="slotRef" class="globe-slot studio-enter" style="--delay: 0.16s">
+        <div v-if="globeReady" class="globe-frame" :style="band">
           <TextPathStudies
             mode="dark"
             :scale="1.00"
@@ -201,6 +225,7 @@ const pageCards = computed(() => [
             :saturation="1.00"
             :brightness="1.00"
             transparent
+            fill-frame
           />
         </div>
       </div>
@@ -374,8 +399,9 @@ const pageCards = computed(() => [
     radial-gradient(50% 60% at 15% 0%, rgba(208, 178, 255, 0.14), transparent 70%),
     radial-gradient(45% 55% at 90% 100%, rgba(232, 64, 13, 0.12), transparent 70%);
 }
-/* Square slot for the globe. Its ground is transparent, so the page's
-   constellation background shows around it. */
+/* Square slot that places the globe. The frame inside it is widened to a
+   full-width band by measureBand(); its ground is transparent, so the page
+   background shows through. */
 .globe-slot {
   position: relative;
   width: min(100%, 520px);
@@ -384,7 +410,8 @@ const pageCards = computed(() => [
 }
 .globe-frame {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
   animation: globe-in 0.9s ease both;
 }
 @keyframes globe-in {
