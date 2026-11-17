@@ -14,10 +14,20 @@ const en = computed(() => lang.value === 'en')
 const work = import.meta.glob('../image/work/*-t.webp', { eager: true, import: 'default' })
 const photo = (id) => work[`../image/work/${id}-t.webp`]
 
-const CLIENTS = {
-  th: ['เฟิร์สท เทเลคอม ซีสเต็ม', 'เคียวเออิ (ประเทศไทย)', 'โฮม ดี ดี', 'โฮดากะ อีเอส (ประเทศไทย)', 'มิตรกาญ', 'สหกรณ์ออมทรัพย์ ตชด. 24'],
-  en: ['First Telecom System', 'Kyoei (Thailand)', 'Home DD', 'Hodaka ES (Thailand)', 'Mitkarn', 'BPP24 Savings Cooperative'],
-}
+// Client logos sit on light plates so dark and coloured marks stay legible.
+// `invert` flips a white-on-transparent logo to dark for the light plate.
+// Clients without a logo file show their name on the plate instead.
+const logos = import.meta.glob('../image/clients/*.webp', { eager: true, import: 'default' })
+const logo = (id) => logos[`../image/clients/${id}.webp`]
+const CLIENTS = [
+  { id: 'first-telecom', th: 'เฟิร์สท เทเลคอม ซีสเต็ม', en: 'First Telecom System' },
+  { id: 'kyoei', th: 'เคียวเออิ (ประเทศไทย)', en: 'Kyoei (Thailand)' },
+  { id: 'hodaka', th: 'โฮดากะ อีเอส (ประเทศไทย)', en: 'Hodaka ES (Thailand)', wide: true },
+  { id: 'mitkarn', th: 'มิตรกาญ', en: 'Mitkarn' },
+  { id: 'monoqlo', th: 'Monoqlo', en: 'Monoqlo', invert: true },
+  { id: 'home-dd', th: 'โฮม ดี ดี', en: 'Home DD' },
+  { id: 'bpp24', th: 'สหกรณ์ออมทรัพย์ ตชด. 24', en: 'BPP24 Savings Cooperative' },
+]
 
 const CAPS = [
   {
@@ -165,8 +175,22 @@ const pageCards = computed(() => [
 
     <div class="relative mx-auto max-w-6xl px-6 pb-16 md:px-10">
       <p class="text-xs uppercase tracking-[0.14em] text-base-content/45">{{ t.clients }}</p>
-      <ul class="mt-4 flex flex-wrap gap-2">
-        <li v-for="c in CLIENTS[L]" :key="c" class="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-base-content/75">{{ c }}</li>
+      <ul class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
+        <li v-for="c in CLIENTS" :key="c.id" class="flex flex-col">
+          <span class="client-plate">
+            <img
+              v-if="logo(c.id)"
+              :src="logo(c.id)"
+              :alt="c[L]"
+              :title="c[L]"
+              decoding="async"
+              class="max-h-full w-auto object-contain"
+              :class="[c.wide ? 'max-w-full' : 'max-w-[85%]', c.invert && 'invert']"
+            />
+            <span v-else class="px-2 text-center text-sm font-semibold leading-tight text-neutral-700">{{ c[L] }}</span>
+          </span>
+          <span v-if="logo(c.id)" class="mt-2 line-clamp-1 text-center text-[11px] text-base-content/45">{{ c[L] }}</span>
+        </li>
       </ul>
     </div>
   </section>
@@ -289,6 +313,17 @@ const pageCards = computed(() => [
   background:
     radial-gradient(50% 60% at 15% 0%, rgba(208, 178, 255, 0.14), transparent 70%),
     radial-gradient(45% 55% at 90% 100%, rgba(232, 64, 13, 0.12), transparent 70%);
+}
+/* Light plate for a client logo */
+.client-plate {
+  display: flex;
+  height: 4.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  background: #f4f2ee;
+  padding: 0.75rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
 }
 .cover-fallback {
   background:
