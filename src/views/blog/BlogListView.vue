@@ -1,38 +1,35 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted, onServerPrefetch } from 'vue'
 import { RouterLink } from 'vue-router'
 import UserLayout from '../../layout/UserLayout.vue'
 import SectionHeading from '../../components/SectionHeading.vue'
 import BlogScanner from '../../components/blog/BlogScanner.vue'
-import { db } from '../../firebase'
-import { collection, query, where, orderBy, getDocs } from 'firebase/firestore'
+import { useBlogStore } from '../../stores/blog'
 
-const posts = ref([])
-const loading = ref(true)
+const blog = useBlogStore()
+const posts = computed(() => blog.list || [])
+const loading = ref(!blog.list)
 const loadError = ref(false)
 
 function formatDate(value) {
   if (!value) return ''
-  const date = value.toDate ? value.toDate() : new Date(value)
-  return date.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' })
+  return new Date(value).toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
-onMounted(async () => {
+async function load() {
   try {
-    const q = query(
-      collection(db, 'posts'),
-      where('published', '==', true),
-      orderBy('publishedAt', 'desc'),
-    )
-    const snapshot = await getDocs(q)
-    posts.value = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }))
+    await blog.loadList()
   } catch (err) {
     console.error('Failed to load posts', err)
     loadError.value = true
   } finally {
     loading.value = false
   }
-})
+}
+
+// Prerendered with the posts in place; the browser reuses them on hydration.
+onServerPrefetch(load)
+onMounted(() => { if (!blog.list) load() })
 </script>
 
 <template>

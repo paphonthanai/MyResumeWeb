@@ -21,7 +21,7 @@ onMounted(() => {
 const siteUrl = 'https://myresume-ae906.web.app'
 const defaultTitle = 'ปพนธนัย ใจมา (PNJ Tech) | Fullstack Developer Portfolio'
 const defaultDescription = 'พอร์ตโฟลิโอและเรซูเม่ของปพนธนัย ใจมา (PNJ Tech) นักพัฒนาซอฟต์แวร์ฟรีแลนซ์ ประสบการณ์กว่า 5 ปี พัฒนาเว็บและแอปด้วย Vue.js, Flutter, Firebase, PHP รวมผลงานจริงและทักษะด้าน Security/CTF'
-const ogImage = `${siteUrl}/favicon.png`
+const ogImage = `${siteUrl}/og-image.png`
 
 const title = computed(() => route.meta.title || defaultTitle)
 const description = computed(() => route.meta.description || defaultDescription)
@@ -84,7 +84,8 @@ useHead({
     { property: 'og:url', content: canonicalUrl },
     { property: 'og:image', content: ogImage },
     { property: 'og:locale', content: computed(() => (htmlLang.value === 'en' ? 'en_US' : 'th_TH')) },
-    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:image', content: ogImage },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
   ],

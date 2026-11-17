@@ -37,7 +37,12 @@ function scrollBehavior(to, from, savedPosition) {
 export const createApp = ViteSSG(
   App,
   { routes, scrollBehavior },
-  ({ app }) => {
-    app.use(createPinia())
+  ({ app, initialState }) => {
+    const pinia = createPinia()
+    app.use(pinia)
+    // Store state filled while prerendering (e.g. blog posts loaded in
+    // onServerPrefetch) is written into the page and picked up on hydration.
+    if (import.meta.env.SSR) initialState.pinia = pinia.state.value
+    else pinia.state.value = initialState.pinia || {}
   },
 )
