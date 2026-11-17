@@ -113,6 +113,7 @@ useHead({
       :hue="0"
       :saturation="1.00"
       :brightness="1.00"
+      follow-pointer
       tabindex="-1"
     />
   </div>
@@ -122,10 +123,17 @@ useHead({
 </template>
 
 <style>
-/* Fixed layer behind every page; the frame inside never takes pointer input. */
+/* Fixed layer behind every page; the frame inside never takes pointer input.
+   It is sized to the largest viewport (lvh) rather than inset:0, so a mobile
+   address bar showing or hiding while scrolling does not resize the frame.
+   Every resize makes the source scatter all its stars again. */
 .site-bg {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
   z-index: 0;
   pointer-events: none;
 }

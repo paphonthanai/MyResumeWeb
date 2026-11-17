@@ -26,7 +26,20 @@ const props = defineProps({
   saturation: { type: Number, default: NEUFORM_BATCH_DEFAULTS.saturation },
   brightness: { type: Number, default: NEUFORM_BATCH_DEFAULTS.brightness },
   className: { type: String, default: undefined },
+  // Site addition (not in ThreeUI): when the frame sits under page content it
+  // never sees the mouse, so the page forwards its pointer and the frame
+  // replays it as the mousemove / mouseleave events the source listens for.
+  followPointer: { type: Boolean, default: false },
 })
+
+const POINTER_BRIDGE = `<script data-site-pointer-bridge>
+window.addEventListener('message', function (event) {
+  var data = event.data;
+  if (!data || data.type !== 'site-pointer') return;
+  if (data.leave) { document.dispatchEvent(new MouseEvent('mouseleave')); return; }
+  document.dispatchEvent(new MouseEvent('mousemove', { clientX: data.x, clientY: data.y }));
+});
+</` + `script>`
 
 const definition = EFFECTS.constellationField
 const iframeRef = ref(null)
@@ -69,7 +82,7 @@ const safe = computed(() => ({
 }))
 
 // Rebuild when baked geometry/mode knobs change. Speed/opacity stay live via postMessage + time wrap.
-const source = computed(() =>
+const focusedSource = computed(() =>
   buildFocusedDocument(definition, {
     variant: 'cube',
     mode: resolvedMode.value,
@@ -82,6 +95,48 @@ const source = computed(() =>
     opacity: NEUFORM_BATCH_DEFAULTS.opacity,
   }),
 )
+const source = computed(() =>
+  props.followPointer ? focusedSource.value.replace(/<\/body>/i, `${POINTER_BRIDGE}</body>`) : focusedSource.value,
+)
+
+let pending = null
+let frameRequest = 0
+function sendPointer() {
+  frameRequest = 0
+  const frame = iframeRef.value
+  if (!frame?.contentWindow || !pending) return
+  const message = pending
+  pending = null
+  if (!message.leave) {
+    const rect = frame.getBoundingClientRect()
+    message.x -= rect.left
+    message.y -= rect.top
+  }
+  frame.contentWindow.postMessage({ type: 'site-pointer', ...message }, '*')
+}
+function queuePointer(message) {
+  pending = message
+  if (!frameRequest) frameRequest = requestAnimationFrame(sendPointer)
+}
+// Touch is left out: a finger dragging to scroll would pull the stars along
+// with it, and the source only reacts to a hovering mouse anyway.
+const onPointerMove = (event) => {
+  if (event.pointerType === 'touch') return
+  queuePointer({ x: event.clientX, y: event.clientY })
+}
+const onPointerLeave = () => queuePointer({ leave: true })
+onMounted(() => {
+  if (!props.followPointer) return
+  window.addEventListener('pointermove', onPointerMove, { passive: true })
+  document.documentElement.addEventListener('pointerleave', onPointerLeave)
+  window.addEventListener('blur', onPointerLeave)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('pointermove', onPointerMove)
+  document.documentElement.removeEventListener('pointerleave', onPointerLeave)
+  window.removeEventListener('blur', onPointerLeave)
+  if (frameRequest) cancelAnimationFrame(frameRequest)
+})
 
 function postControls() {
   const frame = iframeRef.value?.contentWindow
