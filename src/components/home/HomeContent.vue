@@ -58,7 +58,6 @@ const CLIENTS = [
   { id: 'hodaka', th: 'โฮดากะ อีเอส (ประเทศไทย)', en: 'Hodaka ES (Thailand)', wide: true, href: 'https://hodaka.co.th/th/' },
   { id: 'mitkarn', th: 'มิตรกาญ', en: 'Mitkarn', href: 'https://www.facebook.com/Mittrakarn/' },
   { id: 'monoqlo', th: 'Monoqlo', en: 'Monoqlo', invert: true, href: 'https://en.monoqlo-th.com/' },
-  { id: 'home-dd', th: 'โฮม ดี ดี', en: 'Home DD', href: 'http://www.homedd.co.th/' },
   { id: 'bpp24', th: 'สหกรณ์ออมทรัพย์ ตชด. 24', en: 'BPP24 Savings Cooperative', href: 'https://bpp24-coop.com/' },
   { id: 'fire-first', th: 'ไฟร์ เฟิร์ส เซฟตี้ แอนด์ ทรัค', en: 'Fire First Safety and Truck', href: 'https://firefirstsafetyandtruck.com/' },
   { id: 'bpp24-unit', th: 'กก.ตชด.24', en: 'BPP Sub-Division 24', href: 'http://164.115.20.79/bpp.go.th/bpp24/home/indexbpp24.html' },
@@ -242,7 +241,7 @@ const pageCards = computed(() => [
 
     <div class="relative mx-auto max-w-6xl px-6 pb-16 md:px-10">
       <p class="text-xs uppercase tracking-[0.14em] text-base-content/45">{{ t.clients }}</p>
-      <ul class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <ul class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <li v-for="c in CLIENTS" :key="c.id">
           <a :href="c.href" target="_blank" rel="noopener" class="group flex flex-col">
           <span class="client-plate">
@@ -252,7 +251,7 @@ const pageCards = computed(() => [
               :alt="c[L]"
               :title="c[L]"
               decoding="async"
-              class="max-h-full w-auto object-contain"
+              class="max-h-full w-auto object-contain mix-blend-multiply"
               :class="[c.wide ? 'max-w-full' : 'max-w-[85%]', c.invert && 'invert']"
             />
             <span v-else class="px-2 text-center text-sm font-semibold leading-tight text-neutral-700">{{ c[L] }}</span>
