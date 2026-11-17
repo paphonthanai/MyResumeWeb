@@ -42,7 +42,7 @@ const isActive = (to) => !to.includes('#') && route.path === to
 </script>
 
 <template>
-  <div class="min-h-screen bg-base-100" :data-theme="props.theme">
+  <div class="min-h-screen" :data-theme="props.theme">
     <header v-if="!props.bare" class="sticky top-0 z-30 border-b border-white/5 bg-base-100/80 backdrop-blur-xl">
       <div class="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 md:h-[72px] md:px-8">
         <RouterLink :to="home" class="flex shrink-0 items-center gap-2.5">
@@ -115,7 +115,7 @@ const isActive = (to) => !to.includes('#') && route.path === to
 
     <slot></slot>
 
-    <footer class="relative overflow-hidden border-t border-white/5 bg-base-100">
+    <footer class="relative overflow-hidden border-t border-white/5">
       <div class="mx-auto max-w-7xl px-6 pb-6 pt-16 md:px-8">
         <div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div class="max-w-sm">

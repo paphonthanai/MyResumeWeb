@@ -98,7 +98,7 @@ onBeforeUnmount(() => stop?.())
 
 <template>
   <!-- Process: a pinned scroll rail. The active step is shown large on the left. -->
-  <section v-if="props.part === 'process'" id="process" ref="sectionEl" class="process bg-base-100">
+  <section v-if="props.part === 'process'" id="process" ref="sectionEl" class="process">
     <div class="process-pin mx-auto grid max-w-6xl gap-12 px-6 py-24 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20 lg:py-0">
       <div>
         <SectionHeading v-if="!props.bare" :title="t.processTitle" :accent="t.processAccent" :intro="t.processIntro" />
@@ -140,7 +140,7 @@ onBeforeUnmount(() => stop?.())
   </section>
 
   <!-- Packages: one row per package, read side by side like a price list -->
-  <section v-if="props.part === 'packages'" id="packages" class="bg-base-100 px-6 py-24 md:px-10">
+  <section v-if="props.part === 'packages'" id="packages" class="px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
       <SectionHeading v-if="!props.bare" :title="t.packagesTitle" :accent="t.packagesAccent" :intro="t.packagesIntro" />
 

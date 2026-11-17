@@ -1,5 +1,5 @@
 <script setup>
-import { computed, inject } from 'vue'
+import { computed, defineAsyncComponent, inject, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import SectionHeading from '../SectionHeading.vue'
 import { pages } from '../../content/pages'
@@ -7,8 +7,16 @@ import { vReveal } from '../../utils/reveal'
 
 // The homepage, in the same look as the blog page: eyebrow labels, white
 // headings with one glowing phrase, dark rounded cards and the shimmer CTA.
-// Plain HTML and CSS only (no WebGL), so it renders straight from the
-// prerendered page.
+// The text is prerendered HTML; the hero globe (a canvas in its own frame)
+// loads after the page is up, into a box that already holds its space.
+const TextPathStudies = defineAsyncComponent(() => import('../threeui/TextPathStudies.vue'))
+const globeReady = ref(false)
+onMounted(() => {
+  const start = () => { globeReady.value = true }
+  if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 1500 })
+  else setTimeout(start, 600)
+})
+
 const lang = inject('lang')
 const en = computed(() => lang.value === 'en')
 const work = import.meta.glob('../image/work/*-t.webp', { eager: true, import: 'default' })
@@ -154,19 +162,34 @@ const pageCards = computed(() => [
 </script>
 
 <template>
-  <!-- Hero: same two-column layout as the blog page's opening section -->
+  <!-- Hero: heading beside the globe, the introduction underneath -->
   <section class="relative overflow-hidden">
     <div class="hero-glow" aria-hidden="true"></div>
-    <div class="relative mx-auto grid max-w-6xl gap-10 px-6 pb-16 pt-16 md:px-10 md:pb-24 md:pt-24 lg:grid-cols-[1.15fr_1fr] lg:items-end">
+    <div class="relative mx-auto grid max-w-6xl items-center gap-6 px-6 pt-12 md:px-10 md:pt-16 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
       <div>
         <span class="eyebrow studio-enter">{{ t.eyebrow }}</span>
-        <h1 class="studio-enter mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl" style="--delay: 0.08s; text-wrap: balance">
-          {{ t.l1 }}<br /><span class="glow-text">{{ t.l2 }}</span>
+        <h1 class="studio-enter mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[3.1rem] xl:text-[3.6rem]" style="--delay: 0.08s; text-wrap: balance">
+          <span class="lg:whitespace-nowrap">{{ t.l1 }}</span><br /><span class="glow-text lg:whitespace-nowrap"><template v-for="(w, i) in t.l2.split(' ')" :key="i">{{ i ? ' ' : '' }}<span class="whitespace-nowrap">{{ w }}</span></template></span>
         </h1>
       </div>
-      <div class="studio-enter" style="--delay: 0.16s">
-        <p class="text-base leading-relaxed text-base-content/65 md:text-lg">{{ t.lede }}</p>
-        <div class="mt-8 flex flex-wrap gap-3">
+      <!-- ThreeUI Globe Type Study: drag to turn, scroll to zoom, click to pin -->
+      <div class="globe-slot studio-enter" style="--delay: 0.16s">
+        <div v-if="globeReady" class="globe-frame">
+          <TextPathStudies
+            mode="dark"
+            :scale="1.00"
+            :opacity="1.00"
+            :hue="0"
+            :saturation="1.00"
+            :brightness="1.00"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="relative mx-auto max-w-6xl px-6 pb-14 pt-4 md:px-10 md:pb-20">
+      <div class="studio-enter grid gap-8 border-t border-white/10 pt-8 md:grid-cols-[1.4fr_auto] md:items-center" style="--delay: 0.22s">
+        <p class="max-w-2xl text-base leading-relaxed text-base-content/70 md:text-lg">{{ t.lede }}</p>
+        <div class="flex flex-wrap gap-3">
           <RouterLink to="/pricing#inquiry" class="btn btn-shimmer rounded-full border-0 px-7">{{ t.cta }} →</RouterLink>
           <RouterLink to="/projects" class="btn-glow">{{ t.cta2 }}</RouterLink>
         </div>
@@ -314,6 +337,32 @@ const pageCards = computed(() => [
     radial-gradient(50% 60% at 15% 0%, rgba(208, 178, 255, 0.14), transparent 70%),
     radial-gradient(45% 55% at 90% 100%, rgba(232, 64, 13, 0.12), transparent 70%);
 }
+/* Square slot for the globe. The study paints on its own near-black
+   ground, so a radial mask fades the square's edges into the page. */
+.globe-slot {
+  position: relative;
+  width: min(100%, 520px);
+  aspect-ratio: 1;
+  justify-self: center;
+}
+.globe-frame {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
+  animation: globe-in 0.9s ease both;
+}
+@keyframes globe-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .globe-frame { animation: none; }
+}
+@media (max-width: 1023px) {
+  .globe-slot { width: min(100%, 420px); }
+}
+
 /* Light plate for a client logo */
 .client-plate {
   display: flex;

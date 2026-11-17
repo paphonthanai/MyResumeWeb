@@ -1,9 +1,22 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, defineAsyncComponent, onMounted, ref } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import { useHead } from '@unhead/vue'
 
 const route = useRoute()
+
+// Site-wide background: ThreeUI's Constellation Field, fixed behind every
+// public page. It mounts once here (so it keeps running across page changes)
+// and only after the page is idle, so it never delays the first paint.
+// The admin and Website Builder app keep their own plain backgrounds.
+const ConstellationField = defineAsyncComponent(() => import('./components/threeui/ConstellationField.vue'))
+const showBackground = ref(false)
+const publicPage = computed(() => !/^\/(admin|app)(\/|$)/.test(route.path))
+onMounted(() => {
+  const start = () => { showBackground.value = true }
+  if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 2500 })
+  else setTimeout(start, 1200)
+})
 
 const siteUrl = 'https://myresume-ae906.web.app'
 const defaultTitle = 'ปพนธนัย ใจมา (PNJ Tech) | Fullstack Developer Portfolio'
@@ -86,7 +99,47 @@ useHead({
 </script>
 
 <template>
-  <div class="">
+  <div class="site-bg" :class="publicPage && 'is-on'" aria-hidden="true">
+    <ConstellationField
+      v-if="showBackground && publicPage"
+      mode="dark"
+      :speed="1.00"
+      :size="1.00"
+      :stroke-width="1.00"
+      :length="1.00"
+      :density="1.00"
+      :opacity="1.00"
+      :hue="0"
+      :saturation="1.00"
+      :brightness="1.00"
+      tabindex="-1"
+    />
+  </div>
+  <div class="relative z-[1]">
     <RouterView />
   </div>
 </template>
+
+<style>
+/* Fixed layer behind every page; the frame inside never takes pointer input. */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.site-bg.is-on {
+  background: #070914;
+}
+.site-bg iframe {
+  pointer-events: none;
+  animation: site-bg-in 1.2s ease both;
+}
+@keyframes site-bg-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-bg iframe { animation: none; }
+}
+</style>

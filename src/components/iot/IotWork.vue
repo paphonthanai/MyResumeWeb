@@ -19,7 +19,7 @@ const t = computed(() => COPY[lang.value])
 </script>
 
 <template>
-  <section id="work" class="bg-base-100 px-6 py-24 md:px-10">
+  <section id="work" class="px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
       <SectionHeading :kicker="t.kicker" :title="t.title" :accent="t.accent" :intro="t.intro" />
 

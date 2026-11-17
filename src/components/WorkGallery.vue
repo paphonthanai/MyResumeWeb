@@ -134,7 +134,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section id="gallery" class="overflow-hidden bg-base-100" :class="props.bare ? 'pb-24' : 'py-24'">
+  <section id="gallery" class="overflow-hidden" :class="props.bare ? 'pb-24' : 'py-24'">
     <div class="mx-auto max-w-6xl px-6 md:px-10">
       <SectionHeading v-if="!props.bare" :title="t.title" :accent="t.accent" :intro="t.intro" />
 
