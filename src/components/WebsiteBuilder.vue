@@ -32,7 +32,7 @@ function signupLink(plan) {
 
 <template>
   <!-- Hero: centred headline over a glow, the editor mock below it -->
-  <section class="relative overflow-hidden bg-base-100">
+  <section class="relative overflow-hidden">
     <div class="hero-glow pointer-events-none absolute inset-x-0 top-0 h-[640px]" aria-hidden="true"></div>
     <div class="relative mx-auto max-w-6xl px-6 pb-20 pt-16 text-center md:px-10 md:pb-28 md:pt-24">
       <span class="eyebrow">{{ t.badge }}</span>
@@ -99,7 +99,7 @@ function signupLink(plan) {
   </section>
 
   <!-- Features -->
-  <section id="features" class="bg-base-100 px-6 py-24 md:px-10">
+  <section id="features" class="px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
       <SectionHeading :kicker="t.featuresKicker" :title="t.featuresTitle" :accent="t.featuresAccent" />
       <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -122,7 +122,7 @@ function signupLink(plan) {
   </section>
 
   <!-- How it works -->
-  <section id="how" class="bg-base-100 px-6 py-24 md:px-10">
+  <section id="how" class="px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
       <SectionHeading :kicker="t.stepsKicker" :title="t.stepsTitle" :accent="t.stepsAccent" :intro="t.stepsIntro" />
       <ol class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -137,7 +137,7 @@ function signupLink(plan) {
   </section>
 
   <!-- First customer -->
-  <section id="customer" class="bg-base-100 px-6 py-24 md:px-10">
+  <section id="customer" class="px-6 py-24 md:px-10">
     <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1fr_1fr] md:items-center">
       <div>
         <SectionHeading :kicker="t.caseKicker" :title="t.caseTitle" :accent="t.caseAccent" :intro="t.caseDesc" />
@@ -155,7 +155,7 @@ function signupLink(plan) {
   </section>
 
   <!-- Pricing -->
-  <section id="pricing" class="bg-base-100 px-6 py-24 md:px-10">
+  <section id="pricing" class="px-6 py-24 md:px-10">
     <div class="mx-auto max-w-6xl">
       <SectionHeading :kicker="t.pricingKicker" :title="t.pricingTitle" :accent="t.pricingAccent" :intro="t.pricingIntro" />
       <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
@@ -207,7 +207,7 @@ function signupLink(plan) {
   </section>
 
   <!-- FAQ -->
-  <section id="faq" class="bg-base-100 px-6 py-24 md:px-10">
+  <section id="faq" class="px-6 py-24 md:px-10">
     <div class="mx-auto max-w-3xl">
       <SectionHeading :kicker="t.faqKicker" :title="t.faqTitle" :accent="t.faqAccent" />
       <div class="mt-10 space-y-3">

@@ -119,7 +119,7 @@ async function submit() {
 </script>
 
 <template>
-  <section id="inquiry" class="relative overflow-hidden bg-base-100 px-6 py-24 md:px-10">
+  <section id="inquiry" class="relative overflow-hidden px-6 py-24 md:px-10">
     <!-- soft violet glow behind the form -->
     <div class="pointer-events-none absolute -right-40 top-10 h-[480px] w-[480px] rounded-full bg-[#7621b0]/20 blur-[120px]" aria-hidden="true"></div>
     <div class="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.85fr_1.15fr]">

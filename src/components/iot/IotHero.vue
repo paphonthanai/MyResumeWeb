@@ -42,7 +42,7 @@ const t = computed(() =>
 </script>
 
 <template>
-  <section class="relative min-h-[100svh] overflow-hidden bg-[#0c0c0c]">
+  <section class="relative min-h-[100svh] overflow-hidden">
     <!-- Background: the clip's own frame, blurred, behind the sharp video -->
     <img :src="handPoster" alt="" class="absolute inset-0 h-full w-full scale-110 object-cover opacity-50 blur-2xl" aria-hidden="true" />
     <div class="absolute inset-0 bg-gradient-to-t from-[#0c0c0c] via-[#0c0c0c]/40 to-[#0c0c0c]/60" aria-hidden="true"></div>

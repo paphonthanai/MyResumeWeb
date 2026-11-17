@@ -332,7 +332,7 @@ const fmt = (n) => n.toLocaleString('en-US')
 </script>
 
 <template>
-  <section ref="stage" class="scanner-stage relative h-[100svh] min-h-[640px] overflow-hidden bg-base-100">
+  <section ref="stage" class="scanner-stage relative h-[100svh] min-h-[640px] overflow-hidden">
     <!-- Hero copy -->
     <div class="hero-copy relative z-10 grid gap-[4vw] px-[8.9vw] pt-10 md:grid-cols-[1fr_34vw]">
       <div>

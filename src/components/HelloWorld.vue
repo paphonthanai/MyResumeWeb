@@ -524,7 +524,7 @@ const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
 </script>
 
 <template>
-  <section id="portfolio" class="overflow-hidden bg-base-100 py-24">
+  <section id="portfolio" class="overflow-hidden py-24">
     <div class="mx-auto max-w-6xl px-6 md:px-10">
       <SectionHeading v-if="!props.bare" :title="t.sectionTitle" accent="Achievements" />
 
