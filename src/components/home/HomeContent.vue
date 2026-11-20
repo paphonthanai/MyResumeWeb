@@ -131,8 +131,8 @@ const t = computed(() =>
   en.value
     ? {
         eyebrow: 'Freelance · 5+ years',
-        l1: 'Real, working systems,',
-        l2: 'from web and apps to robots.',
+        l1: 'We solve problems',
+        l2: 'to cut the steps | and complexity | out of running | a business.',
         lede: 'I am Paphonthanai Jaima (PNJ Tech). I work with businesses, companies and public agencies to turn real problems into apps, websites, networks and IoT that ship and stay in use.',
         cta: 'Request a quote',
         cta2: 'See the work',
@@ -161,8 +161,8 @@ const t = computed(() =>
       }
     : {
         eyebrow: 'Freelance · 5+ ปี',
-        l1: 'สร้างระบบที่ใช้งานได้จริง',
-        l2: 'ตั้งแต่เว็บ แอป ถึงหุ่นยนต์',
+        l1: 'เราแก้ปัญหา',
+        l2: 'เพื่อลดขั้นตอนการทำงาน|และความซับซ้อน|ในการดำเนินธุรกิจ',
         lede: 'ผม ปพนธนัย ใจมา (PNJ Tech) ทำงานกับธุรกิจ องค์กร และหน่วยงาน เปลี่ยนโจทย์จริงให้เป็นแอป เว็บไซต์ ระบบเครือข่าย และงาน IoT ที่ส่งมอบและใช้งานได้จริง',
         cta: 'ขอใบเสนอราคา',
         cta2: 'ดูผลงาน',
@@ -207,10 +207,10 @@ const pageCards = computed(() => [
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="relative mx-auto grid max-w-6xl items-center gap-6 px-6 pt-12 md:px-10 md:pt-16 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
       <!-- The heading sits on the top layer, over the globe's wide frame -->
-      <div class="relative z-20">
+      <div class="relative z-20 min-w-0">
         <span class="eyebrow studio-enter">{{ t.eyebrow }}</span>
-        <h1 class="studio-enter mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[3.1rem] xl:text-[3.6rem]" style="--delay: 0.08s; text-wrap: balance">
-          <span class="lg:whitespace-nowrap">{{ t.l1 }}</span><br /><span class="glow-text lg:whitespace-nowrap"><template v-for="(w, i) in t.l2.split(' ')" :key="i">{{ i ? ' ' : '' }}<span class="whitespace-nowrap">{{ w }}</span></template></span>
+        <h1 class="studio-enter mt-5 text-[2rem] font-extrabold leading-[1.18] tracking-tight text-white sm:text-5xl lg:text-[2.75rem] xl:text-[3.1rem]" style="--delay: 0.08s; text-wrap: balance">
+          <span>{{ t.l1 }}</span><br /><span class="glow-text"><template v-for="(part, i) in t.l2.split('|')" :key="i"><wbr v-if="i" /><span class="whitespace-nowrap">{{ part }}</span></template></span>
         </h1>
       </div>
       <!-- ThreeUI Globe Type Study: drag to turn, click to pin -->
