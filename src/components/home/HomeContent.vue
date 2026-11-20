@@ -338,8 +338,11 @@ const pageCards = computed(() => [
       </div>
       <div class="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         <RouterLink v-for="(p, i) in projects" :key="p.id" v-reveal="i % 4" :to="p.to" class="group block">
-          <div class="aspect-[16/10] overflow-hidden rounded-2xl border border-white/5 bg-base-200">
-            <img :src="photo(p.id)" :alt="p.title" loading="lazy" decoding="async" width="480" height="300" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+          <!-- Most shots are portrait (phone screens, site photos), so the whole
+               image is shown, over a blurred copy of itself that fills the frame. -->
+          <div class="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/5 bg-base-200">
+            <img :src="photo(p.id)" alt="" aria-hidden="true" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full scale-110 object-cover opacity-50 blur-xl" />
+            <img :src="photo(p.id)" :alt="p.title" loading="lazy" decoding="async" width="480" height="360" class="relative h-full w-full object-contain transition duration-500 group-hover:scale-105" />
           </div>
           <p class="mt-4 text-xs text-base-content/45">{{ p.cat }}</p>
           <h3 class="mt-1 text-lg font-semibold leading-snug text-white transition group-hover:text-primary">{{ p.title }}</h3>
