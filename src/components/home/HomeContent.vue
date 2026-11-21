@@ -54,7 +54,6 @@ const photo = (id) => work[`../image/work/${id}-t.webp`]
 const logos = import.meta.glob('../image/clients/*.webp', { eager: true, import: 'default' })
 const logo = (id) => logos[`../image/clients/${id}.webp`]
 const CLIENTS = [
-  { id: 'first-telecom', th: 'เฟิร์สท เทเลคอม ซีสเต็ม', en: 'First Telecom System', href: 'https://www.firsttelecom.co.th/' },
   { id: 'kyoei', th: 'เคียวเออิ (ประเทศไทย)', en: 'Kyoei (Thailand)', href: 'https://www.kyoei-thai.co.th/th/' },
   { id: 'hodaka', th: 'โฮดากะ อีเอส (ประเทศไทย)', en: 'Hodaka ES (Thailand)', wide: true, href: 'https://hodaka.co.th/th/' },
   { id: 'mitkarn', th: 'มิตรกาญ', en: 'Mitkarn', href: 'https://www.facebook.com/Mittrakarn/' },
@@ -100,7 +99,7 @@ const CAPS = [
 ]
 
 const PROJECTS = [
-  { id: 'driver-app', to: '/skills', th: ['Web · Mobile · ขนส่ง', 'Grab-Truck', 'ระบบบริหารงานขนส่งและงานภายในองค์กร ทั้งเว็บแพลตฟอร์มและแอปมือถือ ใช้งานจริงที่บริษัทมิตรกาญ'], en: ['Web · Mobile · Logistics', 'Grab-Truck', 'A web platform and mobile app for transport and internal operations, in daily use at Mitkarn.'] },
+  { id: 'driver-app', to: '/projects/transportation-management', th: ['Web · Mobile · ขนส่ง', 'ระบบบริหารงานขนส่งและงานภายในองค์กร ทั้งเว็บแพลตฟอร์มและแอปมือถือ', 'รวมการออกงานและการวางบิลไว้ในระบบเดียว พร้อมแอปให้คนขับรถ 10 ล้อดูงานบนมือถือ ใช้งานจริงที่บริษัทมิตรกาญ'], en: ['Web · Mobile · Logistics', 'A transport and operations system, web platform and mobile app', 'Job dispatch and billing in one system, with a phone app for 10-wheel truck drivers. In daily use at Mitkarn.'] },
   { id: 'coop-app-home', to: '/projects', th: ['Flutter · OTP · แบบฟอร์ม', 'แอปสหกรณ์ ตชด. 24', 'แอปของสหกรณ์ออมทรัพย์ตำรวจตระเวนชายแดนที่ 24 กรอกฟอร์มทีละขั้นและเข้าใช้งานด้วย OTP'], en: ['Flutter · OTP · Forms', 'BPP24 Cooperative App', 'A savings cooperative app with step-by-step forms and OTP sign-in, built for the Border Patrol Police cooperative.'] },
   { id: 'web-vue', to: '/skills', th: ['Vue · Firebase · Dashboard', 'First Telecom', 'แดชบอร์ดหลายบทบาท อัปเดตแบบเรียลไทม์ พร้อมกฎความปลอดภัยของ Firestore ให้บริษัท เฟิร์สท เทเลคอม ซีสเต็ม'], en: ['Vue · Firebase · Dashboard', 'First Telecom', 'Multi-role, real-time dashboards with Firestore security rules for First Telecom System.'] },
   { id: 'app-flow', to: '/skills', th: ['API · Backend · การเงิน', 'Home DD', 'ระบบ API เชื่อมต่อธนาคารเพื่อค้นหาสินเชื่อ ให้บริษัท โฮม ดี ดี'], en: ['API · Backend · Finance', 'Home DD', 'An API that connects to banks to search for loans, built for Home DD.'] },
@@ -132,8 +131,8 @@ const t = computed(() =>
   en.value
     ? {
         eyebrow: 'Freelance · 5+ years',
-        l1: 'Real, working systems,',
-        l2: 'from web and apps to robots.',
+        l1: 'We solve problems',
+        l2: 'to cut the steps | and complexity | out of running | a business.',
         lede: 'I am Paphonthanai Jaima (PNJ Tech). I work with businesses, companies and public agencies to turn real problems into apps, websites, networks and IoT that ship and stay in use.',
         cta: 'Request a quote',
         cta2: 'See the work',
@@ -162,8 +161,8 @@ const t = computed(() =>
       }
     : {
         eyebrow: 'Freelance · 5+ ปี',
-        l1: 'สร้างระบบที่ใช้งานได้จริง',
-        l2: 'ตั้งแต่เว็บ แอป ถึงหุ่นยนต์',
+        l1: 'เราแก้ปัญหา',
+        l2: 'เพื่อลดขั้นตอนการทำงาน|และความซับซ้อน|ในการดำเนินธุรกิจ',
         lede: 'ผม ปพนธนัย ใจมา (PNJ Tech) ทำงานกับธุรกิจ องค์กร และหน่วยงาน เปลี่ยนโจทย์จริงให้เป็นแอป เว็บไซต์ ระบบเครือข่าย และงาน IoT ที่ส่งมอบและใช้งานได้จริง',
         cta: 'ขอใบเสนอราคา',
         cta2: 'ดูผลงาน',
@@ -208,10 +207,10 @@ const pageCards = computed(() => [
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="relative mx-auto grid max-w-6xl items-center gap-6 px-6 pt-12 md:px-10 md:pt-16 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
       <!-- The heading sits on the top layer, over the globe's wide frame -->
-      <div class="relative z-20">
+      <div class="relative z-20 min-w-0">
         <span class="eyebrow studio-enter">{{ t.eyebrow }}</span>
-        <h1 class="studio-enter mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[3.1rem] xl:text-[3.6rem]" style="--delay: 0.08s; text-wrap: balance">
-          <span class="lg:whitespace-nowrap">{{ t.l1 }}</span><br /><span class="glow-text lg:whitespace-nowrap"><template v-for="(w, i) in t.l2.split(' ')" :key="i">{{ i ? ' ' : '' }}<span class="whitespace-nowrap">{{ w }}</span></template></span>
+        <h1 class="studio-enter mt-5 text-[2rem] font-extrabold leading-[1.18] tracking-tight text-white sm:text-5xl lg:text-[2.75rem] xl:text-[3.1rem]" style="--delay: 0.08s; text-wrap: balance">
+          <span>{{ t.l1 }}</span><br /><span class="glow-text"><template v-for="(part, i) in t.l2.split('|')" :key="i"><wbr v-if="i" /><span class="whitespace-nowrap">{{ part }}</span></template></span>
         </h1>
       </div>
       <!-- ThreeUI Globe Type Study: drag to turn, click to pin -->
@@ -339,8 +338,11 @@ const pageCards = computed(() => [
       </div>
       <div class="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         <RouterLink v-for="(p, i) in projects" :key="p.id" v-reveal="i % 4" :to="p.to" class="group block">
-          <div class="aspect-[16/10] overflow-hidden rounded-2xl border border-white/5 bg-base-200">
-            <img :src="photo(p.id)" :alt="p.title" loading="lazy" decoding="async" width="480" height="300" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+          <!-- Most shots are portrait (phone screens, site photos), so the whole
+               image is shown, over a blurred copy of itself that fills the frame. -->
+          <div class="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/5 bg-base-200">
+            <img :src="photo(p.id)" alt="" aria-hidden="true" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full scale-110 object-cover opacity-50 blur-xl" />
+            <img :src="photo(p.id)" :alt="p.title" loading="lazy" decoding="async" width="480" height="360" class="relative h-full w-full object-contain transition duration-500 group-hover:scale-105" />
           </div>
           <p class="mt-4 text-xs text-base-content/45">{{ p.cat }}</p>
           <h3 class="mt-1 text-lg font-semibold leading-snug text-white transition group-hover:text-primary">{{ p.title }}</h3>
