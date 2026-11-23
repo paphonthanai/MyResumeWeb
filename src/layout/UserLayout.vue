@@ -69,10 +69,11 @@ const nav = computed(() => [
   { label: en.value ? 'Website Builder' : 'สร้างเว็บไซต์', to: en.value ? '/en/website-builder' : '/website-builder', top: true },
   { label: en.value ? 'About' : 'เกี่ยวกับ', to: '/about' },
   { label: en.value ? 'Blog' : 'บทความ', to: '/blog', top: true },
+  { label: en.value ? 'Contact' : 'ติดต่อ', to: '/contact' },
 ])
 const topNav = computed(() => nav.value.filter((i) => i.top))
-// The Website Builder and Pricing pages have their own inquiry form; elsewhere go to Pricing's.
-const contactTo = computed(() => (route.path.includes('website-builder') || route.path === '/pricing' ? '#inquiry' : '/pricing#inquiry'))
+// The Website Builder and Pricing pages have their own inquiry form; elsewhere open the Contact page.
+const contactTo = computed(() => (route.path.includes('website-builder') || route.path === '/pricing' || route.path === '/contact' ? '#inquiry' : '/contact'))
 const isActive = (to) => !to.includes('#') && route.path === to
 </script>
 

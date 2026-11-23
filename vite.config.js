@@ -53,7 +53,7 @@ export default defineConfig({
     // /app/home and /app/index are prerendered so the PNJ Created Website
     // app's landing page loads directly.
     includedRoutes: async () => [
-      '/', '/en', '/about', '/iot', '/projects', '/lab', '/gallery', '/skills', '/process', '/pricing',
+      '/', '/en', '/about', '/iot', '/projects', '/lab', '/gallery', '/skills', '/process', '/pricing', '/contact',
       '/website-builder', '/en/website-builder', '/app/home', '/app/index',
       '/blog', ...(await publishedPostRoutes()),
     ],

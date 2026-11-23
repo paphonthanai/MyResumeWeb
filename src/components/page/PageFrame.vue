@@ -144,6 +144,16 @@ const FAN = ['cctv-mount', 'robot-arm-red', 'board-repair', 'ctf-group', 'printe
   background: linear-gradient(90deg, transparent, var(--accent-soft), transparent);
 }
 
+/* Contact: a dot matrix fading out from the top right */
+.motif-dots .hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(color-mix(in srgb, var(--accent-soft) 35%, transparent) 1.2px, transparent 1.6px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(70% 80% at 85% 20%, #000, transparent 75%);
+}
+
 /* Gallery: fanned photos on the right (hidden on narrow screens) */
 .fan {
   position: absolute;

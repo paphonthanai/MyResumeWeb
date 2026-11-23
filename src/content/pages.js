@@ -122,6 +122,27 @@ export const pages = [
       sub: 'Pricing depends on the real scope. Tell me what you need and I will estimate and send a quotation.',
     },
   },
+  {
+    key: 'contact',
+    to: '/contact',
+    motif: 'dots',
+    accent: '#0ea5e9',
+    soft: '#a5e8ff',
+    alt: '#b600a8',
+    preview: 'laptop-dell',
+    th: {
+      name: 'ติดต่อ',
+      title: 'คุยกันได้เลย',
+      accentWord: 'คุยกัน',
+      sub: 'ทักมาทางช่องทางที่สะดวก หรือเล่าโจทย์ไว้ในฟอร์ม แล้วจะติดต่อกลับโดยเร็วที่สุด',
+    },
+    en: {
+      name: 'Contact',
+      title: "Let's talk",
+      accentWord: 'talk',
+      sub: 'Reach me on whichever channel suits you, or leave the brief in the form and I will get back to you soon.',
+    },
+  },
 ]
 
 export const pageByKey = Object.fromEntries(pages.map((p) => [p.key, p]))

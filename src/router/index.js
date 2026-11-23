@@ -149,6 +149,16 @@ export const routes = [
     }
   },
   {
+    path: '/contact',
+    name: 'contact',
+    component: () => import('../views/ContactView.vue'),
+    meta: {
+      title: 'ติดต่อ | PNJ Tech',
+      description: 'ติดต่อปพนธนัย ใจมา (PNJ Tech) ทาง Messenger อีเมล Facebook LinkedIn GitHub หรือ Fastwork หรือเล่าโจทย์ไว้ในฟอร์มเพื่อรับใบเสนอราคา',
+      lang: 'th'
+    }
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
