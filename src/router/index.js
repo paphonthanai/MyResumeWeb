@@ -154,7 +154,7 @@ export const routes = [
     component: () => import('../views/ContactView.vue'),
     meta: {
       title: 'ติดต่อ | PNJ Tech',
-      description: 'ติดต่อปพนธนัย ใจมา (PNJ Tech) ทาง Messenger อีเมล Facebook LinkedIn GitHub หรือ Fastwork หรือเล่าโจทย์ไว้ในฟอร์มเพื่อรับใบเสนอราคา',
+      description: 'ติดต่อปพนธนัย ใจมา (PNJ Tech) ทาง Messenger โทรศัพท์ LINE อีเมล Facebook LinkedIn GitHub หรือ Fastwork หรือเล่าโจทย์ไว้ในฟอร์มเพื่อรับใบเสนอราคา',
       lang: 'th'
     }
   },
