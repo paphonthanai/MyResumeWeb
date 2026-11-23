@@ -11,7 +11,15 @@ const lang = inject('lang')
 
 // Copy is derived from the real work shown in the Skills section and the
 // "client brief → flowchart → spec → dev plan" process already described
-// there. No prices are listed: packages describe scope, pricing is quoted.
+// there. Each package shows its regular price struck through and the
+// current one (THB); the final price is still quoted per scope.
+const PRICES = {
+  starter: { was: 8999, now: 5999 },
+  pro: { was: 69999, now: 49999 },
+  enterprise: { was: 100000, now: 89999 },
+}
+const baht = (n) => `฿${n.toLocaleString('en-US')}`
+
 const content = {
   th: {
     processKicker: 'Process',
@@ -37,6 +45,14 @@ const content = {
     ],
     quote: 'ขอใบเสนอราคา',
     popular: 'ยอดนิยม',
+    wasLabel: 'ราคาปกติ',
+    nowLabel: 'ราคาพิเศษ',
+    promoFirst: 'เป็นลูกค้ารายแรก ลดเลย',
+    promoFirstSub: 'ราคาพิเศษด้านล่างสำหรับลูกค้ากลุ่มแรก',
+    promoCare: 'เราดูแลให้ตลอดครึ่งปี',
+    promoCareSub: 'บริการหลังการขาย / ประกัน',
+    careWas: '3 เดือน',
+    careNow: '6 เดือน',
   },
   en: {
     processKicker: 'Process',
@@ -62,6 +78,14 @@ const content = {
     ],
     quote: 'Request a quote',
     popular: 'Popular',
+    wasLabel: 'Regular price',
+    nowLabel: 'Special price',
+    promoFirst: 'Be one of the first clients, get the discount',
+    promoFirstSub: 'The special prices below are for early clients',
+    promoCare: 'Half a year of care',
+    promoCareSub: 'After-sales support / warranty',
+    careWas: '3 months',
+    careNow: '6 months',
   },
 }
 
@@ -144,7 +168,33 @@ onBeforeUnmount(() => stop?.())
     <div class="mx-auto max-w-6xl">
       <SectionHeading v-if="!props.bare" :title="t.packagesTitle" :accent="t.packagesAccent" :intro="t.packagesIntro" />
 
-      <div :class="props.bare ? '' : 'mt-14'">
+      <!-- Launch offers, applying to every package below -->
+      <ul v-reveal class="mb-8 grid gap-3 md:grid-cols-2" :class="props.bare ? '' : 'mt-14'">
+        <li class="promo flex items-start gap-4 rounded-[1.5rem] p-5 md:p-6">
+          <span class="promo-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 15 15 9M9.5 9.5h.01M14.5 14.5h.01M3 12l1.8-1.8V7.6a2.6 2.6 0 0 1 2.6-2.6h2.6L12 3l1.8 1.8h2.6a2.6 2.6 0 0 1 2.6 2.6v2.6L21 12l-1.8 1.8v2.6a2.6 2.6 0 0 1-2.6 2.6h-2.6L12 21l-1.8-1.8H7.6A2.6 2.6 0 0 1 5 16.4v-2.6Z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </span>
+          <span>
+            <span class="block text-lg font-semibold text-white">{{ t.promoFirst }}</span>
+            <span class="mt-1 block text-sm text-white/60">{{ t.promoFirstSub }}</span>
+          </span>
+        </li>
+        <li class="promo flex items-start gap-4 rounded-[1.5rem] p-5 md:p-6">
+          <span class="promo-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3Zm-3.2 9.2 2.2 2.2 4.4-4.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </span>
+          <span>
+            <span class="block text-lg font-semibold text-white">{{ t.promoCare }}</span>
+            <span class="mt-1 flex flex-wrap items-baseline gap-x-2 text-sm text-white/60">
+              {{ t.promoCareSub }}
+              <del class="decoration-white/50 text-white/40">{{ t.careWas }}</del>
+              <strong class="pkg-price text-base font-semibold">{{ t.careNow }}</strong>
+            </span>
+          </span>
+        </li>
+      </ul>
+
+      <div>
         <article
           v-for="(p, i) in t.packages"
           :key="p.id"
@@ -158,6 +208,12 @@ onBeforeUnmount(() => stop?.())
               <span v-if="p.featured" class="rounded-full bg-white px-2.5 py-0.5 text-[11px] font-semibold text-black">{{ t.popular }}</span>
             </p>
             <h3 class="mt-1 text-4xl font-bold tracking-tight text-white md:text-5xl">{{ p.name }}</h3>
+            <p v-if="PRICES[p.id]" class="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 tabular-nums">
+              <span class="sr-only">{{ t.nowLabel }}</span>
+              <span class="pkg-price text-3xl font-semibold tracking-tight">{{ baht(PRICES[p.id].now) }}</span>
+              <span class="sr-only">{{ t.wasLabel }}</span>
+              <del class="text-lg text-white/40 decoration-white/50">{{ baht(PRICES[p.id].was) }}</del>
+            </p>
           </div>
 
           <div>
@@ -187,6 +243,17 @@ onBeforeUnmount(() => stop?.())
 </template>
 
 <style scoped>
+/* Package price, in the page's accent */
+.pkg-price { color: var(--accent-soft, #fff); }
+.promo {
+  background: color-mix(in srgb, var(--accent, #e8400d) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-soft, #ffb38a) 25%, transparent);
+}
+.promo-icon {
+  color: var(--accent-soft, #ffb38a);
+  background: color-mix(in srgb, var(--accent, #e8400d) 22%, transparent);
+}
+
 /* ---- Process rail ---- */
 @media (min-width: 1024px) {
   .process { height: 320svh; }
