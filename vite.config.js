@@ -54,6 +54,7 @@ export default defineConfig({
     // app's landing page loads directly.
     includedRoutes: async () => [
       '/', '/en', '/about', '/iot', '/projects', '/lab', '/gallery', '/skills', '/process', '/pricing', '/contact',
+      '/projects/transportation-management',
       '/website-builder', '/en/website-builder', '/app/home', '/app/index',
       '/blog', ...(await publishedPostRoutes()),
     ],

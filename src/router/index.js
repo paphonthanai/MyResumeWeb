@@ -129,6 +129,16 @@ export const routes = [
     }
   },
   {
+    path: '/projects/transportation-management',
+    name: 'project-transportation-management',
+    component: () => import('../views/work/TransportationCaseView.vue'),
+    meta: {
+      title: 'กรณีศึกษา: ระบบบริหารงานขนส่งและงานภายในองค์กร | PNJ Tech',
+      description: 'กรณีศึกษาจาก PNJ Tech รวมการสร้างงานขนส่ง การคำนวณยอด และการวางบิลที่เคยแยกอยู่สองโปรแกรมไว้ในแพลตฟอร์มเดียว พร้อมแอปมือถือให้พนักงานขับรถ 10 ล้อรับงาน คล้าย Grab',
+      lang: 'th'
+    }
+  },
+  {
     path: '/process',
     name: 'process',
     component: () => import('../views/ProcessView.vue'),
