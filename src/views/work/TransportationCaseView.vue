@@ -2,6 +2,9 @@
 import { useHead } from '@unhead/vue'
 import UserLayout from '../../layout/UserLayout.vue'
 import driverApp from '../../components/image/work/driver-app.webp'
+import tmsDashboard from '../../components/image/Project/transport/tms-dashboard.webp'
+import tmsDriver from '../../components/image/Project/transport/tms-driver.webp'
+import tmsLogin from '../../components/image/Project/transport/tms-login.webp'
 
 // Case study for the transportation management system (formerly listed as
 // Grab-Truck), written like a blog post. It lives
@@ -12,7 +15,7 @@ const siteUrl = 'https://myresume-ae906.web.app'
 useHead({
   meta: [
     { property: 'og:type', content: 'article' },
-    { property: 'og:image', content: `${siteUrl}${driverApp}` },
+    { property: 'og:image', content: `${siteUrl}${tmsDashboard}` },
   ],
 })
 
@@ -57,9 +60,9 @@ const afterFlow = ['สร้างงานขนส่ง', 'มอบหม�
         <RouterLink to="/" class="text-sm text-base-content/50 transition hover:text-white">← กลับหน้าแรก</RouterLink>
         <p class="mt-8"><span class="eyebrow">Project Case Study · Transportation</span></p>
         <h1 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-white md:text-5xl" style="text-wrap: balance">
-          ระบบบริหารงานขนส่งและงานภายในองค์กร
+          ระบบบริหารจัดการงานขนส่งขนาดใหญ่
         </h1>
-        <p class="mt-4 text-lg leading-relaxed text-base-content/70 md:text-xl">เว็บแพลตฟอร์มและแอปมือถือสำหรับธุรกิจขนส่งรถบรรทุก 10 ล้อ</p>
+        <p class="mt-4 text-lg leading-relaxed text-base-content/70 md:text-xl">เว็บแพลตฟอร์มและแอปมือถือสำหรับบริหารงานขนส่งและงานภายในองค์กร ของธุรกิจรถบรรทุก 10 ล้อ</p>
         <ul class="mt-6 flex flex-wrap gap-2 text-xs">
           <li v-for="tag in ['Web Application', 'Mobile App', 'Custom Software']" :key="tag" class="rounded-full border border-white/15 px-3 py-1 text-white/80">{{ tag }}</li>
         </ul>
@@ -95,8 +98,24 @@ const afterFlow = ['สร้างงานขนส่ง', 'มอบหม�
           </div>
         </dl>
 
-        <figure class="mt-10 overflow-hidden rounded-3xl border border-white/5 bg-base-200">
-          <img :src="driverApp" alt="หน้าจอแอปพนักงานขับรถของระบบบริหารงานขนส่ง" width="647" height="1400" class="mx-auto max-h-[70vh] w-auto" />
+        <!-- The system's own screens (dummy data) -->
+        <figure class="mt-10 overflow-hidden rounded-2xl border border-white/10 bg-base-200">
+          <img :src="tmsDashboard" alt="แดชบอร์ดภาพรวมการดำเนินงานของระบบบริหารจัดการงานขนส่ง" width="1600" height="739" class="block w-full" />
+          <figcaption class="px-4 py-2.5 text-xs text-base-content/55">แดชบอร์ดภาพรวม: รอจัดรถ กำลังขนส่ง รอตรวจ POD งานส่งเสร็จ และสรุปสถานะการเงิน</figcaption>
+        </figure>
+        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+          <figure class="overflow-hidden rounded-2xl border border-white/10 bg-base-200">
+            <img :src="tmsDriver" alt="หน้าจอ Driver App ของพนักงานขับรถ" width="1600" height="738" loading="lazy" class="block w-full" />
+            <figcaption class="px-4 py-2.5 text-xs text-base-content/55">Driver App: งานที่ได้รับมอบหมายและค่าเที่ยวล่าสุด</figcaption>
+          </figure>
+          <figure class="overflow-hidden rounded-2xl border border-white/10 bg-base-200">
+            <img :src="tmsLogin" alt="หน้าเข้าสู่ระบบของระบบบริหารจัดการงานขนส่ง" width="1600" height="742" loading="lazy" class="block w-full" />
+            <figcaption class="px-4 py-2.5 text-xs text-base-content/55">เข้าสู่ระบบด้วยอีเมลหรือรหัสคนขับ</figcaption>
+          </figure>
+        </div>
+        <figure class="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-base-200">
+          <img :src="driverApp" alt="หน้าจอแอปพนักงานขับรถบนมือถือ" width="647" height="1400" loading="lazy" class="mx-auto max-h-[70vh] w-auto" />
+          <figcaption class="px-4 py-2.5 text-center text-xs text-base-content/55">แอปพนักงานขับรถบนมือถือ</figcaption>
         </figure>
 
         <div class="prose prose-invert prose-headings:text-white mt-12 max-w-none">
@@ -162,7 +181,7 @@ const afterFlow = ['สร้างงานขนส่ง', 'มอบหม�
 
         <div class="card-studio mt-14 flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
           <p class="text-white"><span class="font-semibold">PNJ Tech</span> — เราแก้ปัญหา เพื่อลดขั้นตอนการทำงานและความซับซ้อนในการดำเนินธุรกิจ</p>
-          <RouterLink to="/pricing#inquiry" class="btn-glow shrink-0 text-sm">ปรึกษาโครงการของคุณ →</RouterLink>
+          <RouterLink to="/contact" class="btn-glow shrink-0 text-sm">ปรึกษาโครงการของคุณ →</RouterLink>
         </div>
       </article>
     </div>

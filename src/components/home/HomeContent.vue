@@ -4,6 +4,8 @@ import { RouterLink } from 'vue-router'
 import SectionHeading from '../SectionHeading.vue'
 import TechStack from './TechStack.vue'
 import FastworkReviews from './FastworkReviews.vue'
+import FeaturedCase from './FeaturedCase.vue'
+import tmsDashboard from '../image/Project/transport/tms-dashboard.webp'
 import { pages } from '../../content/pages'
 import { vReveal } from '../../utils/reveal'
 
@@ -99,7 +101,7 @@ const CAPS = [
 ]
 
 const PROJECTS = [
-  { id: 'driver-app', to: '/projects/transportation-management', th: ['Web · Mobile · ขนส่ง', 'ระบบบริหารงานขนส่งและงานภายในองค์กร ทั้งเว็บแพลตฟอร์มและแอปมือถือ', 'รวมการออกงานและการวางบิลไว้ในระบบเดียว พร้อมแอปให้คนขับรถ 10 ล้อดูงานบนมือถือ ใช้งานจริงที่บริษัทมิตรกาญ'], en: ['Web · Mobile · Logistics', 'A transport and operations system, web platform and mobile app', 'Job dispatch and billing in one system, with a phone app for 10-wheel truck drivers. In daily use at Mitkarn.'] },
+  { id: 'driver-app', img: tmsDashboard, to: '/projects/transportation-management', th: ['Web · Mobile · ขนส่ง', 'ระบบบริหารจัดการงานขนส่งขนาดใหญ่ ทั้งเว็บแพลตฟอร์มและแอปมือถือ', 'รวมการออกงานและการวางบิลไว้ในระบบเดียว พร้อมแอปให้คนขับรถ 10 ล้อดูงานบนมือถือ ใช้งานจริงที่บริษัทมิตรกาญ'], en: ['Web · Mobile · Logistics', 'A large-scale transport management system, web platform and mobile app', 'Job dispatch and billing in one system, with a phone app for 10-wheel truck drivers. In daily use at Mitkarn.'] },
   { id: 'coop-app-home', to: '/projects', th: ['Flutter · OTP · แบบฟอร์ม', 'แอปสหกรณ์ ตชด. 24', 'แอปของสหกรณ์ออมทรัพย์ตำรวจตระเวนชายแดนที่ 24 กรอกฟอร์มทีละขั้นและเข้าใช้งานด้วย OTP'], en: ['Flutter · OTP · Forms', 'BPP24 Cooperative App', 'A savings cooperative app with step-by-step forms and OTP sign-in, built for the Border Patrol Police cooperative.'] },
   { id: 'web-vue', to: '/skills', th: ['Vue · Firebase · Dashboard', 'First Telecom', 'แดชบอร์ดหลายบทบาท อัปเดตแบบเรียลไทม์ พร้อมกฎความปลอดภัยของ Firestore ให้บริษัท เฟิร์สท เทเลคอม ซีสเต็ม'], en: ['Vue · Firebase · Dashboard', 'First Telecom', 'Multi-role, real-time dashboards with Firestore security rules for First Telecom System.'] },
   { id: 'app-flow', to: '/skills', th: ['API · Backend · การเงิน', 'Home DD', 'ระบบ API เชื่อมต่อธนาคารเพื่อค้นหาสินเชื่อ ให้บริษัท โฮม ดี ดี'], en: ['API · Backend · Finance', 'Home DD', 'An API that connects to banks to search for loans, built for Home DD.'] },
@@ -194,7 +196,7 @@ const t = computed(() =>
 const L = computed(() => (en.value ? 'en' : 'th'))
 const identities = computed(() => IDENTITIES.map((d) => ({ key: d.key, href: d.href, mark: d.mark, name: d[L.value][0], role: d[L.value][1], body: d[L.value][2] })))
 const caps = computed(() => CAPS.map((c) => ({ to: c.to === '/website-builder' && en.value ? '/en/website-builder' : c.to, title: c[L.value][0], body: c[L.value][1], tags: c[L.value][2] })))
-const projects = computed(() => PROJECTS.map((p) => ({ id: p.id, to: p.to, cat: p[L.value][0], title: p[L.value][1], body: p[L.value][2] })))
+const projects = computed(() => PROJECTS.map((p) => ({ id: p.id, img: p.img || photo(p.id), to: p.to, cat: p[L.value][0], title: p[L.value][1], body: p[L.value][2] })))
 const pageCards = computed(() => [
   ...pages.map((p) => ({ to: p.to, name: p[L.value].name, sub: p[L.value].sub, img: photo(p.preview) })),
   { to: '/iot', name: en.value ? 'IoT & robotics' : 'IoT และหุ่นยนต์', sub: en.value ? 'Robot hands and arms, designed and printed in-house.' : 'มือและแขนหุ่นยนต์ ออกแบบและพิมพ์ชิ้นส่วนเอง', img: photo('robot-arm-tracked') },
@@ -280,6 +282,9 @@ const pageCards = computed(() => [
     <TechStack class="relative pb-16 md:pb-20" />
   </section>
 
+  <!-- Flagship case: the large transport management system, in daily use -->
+  <FeaturedCase />
+
   <!-- Reviews from FastWork -->
   <FastworkReviews />
 
@@ -341,8 +346,8 @@ const pageCards = computed(() => [
           <!-- Most shots are portrait (phone screens, site photos), so the whole
                image is shown, over a blurred copy of itself that fills the frame. -->
           <div class="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/5 bg-base-200">
-            <img :src="photo(p.id)" alt="" aria-hidden="true" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full scale-110 object-cover opacity-50 blur-xl" />
-            <img :src="photo(p.id)" :alt="p.title" loading="lazy" decoding="async" width="480" height="360" class="relative h-full w-full object-contain transition duration-500 group-hover:scale-105" />
+            <img :src="p.img" alt="" aria-hidden="true" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full scale-110 object-cover opacity-50 blur-xl" />
+            <img :src="p.img" :alt="p.title" loading="lazy" decoding="async" width="480" height="360" class="relative h-full w-full object-contain transition duration-500 group-hover:scale-105" />
           </div>
           <p class="mt-4 text-xs text-base-content/45">{{ p.cat }}</p>
           <h3 class="mt-1 text-lg font-semibold leading-snug text-white transition group-hover:text-primary">{{ p.title }}</h3>

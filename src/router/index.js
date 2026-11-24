@@ -133,7 +133,7 @@ export const routes = [
     name: 'project-transportation-management',
     component: () => import('../views/work/TransportationCaseView.vue'),
     meta: {
-      title: 'กรณีศึกษา: ระบบบริหารงานขนส่งและงานภายในองค์กร | PNJ Tech',
+      title: 'กรณีศึกษา: ระบบบริหารจัดการงานขนส่งขนาดใหญ่ | PNJ Tech',
       description: 'กรณีศึกษาจาก PNJ Tech รวมการสร้างงานขนส่ง การคำนวณยอด และการวางบิลที่เคยแยกอยู่สองโปรแกรมไว้ในแพลตฟอร์มเดียว พร้อมแอปมือถือให้พนักงานขับรถ 10 ล้อรับงาน คล้าย Grab',
       lang: 'th'
     }

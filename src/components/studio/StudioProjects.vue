@@ -5,6 +5,9 @@ import { clamp01, onScrollFrame } from '../../utils/fade'
 import { galleryFilter } from '../../utils/galleryState'
 import websiteImage from '../image/Project/web-vue/01.png'
 import loanAppImage from '../image/Project/AppsLone/01.png'
+import tmsDashboard from '../image/Project/transport/tms-dashboard.webp'
+import tmsDriver from '../image/Project/transport/tms-driver.webp'
+import tmsLogin from '../image/Project/transport/tms-login.webp'
 import logo from '../image/NewLogo_Gold.png'
 import robotVideo from '../image/video/case-robot.mp4'
 import robotPoster from '../image/video/case-robot.webp'
@@ -28,6 +31,19 @@ const img = (id) => ({ type: 'img', src: work[`../image/work/${id}.webp`] })
 const vid = (src, poster) => ({ type: 'video', src, poster })
 
 const CASES = [
+  // The flagship: a real client system in daily use, shown first.
+  {
+    th: 'ระบบบริหารจัดการงานขนส่งขนาดใหญ่',
+    en: 'Large-scale transport management system',
+    rows: { th: ['WEB PLATFORM · DRIVER APP', 'สร้างงาน · จ่ายงาน · วางบิล', 'ใช้งานจริงทุกวัน'], en: ['WEB PLATFORM · DRIVER APP', 'JOBS · DISPATCH · BILLING', 'IN DAILY USE'] },
+    key: '// featured',
+    desc: {
+      th: '— รวมโปรแกรมสองตัวของลูกค้ารถบรรทุก 10 ล้อ ให้เหลือแพลตฟอร์มเดียว พร้อมแอปให้คนขับดูงานบนมือถือ',
+      en: '— two programs merged into one platform for a 10-wheel truck operator, with a driver app on their phones.',
+    },
+    media: [{ type: 'img', src: tmsDashboard }, { type: 'img', src: tmsDriver }, { type: 'img', src: tmsLogin }, img('driver-app')],
+    action: { to: { th: '/projects/transportation-management', en: '/projects/transportation-management' }, th: 'อ่านกรณีศึกษา', en: 'Read the case study' },
+  },
   {
     th: 'พัฒนาแอปพลิเคชั่น Android and IOS',
     en: 'Android & iOS app development',
@@ -37,7 +53,7 @@ const CASES = [
       th: '— แอปมือถือที่ใช้งานจริงในองค์กร ตั้งแต่ระบบสมาชิก สินเชื่อ ไปจนถึงแอปสำหรับคนขับรถ',
       en: '— mobile apps used in real operations, from member and loan systems to a driver app.',
     },
-    media: [{ type: 'img', src: loanAppImage }, img('coop-app-home'), img('driver-app'), img('flutter-dev')],
+    media: [{ type: 'img', src: loanAppImage }, img('coop-app-home'), img('coop-app-menu'), img('flutter-dev')],
     action: { gallery: 'software', th: 'ดูภาพผลงาน', en: 'See photos' },
   },
   {
@@ -207,7 +223,7 @@ watch([item, inView], schedule)
     id="projects"
     ref="sec"
     class="relative z-10 -mt-10 rounded-t-[40px] bg-[#0C0C0C] sm:-mt-12 sm:rounded-t-[50px] md:-mt-14 md:rounded-t-[60px]"
-    style="height: 640svh"
+    style="height: 760svh"
     :aria-label="en ? 'Projects' : 'ผลงาน'"
   >
     <div class="sticky top-0 h-[100svh] overflow-hidden">
