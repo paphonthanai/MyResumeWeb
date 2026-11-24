@@ -74,7 +74,17 @@ const techCategories = [
       { name: 'CyberChef', icon: 'https://cdn-1.webcatalog.io/catalog/cyberchef/cyberchef-icon-filled-256.webp?v=1714774077431' },
       { name: 'Ghidra', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Ghidra_logo.svg/768px-Ghidra_logo.svg.png?20220727174502' },
       { name: 'IDA', icon: 'https://static.wikitide.net/zenithwiki/0/0d/IDAIcon.png' },
-      { name: 'KaliLinux', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Kali-dragon-icon.svg/768px-Kali-dragon-icon.svg.png?20211125065834' },
+      {
+        name: 'KaliLinux',
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Kali-dragon-icon.svg/768px-Kali-dragon-icon.svg.png?20211125065834',
+        // CC BY-SA 4.0: the author must be credited wherever the icon is shown.
+        credit: {
+          author: 'Abiss21',
+          source: 'https://commons.wikimedia.org/wiki/File:Kali-dragon-icon.svg',
+          license: 'CC BY-SA 4.0',
+          licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0',
+        },
+      },
     ],
   },
 ];
@@ -84,6 +94,8 @@ const half = Math.ceil(allTech.length / 2)
 const techRows = [allTech.slice(0, half), allTech.slice(half)]
 // Black logos that would vanish on the dark page
 const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
+// Logos whose licence asks for attribution, credited under the rows
+const credits = allTech.filter((t) => t.credit)
 </script>
 
 <template>
@@ -104,6 +116,15 @@ const DARK_LOGOS = new Set(['GitHub', 'Next.js', 'Express'])
         </template>
       </div>
     </div>
+    <p v-if="credits.length" class="mx-auto mt-3 max-w-6xl px-6 text-[11px] leading-relaxed text-base-content/35 md:px-10">
+      <span v-for="(c, i) in credits" :key="c.name">
+        <template v-if="i">; </template>
+        {{ c.name === 'KaliLinux' ? 'Kali Linux' : c.name }} icon:
+        <a :href="c.credit.source" target="_blank" rel="noopener noreferrer" class="underline decoration-white/20 underline-offset-2 hover:text-white/70">{{ c.credit.author }}</a>,
+        <a :href="c.credit.licenseUrl" target="_blank" rel="noopener noreferrer" class="underline decoration-white/20 underline-offset-2 hover:text-white/70">{{ c.credit.license }}</a>,
+        via Wikimedia Commons
+      </span>
+    </p>
   </div>
 </template>
 
