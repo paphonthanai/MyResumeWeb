@@ -29,8 +29,8 @@ export const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      title: 'ปพนธนัย ใจมา (PNJ Tech) | Fullstack Developer Portfolio',
-      description: 'พอร์ตโฟลิโอและเรซูเม่ของปพนธนัย ใจมา (PNJ Tech) นักพัฒนาซอฟต์แวร์ฟรีแลนซ์ ประสบการณ์กว่า 5 ปี พัฒนาเว็บและแอปด้วย Vue.js, Flutter, Firebase, PHP รวมผลงานจริงและทักษะด้าน Security/CTF',
+      title: 'PNJ Tech Fullstack Developer เปลี่ยนจากสิ่งที่คิดให้สามารถใช้งานได้จริง',
+      description: 'เรามองหาปัญหา และนำเทคโนโลยีมาเพื่อ แก้ปัญหา ลดขั้นตอนการทำงาน และความซับซ้อน ในการดำเนินธุรกิจ',
       lang: 'th',
       // Marks this and '/en' as language alternates of the same page,
       // so App.vue can emit hreflang links between them.
